@@ -222,7 +222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142671048}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.89645, y: 0.568326, z: 3.8102243}
+  m_LocalPosition: {x: 18.751135, y: 1.0395727, z: 3.8102243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 670453501}
@@ -243,7 +243,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 4622405978093960878, guid: 7469cb701fde2454ca6e09f5df3b360c,
     type: 3}
   position1: {x: 20.157799, y: 0.5030346, z: 6.5829945}
-  position2: {x: 17.635101, y: 0.6336174, z: 1.0374541}
+  position2: {x: 17.344471, y: 1.5761108, z: 1.0374541}
   spawnRate: 3
   enemyCount: 3
   enemyRemaining: 1
@@ -495,8 +495,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4622405978093960878, guid: 7469cb701fde2454ca6e09f5df3b360c,
     type: 3}
-  position1: {x: -19.97411, y: 3.1624308, z: 6.7797985}
-  position2: {x: -30.399492, y: 1.8302684, z: -10.115049}
+  position1: {x: -19.97411, y: 2.46667, z: 6.7797985}
+  position2: {x: -30.399492, y: 1.9485326, z: -10.115049}
   spawnRate: 2
   enemyCount: 5
   enemyRemaining: 1
@@ -509,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491477401}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.186802, y: 2.4963496, z: -1.6676254}
+  m_LocalPosition: {x: -25.186802, y: 2.2076013, z: -1.6676254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 670453501}
@@ -663,13 +663,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524195357}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: -3.2, z: 32.5}
+  m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
+  m_LocalPosition: {x: 0.2, y: 1.8, z: 30}
   m_LocalScale: {x: 23.496563, y: 4.74443, z: 4.74443}
   m_Children: []
   m_Father: {fileID: 1028709645}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
 --- !u!1 &530146276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,7 +2105,7 @@ PrefabInstance:
     - target: {fileID: 4622405978093960874, guid: 7469cb701fde2454ca6e09f5df3b360c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 4622405978093960874, guid: 7469cb701fde2454ca6e09f5df3b360c,
         type: 3}
@@ -2822,6 +2822,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5648784176146209496, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5648784176146209498, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5648784177063748530, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
         type: 3}
       propertyPath: m_LocalPosition.x

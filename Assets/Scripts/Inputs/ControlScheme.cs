@@ -139,19 +139,8 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b00b214b-16a5-44ef-b136-995d2bbdfdc5"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Punch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""242fe760-4601-4a80-bf99-35d37c1618f4"",
-                    ""path"": ""<Keyboard>/ctrl"",
+                    ""path"": ""<Keyboard>/P"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -194,19 +183,8 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3e1dbf91-7374-4db4-a6dd-d90e03a51c4c"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Special"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""b4fb0494-0442-4d89-9239-e2574bca6599"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/O"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

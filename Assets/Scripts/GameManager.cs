@@ -6,6 +6,10 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Players prefabs")]
+    public GameObject player0prefab;
+    public GameObject player1prefab;
+
     [Header("Camera container")]
     public Transform camContainer;
 
@@ -32,6 +36,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (inputManager.playerCount == 0 && inputManager.joiningEnabled)
+            inputManager.playerPrefab = player0prefab;
+
+        if (inputManager.playerCount == 1 && inputManager.joiningEnabled)
+            inputManager.playerPrefab = player1prefab;
 
         if (inputManager.playerCount == 2 && inputManager.joiningEnabled)
             inputManager.DisableJoining();

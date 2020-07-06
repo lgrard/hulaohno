@@ -14,8 +14,12 @@ public class CameraCheckPoint : MonoBehaviour
     public Vector3 zonePosition;
     public Vector3 zoneSize;
 
+
     [Header("Does this zone uses blocks the players")]
     public bool blocksPlayers;
+
+    [Header("Does this zone uses blocks the players")]
+    public bool controlsCam;
 
     [Header("Linked Spawner (null if blocksPlayers = false)")]
     public List<EnemySpawner> linkedSpawner = new List<EnemySpawner>();
@@ -59,12 +63,11 @@ public class CameraCheckPoint : MonoBehaviour
     //Fixed Update method
     private void FixedUpdate()
     {
-        if (blocksPlayers)
-            Blocking();
+        Blocking();
 
         playerInside = Physics.CheckBox(zonePosition, zoneSize/2,Quaternion.identity,playerLayer);
 
-        if (playerInside)
+        if (playerInside && controlsCam)
         {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = true;
             Transform camContainer = cam.GetComponentInParent<CameraEffects>().transform;
@@ -79,11 +82,15 @@ public class CameraCheckPoint : MonoBehaviour
     //Blocking method
     private void Blocking()
     {
-        if(playerInside && !blockTriggered)
+        if (playerInside && !blockTriggered)
         {
             blockTriggered = true;
-            boundL.enabled = true;
-            boundR.enabled = true;
+
+            if (blocksPlayers)
+            {
+                boundL.enabled = true;
+                boundR.enabled = true;
+            }
 
             foreach (EnemySpawner spawner in linkedSpawner)
                 spawner.enabled = true;
@@ -91,26 +98,17 @@ public class CameraCheckPoint : MonoBehaviour
 
         if (linkedSpawner.Capacity > 0 && linkedSpawner.Capacity > endedSpawner.Capacity)
         {
-            foreach(EnemySpawner spawner in linkedSpawner)
+            foreach (EnemySpawner spawner in linkedSpawner)
             {
-                if(spawner.enemyRemaining <= 0)
+                if (spawner.enemyRemaining <= 0)
                     endedSpawner.Add(spawner);
             }
         }
 
-        else
+        else if (blocksPlayers)
         {
             boundL.enabled = false;
             boundR.enabled = false;
         }
     }
- 
-    //Draw on Gizmo
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(0, 180, 0);
-        Gizmos.DrawSphere(cameraPosition,1f);
-        Gizmos.color = new Color(0, 180, 0);
-        Gizmos.DrawWireCube(zonePosition, zoneSize);
-    }
-}
+ }

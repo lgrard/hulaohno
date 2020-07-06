@@ -1025,6 +1025,7 @@ MonoBehaviour:
   zonePosition: {x: -25.60343, y: 2.5, z: 0}
   zoneSize: {x: 15.182487, y: 5, z: 25}
   blocksPlayers: 1
+  controlsCam: 0
   linkedSpawner:
   - {fileID: 491477402}
   boundL: {fileID: 881888814}
@@ -1785,13 +1786,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395873715}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -76.87509, y: -6.263462, z: 15.962067}
+  m_LocalRotation: {x: -0, y: 0.44700077, z: -0, w: 0.89453363}
+  m_LocalPosition: {x: 0.247, y: 1.599, z: -0.318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 53.103, z: 0}
 --- !u!1 &1405698768
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,11 +2644,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPosition: {x: 25, y: 20, z: -5}
   cameraRotation: {x: 70, y: 0, z: 0}
-  zonePosition: {x: 25, y: 2.5, z: 0}
+  zonePosition: {x: 24.819962, y: 2.5, z: 0}
   zoneSize: {x: 15.592833, y: 5, z: 25}
   blocksPlayers: 1
+  controlsCam: 1
   linkedSpawner:
-  - {fileID: 142671050}
+  - {fileID: 1393879890}
   - {fileID: 1393879890}
   boundL: {fileID: 1880396842}
   boundR: {fileID: 1880396841}
@@ -2659,7 +2661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880396838}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 27.659515, y: 26.674362, z: -36.525513}
+  m_LocalPosition: {x: 27.479477, y: 26.674362, z: -36.525513}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 553043081}

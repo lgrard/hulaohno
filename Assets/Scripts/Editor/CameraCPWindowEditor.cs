@@ -23,15 +23,16 @@ public class CameraCPWindowEditor : EditorWindow
 
     bool displayHandles;
     bool blocksPlayers;
+    bool controlsCam;
 
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/HulaOhNo/Checkpoint manager")]
+    [MenuItem("Window/HulaOhNo/Zone manager")]
 
     static void Init()
     {
         // Get existing open window or if none, make a new one:
-        CameraCPWindowEditor window = (CameraCPWindowEditor)EditorWindow.GetWindow(typeof(CameraCPWindowEditor),false, "Checkpoint manager");
+        CameraCPWindowEditor window = (CameraCPWindowEditor)EditorWindow.GetWindow(typeof(CameraCPWindowEditor),false, "Zone manager");
         window.Show();
     }
 
@@ -43,20 +44,23 @@ public class CameraCPWindowEditor : EditorWindow
 
     void OnGUI()
     {
-        GUILayout.Label("Camera settings", EditorStyles.boldLabel);
+        if (controlsCam)
+        {
+            GUILayout.Label("Camera settings", EditorStyles.boldLabel);
 
-        GUILayout.BeginHorizontal();
-        cameraPosition = EditorGUILayout.Vector3Field("Camera Position", cameraPosition);
-            if(GUILayout.Button("Reset",GUILayout.Height(40)))
-                cameraPosition = cameraPositionDef;
-        GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            cameraPosition = EditorGUILayout.Vector3Field("Camera Position", cameraPosition);
+                if(GUILayout.Button("Reset",GUILayout.Height(40)))
+                    cameraPosition = cameraPositionDef;
+            GUILayout.EndHorizontal();
 
-        GUILayout.BeginHorizontal();
-        cameraRotation = EditorGUILayout.Vector3Field("Camera Rotation", cameraRotation);
-        if (GUILayout.Button("Reset", GUILayout.Height(40)))
-            cameraRotation = cameraRotationDef;
-        GUILayout.EndHorizontal();
-        EditorGUILayout.Space();
+            GUILayout.BeginHorizontal();
+            cameraRotation = EditorGUILayout.Vector3Field("Camera Rotation", cameraRotation);
+            if (GUILayout.Button("Reset", GUILayout.Height(40)))
+                cameraRotation = cameraRotationDef;
+            GUILayout.EndHorizontal();
+            EditorGUILayout.Space();
+        }
 
         GUILayout.Label("Trigger zone settings", EditorStyles.boldLabel);
 
@@ -73,7 +77,11 @@ public class CameraCPWindowEditor : EditorWindow
         GUILayout.EndHorizontal();
         EditorGUILayout.Space();
 
+        GUILayout.BeginHorizontal();
         blocksPlayers = EditorGUILayout.Toggle("Does this block the player", blocksPlayers);
+        controlsCam = EditorGUILayout.Toggle("Does this moves camera", controlsCam);
+        GUILayout.EndHorizontal();
+        EditorGUILayout.Space();
         if (blocksPlayers)
         {
             numberOfSpawner = EditorGUILayout.IntSlider("Number of spawner",numberOfSpawner, 0, 4);
@@ -86,7 +94,6 @@ public class CameraCPWindowEditor : EditorWindow
             if (numberOfSpawner > 3)
                 spawnerToLink_4 = (EnemySpawner)EditorGUILayout.ObjectField("Spawner 4", spawnerToLink_4, typeof(EnemySpawner), true);
         }
-
         EditorGUILayout.Space();
 
         GUILayout.BeginHorizontal();
@@ -120,7 +127,9 @@ public class CameraCPWindowEditor : EditorWindow
         }
 
         Handles.color = Color.green;
-        Handles.DrawCone(0, cameraPosition, Quaternion.Euler(cameraRotation), 2);
+        if (controlsCam)
+            Handles.DrawCone(0, cameraPosition, Quaternion.Euler(cameraRotation), 2);
+
         Handles.DrawWireCube(zonePosition, zoneSize);
     }
 
@@ -145,6 +154,7 @@ public class CameraCPWindowEditor : EditorWindow
         camCpScript.zonePosition = zonePosition;
         camCpScript.zoneSize = zoneSize;
         camCpScript.blocksPlayers = blocksPlayers;
+        camCpScript.controlsCam = controlsCam;
 
         if (blocksPlayers)
         {

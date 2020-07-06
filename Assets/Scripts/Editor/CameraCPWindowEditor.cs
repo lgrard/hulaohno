@@ -26,12 +26,12 @@ public class CameraCPWindowEditor : EditorWindow
 
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/HulaOhNo/CameraCP")]
+    [MenuItem("Window/HulaOhNo/Checkpoint manager")]
 
     static void Init()
     {
         // Get existing open window or if none, make a new one:
-        CameraCPWindowEditor window = (CameraCPWindowEditor)EditorWindow.GetWindow(typeof(CameraCPWindowEditor));
+        CameraCPWindowEditor window = (CameraCPWindowEditor)EditorWindow.GetWindow(typeof(CameraCPWindowEditor),false, "Checkpoint manager");
         window.Show();
     }
 
@@ -121,8 +121,6 @@ public class CameraCPWindowEditor : EditorWindow
 
         Handles.color = Color.green;
         Handles.DrawCone(0, cameraPosition, Quaternion.Euler(cameraRotation), 2);
-
-        Handles.color = Color.green;
         Handles.DrawWireCube(zonePosition, zoneSize);
     }
 
@@ -141,21 +139,22 @@ public class CameraCPWindowEditor : EditorWindow
     void AddCameraCP()
     {
         GameObject camCp = new GameObject("CamCP");
-        BoxCollider boundL = camCp.AddComponent<BoxCollider>();
-        BoxCollider boundR = camCp.AddComponent<BoxCollider>();
         CameraCheckPoint camCpScript = camCp.AddComponent<CameraCheckPoint>();
         camCpScript.cameraPosition = cameraPosition;
         camCpScript.cameraRotation = cameraRotation;
         camCpScript.zonePosition = zonePosition;
         camCpScript.zoneSize = zoneSize;
-        camCpScript.boundL = boundL;
-        camCpScript.boundR = boundR;
-        camCpScript.boundL.enabled = false;
-        camCpScript.boundR.enabled = false;
         camCpScript.blocksPlayers = blocksPlayers;
 
         if (blocksPlayers)
         {
+            BoxCollider boundL = camCp.AddComponent<BoxCollider>();
+            BoxCollider boundR = camCp.AddComponent<BoxCollider>();
+            camCpScript.boundL = boundL;
+            camCpScript.boundR = boundR;
+            camCpScript.boundL.enabled = false;
+            camCpScript.boundR.enabled = false;
+
             camCpScript.linkedSpawner = new List<EnemySpawner>();
             if (numberOfSpawner > 0 && spawnerToLink_1 !=null)
                 camCpScript.linkedSpawner.Add(spawnerToLink_1);

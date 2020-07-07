@@ -41,6 +41,8 @@ public class CameraCPEditor : Editor
         }
 
         Handles.DrawWireCube(camCP.zonePosition, camCP.zoneSize);
+
+        Handles.DrawWireCube(camCP.zonePosition, camCP.triggerSize);
     }
 
     public override void OnInspectorGUI()
@@ -77,6 +79,8 @@ public class CameraCPEditor : Editor
             camCP.zoneSize = zoneSizeDef;
         GUILayout.EndHorizontal();
         EditorGUILayout.Space();
+
+        camCP.triggerOffset = EditorGUILayout.FloatField("Trigger zone offset", camCP.triggerOffset);
 
 
         GUILayout.BeginHorizontal();

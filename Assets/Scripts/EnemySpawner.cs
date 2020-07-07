@@ -23,6 +23,9 @@ public class EnemySpawner : MonoBehaviour
     [Header("Is the spawner working ?")]
     public bool isSpawning;
 
+    [HideInInspector]
+    public bool noMoreEnemies = false;
+
     private void OnEnable()
     {
         enemyRemaining = enemyCount;

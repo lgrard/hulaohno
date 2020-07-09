@@ -6,12 +6,7 @@ public class Attack : MonoBehaviour
 {
     [SerializeField] string attackName;
     public int attackIndex;
-    public Vector3 attackPos;
+    public Vector3 attackOffset;
     public float attackRadius;
     public int attackDamage;
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(attackPos, attackRadius);
-    }
 }

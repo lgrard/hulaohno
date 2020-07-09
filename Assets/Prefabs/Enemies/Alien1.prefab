@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 4622405978093960884}
   - component: {fileID: 4622405978093960885}
   - component: {fileID: 4622405978093960875}
+  - component: {fileID: 5634877151389325694}
   m_Layer: 9
   m_Name: Alien1
   m_TagString: Untagged
@@ -253,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh: {fileID: 2318436218592444843}
   attackPoint: {fileID: 4774638271472354384}
+  spawner: {fileID: 0}
   maxHp: 10
   target: {fileID: 0}
   scoreAmount: 10
@@ -266,6 +268,23 @@ MonoBehaviour:
   p_hit: {fileID: 4622405979317916321}
   p_die: {fileID: 4622405979491602381}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
+--- !u!114 &5634877151389325694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4622405978093960878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf8d05679c1f6f4bb44ad3f0c9ad753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackName: Simple attack
+  attackIndex: 0
+  attackOffset: {x: 0, y: 0, z: 0}
+  attackRadius: 1
+  attackDamage: 1
 --- !u!1 &4622405979317916320
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,8 +569,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.7
-      minScalar: 0.2
+      scalar: 0.3
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -925,14 +944,14 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 2
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: -90, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -1865,7 +1884,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5371,8 +5390,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5
-      minScalar: 0.7
+      scalar: 0.5
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5746,14 +5765,14 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 2
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: -90, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -6062,7 +6081,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 20
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6686,7 +6705,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -2.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -9932,7 +9951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6368992690094040644}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.00022338111}
+  m_LocalPosition: {x: -0, y: -0.00125, z: 0.00022}
   m_LocalScale: {x: 1.1348227, y: 1.1348227, z: 1.1348227}
   m_Children:
   - {fileID: 1753623354844998329}

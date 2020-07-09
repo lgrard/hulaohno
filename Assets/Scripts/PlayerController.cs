@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour
     //Unity Cycles
     void Update()
     {
+        HP = Mathf.Clamp(HP, 0, maxHp);
+
         HandleMovement();
         GroundCheck();
         AttackState();
@@ -164,6 +166,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void GainHP(int hpGained) => HP += hpGained;
+
+
     private void Die()
     {
         meshAnim.SetTrigger("Dies");
@@ -200,11 +205,6 @@ public class PlayerController : MonoBehaviour
 
                 meshAnim.SetTrigger("Punch");
 
-                Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, attackRadius, enemyLayers);
-
-                foreach (Collider hit in hitEnemies)
-                    hit.GetComponent<Enemy>().TakeDamage(attackList[attackDepth - 1]);
-
                 if (Physics.CheckSphere(punchPoint.position, attackRadius, enemyLayers))
                 {
                     effectManager.p_impact.Play();
@@ -212,6 +212,11 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
                     StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
                 }
+
+                Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, attackRadius, enemyLayers);
+
+                foreach (Collider hit in hitEnemies)
+                    hit.GetComponent<Enemy>().TakeDamage(attackList[attackDepth - 1]);
             }
         }
     }

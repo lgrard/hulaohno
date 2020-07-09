@@ -71,8 +71,11 @@ public class UIManagement : MonoBehaviour
         foreach (GameObject bar in pbar)
         {
             int number = int.Parse (bar.name.Substring(bar.name.Length - 1));
-            if(number > HP1)
+            if (number > HP1)
                 bar.SetActive(false);
+
+            else
+                bar.SetActive(true);
         }
     }
 

@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public int score;
     public int combo1;
     public int combo2;
+    public float specialGauge0 = 0;
+    public float specialGauge1 = 0;
+    private float specialGaugeGlobal = 0;
 
     [Header("Players scripts")]
     public PlayerController player0;
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        Special();
+
         if (inputManager.playerCount == 0 && inputManager.joiningEnabled)
             inputManager.playerPrefab = player0prefab;
 
@@ -49,5 +54,10 @@ public class GameManager : MonoBehaviour
     public void Scoring(int amount)
     {
         score += amount;
+    }
+
+    private void Special()
+    {
+
     }
 }

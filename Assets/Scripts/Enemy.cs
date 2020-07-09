@@ -93,6 +93,7 @@ public class Enemy : MonoBehaviour
         if (spawner != null)
             spawner.enemyRemaining -= 1;
 
+        StartCoroutine(Blink());
         gameManager.Scoring(scoreAmount);
         anim.SetTrigger("Dies");
         p_die.Play();

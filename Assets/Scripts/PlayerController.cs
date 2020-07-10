@@ -41,13 +41,17 @@ public class PlayerController : MonoBehaviour
     private Transform camContainer;
     [SerializeField] GameObject mesh;
     [SerializeField] EffectManager effectManager;
+    [SerializeField] InputActionAsset inputAction;
     private AudioSource audioSource;
     private GameManager gameManager;
 
     [Header("States")]
     public bool isGrounded;
     public bool isAttacking;
+    [SerializeField] bool rumbleActive;
+    bool isRumbling = false;
 
+    PlayerInput playerInput;
     Animator meshAnim;
     Rigidbody rb;
     float groundCheckDistance = 0.5f;
@@ -57,8 +61,10 @@ public class PlayerController : MonoBehaviour
     //Initialize
     void Start()
     {
-        playerIndex = GetComponent<PlayerInput>().playerIndex;
-
+        playerInput = GetComponent<PlayerInput>();
+        playerIndex = playerInput.playerIndex;
+        if(playerInput.actions == null)
+            playerInput.actions = inputAction;
 
         HP = maxHp;
         rb = gameObject.GetComponent<Rigidbody>();
@@ -153,6 +159,8 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damageTaken)
     {
         StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
+        if(rumbleActive)
+            StartCoroutine(Rumble(2, 2, 0.1f));
 
         HP -= damageTaken;
 
@@ -211,6 +219,9 @@ public class PlayerController : MonoBehaviour
                     AudioSinglePlay(audioSource.clip, 0.05f);
                     StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
                     StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
+                    
+                    if (rumbleActive)
+                        StartCoroutine(Rumble(0.5f, 1, 0.1f));
                 }
 
                 Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, attackRadius, enemyLayers);
@@ -254,5 +265,18 @@ public class PlayerController : MonoBehaviour
         audioSource.clip = clipToPlay;
         audioSource.pitch = Random.Range(1 - pitchVariation, 1 + pitchVariation);
         audioSource.Play();
+    }
+
+    private IEnumerator Rumble(float low, float high, float duration)
+    {
+        if (!isRumbling)
+        {
+            isRumbling = true;
+            var gamePad = Gamepad.current;
+            gamePad.SetMotorSpeeds(low, high);
+            yield return new WaitForSeconds(duration);
+            gamePad.SetMotorSpeeds(0, 0);
+            isRumbling = false;
+        }
     }
 }

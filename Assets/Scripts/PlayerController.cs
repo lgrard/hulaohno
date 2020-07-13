@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed = 10f;
     [SerializeField] LayerMask groundLayer;
     private Vector2 input;
-
+    private float blinkingTime = 0.05f;
 
     [Header("Attack Values")]
     [SerializeField] int attackDepth;
@@ -35,13 +35,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int spin = 4;
 
     int[] attackList;
-
+    [SerializeField] Attack[] attackArray;
 
     [Header("Object")]
-    private Transform camContainer;
     [SerializeField] GameObject mesh;
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
+    [SerializeField] Material whiteMat;
+    private Material[] defMats;
+    private SkinnedMeshRenderer renderer;
+    private Transform camContainer;
     private AudioSource audioSource;
     private GameManager gameManager;
 
@@ -61,6 +64,8 @@ public class PlayerController : MonoBehaviour
     //Initialize
     void Start()
     {
+        renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        defMats = new Material[] {renderer.materials[0], renderer.materials[1], renderer.materials[2] };
         playerInput = GetComponent<PlayerInput>();
         playerIndex = playerInput.playerIndex;
         if(playerInput.actions == null)
@@ -171,6 +176,7 @@ public class PlayerController : MonoBehaviour
         {
             meshAnim.SetTrigger("GetHit");
             effectManager.p_hit.Play();
+            StartCoroutine(Blink());
         }
     }
 
@@ -271,12 +277,41 @@ public class PlayerController : MonoBehaviour
     {
         if (!isRumbling)
         {
+            InputDevice playerDevice = playerInput.devices[playerIndex];
+
             isRumbling = true;
-            var gamePad = Gamepad.current;
+            var gamePad = (Gamepad)InputSystem.GetDeviceById(playerDevice.deviceId);
             gamePad.SetMotorSpeeds(low, high);
             yield return new WaitForSeconds(duration);
             gamePad.SetMotorSpeeds(0, 0);
             isRumbling = false;
+
         }
+    }
+
+
+    //Blinking while damage method
+    private IEnumerator Blink()
+    {
+        renderer.materials[0] = whiteMat;
+        renderer.materials[1] = whiteMat;
+        renderer.materials[2] = whiteMat;
+
+        yield return new WaitForSeconds(blinkingTime);
+        renderer.materials[0] = defMats[0];
+        renderer.materials[1] = defMats[1];
+        renderer.materials[2] = defMats[2];
+
+        yield return new WaitForSeconds(blinkingTime);
+        renderer.materials[0] = whiteMat;
+        renderer.materials[1] = whiteMat;
+        renderer.materials[2] = whiteMat;
+
+        yield return new WaitForSeconds(blinkingTime);
+        renderer.materials[0] = defMats[0];
+        renderer.materials[1] = defMats[1];
+        renderer.materials[2] = defMats[2];
+
+        yield return new WaitForSeconds(blinkingTime);
     }
 }

@@ -32,6 +32,7 @@ public class CameraCheckPoint : MonoBehaviour
 
     bool blockTriggered = false;
     bool playerInside;
+    float timeStamp = 1;
     int playerLayer;
     Camera cam;
 
@@ -116,8 +117,17 @@ public class CameraCheckPoint : MonoBehaviour
 
         else if (blocksPlayers && linkedSpawner.Count == endedSpawner.Count)
         {
-            wallL.SetActive(false);
-            wallR.SetActive(false);
+            wallL.GetComponent<Animator>().SetTrigger("Out");
+            wallR.GetComponent<Animator>().SetTrigger("Out");
+
+            if(timeStamp > 0)
+                timeStamp -= Time.deltaTime;
+
+            else
+            {
+                wallL.SetActive(false);
+                wallR.SetActive(false);
+            }
         }
     }
  }

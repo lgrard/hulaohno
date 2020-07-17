@@ -29261,7 +29261,7 @@ MonoBehaviour:
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
   isGrounded: 0
   isAttacking: 0
-  rumbleActive: 1
+  rumbleActive: 0
 --- !u!1 &7683988036685269932
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,63 @@
+{
+    "name": "GlobalScheme",
+    "maps": [
+        {
+            "name": "Global",
+            "id": "f0453d7e-36f2-42af-bf31-84b44ba2a139",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "70bf235d-0333-42b1-8494-087cd5300d0a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Join",
+                    "type": "Button",
+                    "id": "f1d96226-c2c1-45d7-ba98-b7d37be75107",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "36d1c60e-4671-48e4-85ff-ce6d8320213b",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ea5b038-cc44-450a-92f5-9d7d21d1e6e8",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39928a4f-58d1-4f93-aa7e-4d7187292b28",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     public Color player2Color;
 
     private PlayerInputManager inputManager;
-        
 
     private void Start()
     {

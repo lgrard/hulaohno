@@ -67,7 +67,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
     m_Reference: {fileID: -5730390838032271067, guid: 2ff868cadc31b094c807d3dfe081088a,
       type: 3}
-  m_PlayerPrefab: {fileID: 4273019010050961798, guid: 01ff4c66529316f42a011d796d9219a8,
+  m_PlayerPrefab: {fileID: 6710283594800337945, guid: bc0f8adc93e1bdb46b54696baecc9ed3,
     type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0

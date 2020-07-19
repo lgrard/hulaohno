@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[ExecuteInEditMode]
 public class EnemySpawner : MonoBehaviour
 {
     [Header("The object to spawn")]

@@ -65,7 +65,7 @@ MonoBehaviour:
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: -6169970473229734426, guid: 2ff868cadc31b094c807d3dfe081088a,
+    m_Reference: {fileID: -5730390838032271067, guid: 2ff868cadc31b094c807d3dfe081088a,
       type: 3}
   m_PlayerPrefab: {fileID: 6710283594800337945, guid: bc0f8adc93e1bdb46b54696baecc9ed3,
     type: 3}
@@ -90,8 +90,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f8037b1945b8c4daafa8851cccb2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player0prefab: {fileID: 6710283594800337945, guid: bc0f8adc93e1bdb46b54696baecc9ed3,
+    type: 3}
+  player1prefab: {fileID: 6710283594800337945, guid: 02710c8c904c81c4fbe8254c97881d80,
+    type: 3}
   camContainer: {fileID: 0}
   score: 0
+  combo1: 0
+  combo2: 0
+  specialGauge0: 0
+  specialGauge1: 0
   player0: {fileID: 0}
   player1: {fileID: 0}
   player1Color: {r: 0.2216981, g: 0.44339633, b: 0.8867924, a: 0}

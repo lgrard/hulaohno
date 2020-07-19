@@ -74,6 +74,7 @@ Material:
     - Vector1_83A753E1: 0.75
     - Vector1_96E3D2C4: 7.5
     - Vector1_AD1592F9: 2
+    - Vector1_F102CA04: 0
     - Vector1_F6E3DAC9: 0.5
     - _AlphaClip: 0
     - _Blend: 0
@@ -96,6 +97,10 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - dissolveAm: 0
+    - dissolveSca: 60
+    - intensity: 10
+    - size: 0.4
     m_Colors:
     - Color_31C482D0: {r: 0, g: 0.4986515, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

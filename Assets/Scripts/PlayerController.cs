@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,9 +15,16 @@ public class PlayerController : MonoBehaviour
     public int HP;
     [SerializeField] float jumpHeight = 10f;
     [SerializeField] float speed = 10f;
+    [Tooltip("Controls the amount of air control (value between 0 and 1)")]
+    [SerializeField] float airControlAmount = 0.5f;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] float dashAmount = 30;
+    [SerializeField] float dashPush = 50;
+    [SerializeField] float dashDuration = 0.2f;
+    [SerializeField] float dashCooldown = 0.5f;
+    private float dashStamp;
     private Vector2 input;
-
+    private float blinkingTime = 0.05f;
 
     [Header("Attack Values")]
     [SerializeField] int attackDepth;
@@ -35,43 +43,62 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int spin = 4;
 
     int[] attackList;
-
+    [SerializeField] Attack[] attackArray;
 
     [Header("Object")]
-    private Transform camContainer;
     [SerializeField] GameObject mesh;
     [SerializeField] EffectManager effectManager;
+    [SerializeField] InputActionAsset inputAction;
+    [SerializeField] Material whiteMat;
+    private Material defMat;
+    private SkinnedMeshRenderer renderer;
+    private Transform camContainer;
     private AudioSource audioSource;
     private GameManager gameManager;
 
     [Header("States")]
     public bool isGrounded;
     public bool isAttacking;
+    [SerializeField] bool rumbleActive;
+    bool isRumbling = false;
+    bool isDashing = false;
+    bool canDash = true;
 
+    PlayerInput playerInput;
     Animator meshAnim;
     Rigidbody rb;
     float groundCheckDistance = 0.5f;
     float rotationSmoothingAmount = 0.75f;
 
+    private void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        if (playerIndex == 0)
+            gameManager.player0 = this;
+        else
+            gameManager.player1 = this;
+    }
 
     //Initialize
     void Start()
     {
-        playerIndex = GetComponent<PlayerInput>().playerIndex;
+        airControlAmount = Mathf.Clamp(airControlAmount, 0f, 1f);
 
+        renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        defMat = renderer.material;
+        playerInput = GetComponent<PlayerInput>();
+        playerIndex = playerInput.playerIndex;
+        if(playerInput.actions == null)
+            playerInput.actions = inputAction;
 
         HP = maxHp;
         rb = gameObject.GetComponent<Rigidbody>();
         groundLayer = LayerMask.GetMask("Ground");
         meshAnim = mesh.GetComponent<Animator>();
         audioSource = gameObject.GetComponent<AudioSource>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        camContainer = gameManager.camContainer;
 
-        if (playerIndex == 0)
-            gameManager.player0 = this;
-        else
-            gameManager.player1 = this;
+        camContainer = gameManager.camContainer;
 
         attackList = new int[] { punchL, punchR, uppercutR, kick, spin };
     }
@@ -79,9 +106,15 @@ public class PlayerController : MonoBehaviour
     //Unity Cycles
     void Update()
     {
-        HandleMovement();
+        HP = Mathf.Clamp(HP, 0, maxHp);
+
         GroundCheck();
         AttackState();
+    }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
     }
 
     private void OnMovement(InputValue value)
@@ -92,8 +125,10 @@ public class PlayerController : MonoBehaviour
     //Movement method
     private void HandleMovement()
     {
-        if (isGrounded && !isAttacking)
-        {
+        if (!isAttacking && !isDashing)
+        {            
+            //rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
+            
             #region variables
             Vector3 camForward = camContainer.transform.forward;
             Vector3 camRight = camContainer.transform.right;
@@ -102,10 +137,15 @@ public class PlayerController : MonoBehaviour
             #endregion
 
             //Move player's RigidBody
-            rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
+            if(isGrounded)
+                rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
+
+            else
+                rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, rb.velocity.y, DesiredPosition.z * speed * airControlAmount);
+
 
             //Rotate player's Mesh
-            if (DesiredPosition != Vector3.zero)
+            if (DesiredPosition != Vector3.zero && isGrounded)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(DesiredPosition.x, 0, DesiredPosition.z));
                 mesh.transform.rotation = Quaternion.Slerp(desiredRotation, mesh.transform.rotation, rotationSmoothingAmount);
@@ -126,7 +166,7 @@ public class PlayerController : MonoBehaviour
     //Jump Method
     private void OnJump()
     {
-        if(isGrounded && !isAttacking)
+        if(isGrounded && !isAttacking && !isDashing)
         {
             rb.AddForce(0, jumpHeight, 0);
             meshAnim.SetTrigger("Jump");
@@ -151,6 +191,8 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damageTaken)
     {
         StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
+        if(rumbleActive)
+            StartCoroutine(Rumble(2, 2, 0.1f));
 
         HP -= damageTaken;
 
@@ -161,8 +203,12 @@ public class PlayerController : MonoBehaviour
         {
             meshAnim.SetTrigger("GetHit");
             effectManager.p_hit.Play();
+            StartCoroutine(Blink());
         }
     }
+
+    public void GainHP(int hpGained) => HP += hpGained;
+
 
     private void Die()
     {
@@ -173,13 +219,50 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    //Dash input method
+    private void OnDash()
+    {
+        if(canDash)
+            StartCoroutine(HandleDash());
+    }
+    
+    //Dash handling method
+    private IEnumerator HandleDash()
+    {
+        canDash = false;
+
+        isDashing = true;
+        meshAnim.SetBool("Dash", true);
+
+        effectManager.t_dashTrail.enabled = true;
+        effectManager.p_dash.Play();
+        dashStamp = 0;
+
+        while (isDashing && dashStamp < dashDuration)
+        {
+            Vector3 direction = mesh.transform.forward;
+            rb.velocity = direction * dashAmount;
+                
+            dashStamp += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        effectManager.t_dashTrail.enabled = false;
+        isDashing = false;
+        meshAnim.SetBool("Dash", false);
+
+        yield return new WaitForSeconds(dashCooldown);
+
+        canDash = true;
+    }
 
     //Attack method
     private void OnPunch()
     {
         var progressState = meshAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-        if (isGrounded)
+        if (isGrounded && !isDashing)
         {
             attackTimeStamp = attackTimerMax;
 
@@ -200,18 +283,21 @@ public class PlayerController : MonoBehaviour
 
                 meshAnim.SetTrigger("Punch");
 
-                Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, attackRadius, enemyLayers);
-
-                foreach (Collider hit in hitEnemies)
-                    hit.GetComponent<Enemy>().TakeDamage(attackList[attackDepth - 1]);
-
                 if (Physics.CheckSphere(punchPoint.position, attackRadius, enemyLayers))
                 {
                     effectManager.p_impact.Play();
                     AudioSinglePlay(audioSource.clip, 0.05f);
                     StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
                     StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
+                    
+                    if (rumbleActive)
+                        StartCoroutine(Rumble(0.5f, 1, 0.1f));
                 }
+
+                Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, attackRadius, enemyLayers);
+
+                foreach (Collider hit in hitEnemies)
+                    hit.GetComponent<Enemy>().TakeDamage(attackList[attackDepth - 1]);
             }
         }
     }
@@ -249,5 +335,46 @@ public class PlayerController : MonoBehaviour
         audioSource.clip = clipToPlay;
         audioSource.pitch = Random.Range(1 - pitchVariation, 1 + pitchVariation);
         audioSource.Play();
+    }
+
+    private IEnumerator Rumble(float low, float high, float duration)
+    {
+        if (!isRumbling)
+        {
+            InputDevice playerDevice = playerInput.devices[playerIndex];
+
+            isRumbling = true;
+            var gamePad = (Gamepad)InputSystem.GetDeviceById(playerDevice.deviceId);
+            gamePad.SetMotorSpeeds(low, high);
+            yield return new WaitForSeconds(duration);
+            gamePad.SetMotorSpeeds(0, 0);
+            isRumbling = false;
+
+        }
+    }
+
+    //Blinking while damage method
+    private IEnumerator Blink()
+    {
+        renderer.material = whiteMat;
+
+        yield return new WaitForSeconds(blinkingTime);
+        renderer.material = defMat;
+        yield return new WaitForSeconds(blinkingTime);
+        renderer.material = whiteMat;
+        yield return new WaitForSeconds(blinkingTime);
+        renderer.material = defMat;
+        yield return new WaitForSeconds(blinkingTime);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (isDashing)
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+            if (enemy != null)
+                StartCoroutine(enemy.KnockBack(dashPush));
+        }
     }
 }

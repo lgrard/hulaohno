@@ -6,6 +6,10 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Players prefabs")]
+    public GameObject player0prefab;
+    public GameObject player1prefab;
+
     [Header("Camera container")]
     public Transform camContainer;
 
@@ -13,6 +17,9 @@ public class GameManager : MonoBehaviour
     public int score;
     public int combo1;
     public int combo2;
+    public float specialGauge0 = 0;
+    public float specialGauge1 = 0;
+    private float specialGaugeGlobal = 0;
 
     [Header("Players scripts")]
     public PlayerController player0;
@@ -23,7 +30,6 @@ public class GameManager : MonoBehaviour
     public Color player2Color;
 
     private PlayerInputManager inputManager;
-        
 
     private void Start()
     {
@@ -32,6 +38,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        Special();
+
+        if (inputManager.playerCount == 0 && inputManager.joiningEnabled)
+            inputManager.playerPrefab = player0prefab;
+
+        if (inputManager.playerCount == 1 && inputManager.joiningEnabled)
+            inputManager.playerPrefab = player1prefab;
 
         if (inputManager.playerCount == 2 && inputManager.joiningEnabled)
             inputManager.DisableJoining();
@@ -40,5 +53,10 @@ public class GameManager : MonoBehaviour
     public void Scoring(int amount)
     {
         score += amount;
+    }
+
+    private void Special()
+    {
+
     }
 }

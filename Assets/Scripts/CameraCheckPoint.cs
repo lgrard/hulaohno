@@ -31,6 +31,7 @@ public class CameraCheckPoint : MonoBehaviour
     public float triggerOffset = 0;
 
     bool blockTriggered = false;
+    bool playerInsideTrigger;
     bool playerInside;
     float timeStamp = 1;
     int playerLayer;
@@ -68,13 +69,12 @@ public class CameraCheckPoint : MonoBehaviour
     //Fixed Update method
     private void FixedUpdate()
     {
-
-
         Blocking();
 
-        playerInside = Physics.CheckBox(zonePosition, triggerSize/ 2,Quaternion.identity,playerLayer);
+        playerInsideTrigger = Physics.CheckBox(zonePosition, triggerSize/ 2,Quaternion.identity,playerLayer);
+        playerInside = Physics.CheckBox(zonePosition, zoneSize / 2, Quaternion.identity, playerLayer);
 
-        if (playerInside && controlsCam)
+        if (blockTriggered && playerInside && controlsCam)
         {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = true;
             Transform camContainer = cam.GetComponentInParent<CameraEffects>().transform;
@@ -89,7 +89,7 @@ public class CameraCheckPoint : MonoBehaviour
     //Blocking method
     private void Blocking()
     {
-        if (playerInside && !blockTriggered)
+        if (playerInsideTrigger && !blockTriggered)
         {
             blockTriggered = true;
 

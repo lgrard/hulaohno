@@ -11,6 +11,7 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem p_impact;
     public TrailRenderer t_dashTrail;
     public ParticleSystem p_dash;
+    public ParticleSystem p_spinCharge;
 
     int groundLayer;
 

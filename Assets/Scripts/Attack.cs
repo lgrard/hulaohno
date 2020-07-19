@@ -8,4 +8,5 @@ public class Attack : MonoBehaviour
     public int attackIndex;
     public float attackRadius;
     public int attackDamage;
+    public float delay;
 }

@@ -19,7 +19,7 @@
                     "id": "c82b1b22-ecf3-4084-88f7-7f3cc61f5072",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap"
                 },
                 {
                     "name": "Jump",
@@ -31,11 +31,11 @@
                 },
                 {
                     "name": "Special",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "a621341e-5606-4506-8d1c-0d9cc8a618f3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold(duration=0.7)"
                 },
                 {
                     "name": "Join",
@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SpecialCharge",
+                    "type": "Button",
+                    "id": "e7a5f2b2-7910-4d7d-ac71-bbdcbdfd3a97",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.21)"
                 }
             ],
             "bindings": [
@@ -168,7 +176,7 @@
                 {
                     "name": "",
                     "id": "b873166b-8de1-4967-824b-caeb034a8af3",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -228,6 +236,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "427c3933-137b-4ec6-8309-0fb8a4863c1a",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "SpecialCharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff380676-bc43-47d2-91d3-7b77e9295838",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SpecialCharge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

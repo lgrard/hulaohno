@@ -307,10 +307,32 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            //StartCoroutine(Attack("Spin"));
+            meshAnim.SetTrigger("Spin");
             isAttacking = true;
             attackTimeStamp = attackTimerMax;
+
+            //a changer
+            #region code de merde
+            if (Physics.CheckSphere(punchPoint.position, 6f, enemyLayers))
+            {
+                effectManager.p_impact.Play();
+                AudioSinglePlay(audioSource.clip, 0.05f);
+                StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.15f));
+                StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.2f, 0.1f));
+            }
+
+            Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, 6f, enemyLayers);
+
+            foreach (Collider hit in hitEnemies)
+                hit.GetComponent<Enemy>().TakeDamage(10);
+            #endregion
         }
+    }
+
+    private void OnSpecialCharge()
+    {
+        if(isGrounded)
+            effectManager.p_spinCharge.Play();
     }
 
     //Set up the attack states

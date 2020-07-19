@@ -32,7 +32,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""id"": ""c82b1b22-ecf3-4084-88f7-7f3cc61f5072"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Tap""
                 },
                 {
                     ""name"": ""Jump"",
@@ -44,11 +44,11 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Special"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""a621341e-5606-4506-8d1c-0d9cc8a618f3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold(duration=0.7)""
                 },
                 {
                     ""name"": ""Join"",
@@ -65,6 +65,14 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SpecialCharge"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7a5f2b2-7910-4d7d-ac71-bbdcbdfd3a97"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.21)""
                 }
             ],
             ""bindings"": [
@@ -181,7 +189,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b873166b-8de1-4967-824b-caeb034a8af3"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -243,6 +251,28 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""427c3933-137b-4ec6-8309-0fb8a4863c1a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SpecialCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff380676-bc43-47d2-91d3-7b77e9295838"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SpecialCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -280,6 +310,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         m_Player_Special = m_Player.FindAction("Special", throwIfNotFound: true);
         m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_SpecialCharge = m_Player.FindAction("SpecialCharge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -335,6 +366,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Special;
     private readonly InputAction m_Player_Join;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_SpecialCharge;
     public struct PlayerActions
     {
         private @ControlScheme m_Wrapper;
@@ -345,6 +377,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         public InputAction @Special => m_Wrapper.m_Player_Special;
         public InputAction @Join => m_Wrapper.m_Player_Join;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @SpecialCharge => m_Wrapper.m_Player_SpecialCharge;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -372,6 +405,9 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @SpecialCharge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialCharge;
+                @SpecialCharge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialCharge;
+                @SpecialCharge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialCharge;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,6 +430,9 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @SpecialCharge.started += instance.OnSpecialCharge;
+                @SpecialCharge.performed += instance.OnSpecialCharge;
+                @SpecialCharge.canceled += instance.OnSpecialCharge;
             }
         }
     }
@@ -424,5 +463,6 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         void OnSpecial(InputAction.CallbackContext context);
         void OnJoin(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnSpecialCharge(InputAction.CallbackContext context);
     }
 }

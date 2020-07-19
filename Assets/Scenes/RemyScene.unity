@@ -1362,7 +1362,7 @@ TerrainCollider:
   m_GameObject: {fileID: 1030429132}
   m_Material: {fileID: 0}
   m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: afb6d91a93ae45941b2485a2f3119639, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: c57520ec0364487459c313c065d94503, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &1030429137
 Terrain:
@@ -1816,7 +1816,7 @@ TerrainCollider:
   m_GameObject: {fileID: 1128026423}
   m_Material: {fileID: 0}
   m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: 6ed293f3f710d274eb18051129336252, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: ccbcd15b38cb218429dbe7b5ec41d804, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &1128026426
 Terrain:
@@ -3120,7 +3120,7 @@ TerrainCollider:
   m_GameObject: {fileID: 2015173775}
   m_Material: {fileID: 0}
   m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: ef9437bb586b58142a0dd47cdc70977b, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: f6bd014bf5b280e4f90e3890b59f9877, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &2015173778
 Terrain:

@@ -12,16 +12,20 @@ public class CameraEffects : MonoBehaviour
     private GameManager gameManager;
     private Vector3 offset;
     private Camera cam;
+    private Vector3 rotOffset;
 
     public bool checkPointActive = false;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (gameManager.player0 != null)
+            cameraTarget.transform.position = gameManager.player0.transform.position;
 
         cam = Camera.main;
         offset  = cameraContainer.transform.position - cameraTarget.transform.position;
         offset = new Vector3(offset.x, offset.y, cameraContainer.transform.position.z);
+        rotOffset = cam.transform.rotation.eulerAngles;
     }
 
     private void FixedUpdate()
@@ -41,7 +45,7 @@ public class CameraEffects : MonoBehaviour
             Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
             cameraContainer.transform.position = Vector3.Lerp(desiredPosition, cameraContainer.transform.position, smoothingAmount);
 
-            Vector3 desiredRotation = new Vector3(9.17f, 0, 0);
+            Vector3 desiredRotation = rotOffset;
             cam.transform.rotation = Quaternion.Slerp(Quaternion.Euler(desiredRotation), cam.transform.rotation,smoothingAmount);
         }
     }

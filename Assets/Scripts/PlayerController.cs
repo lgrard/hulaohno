@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,7 +15,14 @@ public class PlayerController : MonoBehaviour
     public int HP;
     [SerializeField] float jumpHeight = 10f;
     [SerializeField] float speed = 10f;
+    [Tooltip("Controls the amount of air control (value between 0 and 1)")]
+    [SerializeField] float airControlAmount = 0.5f;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] float dashAmount = 30;
+    [SerializeField] float dashPush = 50;
+    [SerializeField] float dashDuration = 0.2f;
+    [SerializeField] float dashCooldown = 0.5f;
+    private float dashStamp;
     private Vector2 input;
     private float blinkingTime = 0.05f;
 
@@ -42,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
-    private Material[] defMats;
+    private Material defMat;
     private SkinnedMeshRenderer renderer;
     private Transform camContainer;
     private AudioSource audioSource;
@@ -53,6 +61,8 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking;
     [SerializeField] bool rumbleActive;
     bool isRumbling = false;
+    bool isDashing = false;
+    bool canDash = true;
 
     PlayerInput playerInput;
     Animator meshAnim;
@@ -60,12 +70,23 @@ public class PlayerController : MonoBehaviour
     float groundCheckDistance = 0.5f;
     float rotationSmoothingAmount = 0.75f;
 
+    private void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        if (playerIndex == 0)
+            gameManager.player0 = this;
+        else
+            gameManager.player1 = this;
+    }
 
     //Initialize
     void Start()
     {
+        airControlAmount = Mathf.Clamp(airControlAmount, 0f, 1f);
+
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        defMats = new Material[] {renderer.materials[0], renderer.materials[1], renderer.materials[2] };
+        defMat = renderer.material;
         playerInput = GetComponent<PlayerInput>();
         playerIndex = playerInput.playerIndex;
         if(playerInput.actions == null)
@@ -76,13 +97,8 @@ public class PlayerController : MonoBehaviour
         groundLayer = LayerMask.GetMask("Ground");
         meshAnim = mesh.GetComponent<Animator>();
         audioSource = gameObject.GetComponent<AudioSource>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        camContainer = gameManager.camContainer;
 
-        if (playerIndex == 0)
-            gameManager.player0 = this;
-        else
-            gameManager.player1 = this;
+        camContainer = gameManager.camContainer;
 
         attackList = new int[] { punchL, punchR, uppercutR, kick, spin };
     }
@@ -92,9 +108,13 @@ public class PlayerController : MonoBehaviour
     {
         HP = Mathf.Clamp(HP, 0, maxHp);
 
-        HandleMovement();
         GroundCheck();
         AttackState();
+    }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
     }
 
     private void OnMovement(InputValue value)
@@ -105,8 +125,10 @@ public class PlayerController : MonoBehaviour
     //Movement method
     private void HandleMovement()
     {
-        if (isGrounded && !isAttacking)
-        {
+        if (!isAttacking && !isDashing)
+        {            
+            //rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
+            
             #region variables
             Vector3 camForward = camContainer.transform.forward;
             Vector3 camRight = camContainer.transform.right;
@@ -115,10 +137,15 @@ public class PlayerController : MonoBehaviour
             #endregion
 
             //Move player's RigidBody
-            rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
+            if(isGrounded)
+                rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
+
+            else
+                rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, rb.velocity.y, DesiredPosition.z * speed * airControlAmount);
+
 
             //Rotate player's Mesh
-            if (DesiredPosition != Vector3.zero)
+            if (DesiredPosition != Vector3.zero && isGrounded)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(DesiredPosition.x, 0, DesiredPosition.z));
                 mesh.transform.rotation = Quaternion.Slerp(desiredRotation, mesh.transform.rotation, rotationSmoothingAmount);
@@ -139,7 +166,7 @@ public class PlayerController : MonoBehaviour
     //Jump Method
     private void OnJump()
     {
-        if(isGrounded && !isAttacking)
+        if(isGrounded && !isAttacking && !isDashing)
         {
             rb.AddForce(0, jumpHeight, 0);
             meshAnim.SetTrigger("Jump");
@@ -192,13 +219,50 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    //Dash input method
+    private void OnDash()
+    {
+        if(canDash)
+            StartCoroutine(HandleDash());
+    }
+    
+    //Dash handling method
+    private IEnumerator HandleDash()
+    {
+        canDash = false;
+
+        isDashing = true;
+        meshAnim.SetBool("Dash", true);
+
+        effectManager.t_dashTrail.enabled = true;
+        effectManager.p_dash.Play();
+        dashStamp = 0;
+
+        while (isDashing && dashStamp < dashDuration)
+        {
+            Vector3 direction = mesh.transform.forward;
+            rb.velocity = direction * dashAmount;
+                
+            dashStamp += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        effectManager.t_dashTrail.enabled = false;
+        isDashing = false;
+        meshAnim.SetBool("Dash", false);
+
+        yield return new WaitForSeconds(dashCooldown);
+
+        canDash = true;
+    }
 
     //Attack method
     private void OnPunch()
     {
         var progressState = meshAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-        if (isGrounded)
+        if (isGrounded && !isDashing)
         {
             attackTimeStamp = attackTimerMax;
 
@@ -289,29 +353,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     //Blinking while damage method
     private IEnumerator Blink()
     {
-        renderer.materials[0] = whiteMat;
-        renderer.materials[1] = whiteMat;
-        renderer.materials[2] = whiteMat;
+        renderer.material = whiteMat;
 
         yield return new WaitForSeconds(blinkingTime);
-        renderer.materials[0] = defMats[0];
-        renderer.materials[1] = defMats[1];
-        renderer.materials[2] = defMats[2];
-
+        renderer.material = defMat;
         yield return new WaitForSeconds(blinkingTime);
-        renderer.materials[0] = whiteMat;
-        renderer.materials[1] = whiteMat;
-        renderer.materials[2] = whiteMat;
-
+        renderer.material = whiteMat;
         yield return new WaitForSeconds(blinkingTime);
-        renderer.materials[0] = defMats[0];
-        renderer.materials[1] = defMats[1];
-        renderer.materials[2] = defMats[2];
-
+        renderer.material = defMat;
         yield return new WaitForSeconds(blinkingTime);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (isDashing)
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+            if (enemy != null)
+                StartCoroutine(enemy.KnockBack(dashPush));
+        }
     }
 }

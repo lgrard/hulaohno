@@ -9,6 +9,8 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem p_hit;
     public ParticleSystem p_die;
     public ParticleSystem p_impact;
+    public TrailRenderer t_dashTrail;
+    public ParticleSystem p_dash;
 
     int groundLayer;
 

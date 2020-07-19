@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float attackStampMax = 3f;
     private float hitStamp = 0f;
     [SerializeField] float shitStampMax = 3f;
+    private Vector3 knockBackDir;
 
     [SerializeField] float attackRadius = 2f;
     [SerializeField] LayerMask enemyLayers;
@@ -38,6 +39,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] ParticleSystem p_die;
     [SerializeField] Material whiteMat;
 
+    [Header("States")]
+    private bool isKnockedBack;
 
     // Start is called before the first frame update
     void Start()
@@ -57,16 +60,22 @@ public class Enemy : MonoBehaviour
         if (target == null)
             Targetting();
 
-        else
+        else if(!isKnockedBack)
         {
             agent.SetDestination(target.position);
             Attack();
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (isKnockedBack)
+            agent.velocity = knockBackDir;
+    }
+
     private void LateUpdate()
     {
-        if(target != null)
+        if(target != null && !isKnockedBack)
             gameObject.transform.LookAt(target);
     }
 
@@ -159,6 +168,21 @@ public class Enemy : MonoBehaviour
             target = gameManager.player1.transform;
     }
 
+    public IEnumerator KnockBack(float force)
+    {
+        knockBackDir = -mesh.transform.forward * force;
+        agent.angularSpeed = 0;
+        agent.speed = 0;
+        attackStamp = 0f;
+        isKnockedBack = true;
+
+        yield return new WaitForSeconds(0.25f);
+
+        isKnockedBack = false;
+        agent.velocity = Vector3.zero;
+        agent.speed = 1.5f;
+        agent.angularSpeed = 120;
+    }
 
     private void OnDrawGizmosSelected()
     {

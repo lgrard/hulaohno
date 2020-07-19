@@ -35,15 +35,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float attackTimerMax = 0.15f;
     [SerializeField] float attackTimeStamp = 0f;
 
-    [Header("Lists of attacks per damage")]
-    [SerializeField] int punchL = 2;
-    [SerializeField] int punchR = 2;
-    [SerializeField] int uppercutR = 3;
-    [SerializeField] int kick = 4;
-    [SerializeField] int spin = 4;
-
-    int[] attackList;
-    [SerializeField] Attack[] attackArray;
+    [SerializeField] GameObject attackManager;
+    private Attack[] attackArray;
 
     [Header("Object")]
     [SerializeField] GameObject mesh;
@@ -100,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         camContainer = gameManager.camContainer;
 
-        attackList = new int[] { punchL, punchR, uppercutR, kick, spin };
+        attackArray = attackManager.GetComponents<Attack>();
     }
 
     //Unity Cycles
@@ -283,21 +276,7 @@ public class PlayerController : MonoBehaviour
 
                 meshAnim.SetTrigger("Punch");
 
-                if (Physics.CheckSphere(punchPoint.position, attackRadius, enemyLayers))
-                {
-                    effectManager.p_impact.Play();
-                    AudioSinglePlay(audioSource.clip, 0.05f);
-                    StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
-                    StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
-                    
-                    if (rumbleActive)
-                        StartCoroutine(Rumble(0.5f, 1, 0.1f));
-                }
-
-                Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, attackRadius, enemyLayers);
-
-                foreach (Collider hit in hitEnemies)
-                    hit.GetComponent<Enemy>().TakeDamage(attackList[attackDepth - 1]);
+                StartCoroutine(Attack(attackArray[attackDepth - 1]));
             }
         }
     }
@@ -311,24 +290,36 @@ public class PlayerController : MonoBehaviour
             isAttacking = true;
             attackTimeStamp = attackTimerMax;
 
-            //a changer
-            #region code de merde
-            if (Physics.CheckSphere(punchPoint.position, 6f, enemyLayers))
-            {
-                effectManager.p_impact.Play();
-                AudioSinglePlay(audioSource.clip, 0.05f);
-                StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.15f));
-                StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.2f, 0.1f));
-            }
-
-            Collider[] hitEnemies = Physics.OverlapSphere(punchPoint.position, 6f, enemyLayers);
-
-            foreach (Collider hit in hitEnemies)
-                hit.GetComponent<Enemy>().TakeDamage(10);
-            #endregion
+            StartCoroutine(Attack(attackArray[4]));
         }
     }
 
+    //Reference attack method
+    private IEnumerator Attack(Attack attack)
+    {
+        yield return new WaitForSeconds(attack.delay);
+
+        if (Physics.CheckSphere(attack.attackPosition.position, attack.attackRadius, enemyLayers))
+        {
+            AudioSinglePlay(audioSource.clip, 0.05f);
+            StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
+            StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
+
+            if (rumbleActive)
+                StartCoroutine(Rumble(0.5f, 1, 0.1f));
+        }
+
+        Collider[] hitEnemies = Physics.OverlapSphere(attack.attackPosition.position, attack.attackRadius, enemyLayers);
+
+        foreach (Collider hit in hitEnemies)
+        {
+            hit.GetComponent<Enemy>().TakeDamage(attack.attackDamage);
+            effectManager.p_impact.transform.position = hit.transform.position;
+            effectManager.p_impact.Play();
+        }
+    }
+
+    //Set up effect on charge state
     private void OnSpecialCharge()
     {
         if(isGrounded)
@@ -359,6 +350,7 @@ public class PlayerController : MonoBehaviour
         audioSource.Play();
     }
 
+    //Rumble management
     private IEnumerator Rumble(float low, float high, float duration)
     {
         if (!isRumbling)
@@ -389,6 +381,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(blinkingTime);
     }
 
+    //Collision management
     private void OnCollisionEnter(Collision other)
     {
         if (isDashing)

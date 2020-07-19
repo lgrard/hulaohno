@@ -9,4 +9,12 @@ public class Attack : MonoBehaviour
     public float attackRadius;
     public int attackDamage;
     public float delay;
+    public Transform attackPosition;
+    [SerializeField] bool displayPreview;
+
+    private void OnDrawGizmosSelected()
+    {
+        if(displayPreview)
+            Gizmos.DrawWireSphere(attackPosition.position, attackRadius);
+    }
 }

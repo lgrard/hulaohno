@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
@@ -41,6 +42,14 @@ public class Enemy : MonoBehaviour
 
     [Header("States")]
     private bool isKnockedBack;
+
+    [Header("Caster")]
+    public bool isCaster;
+    [SerializeField] float projectilesSpeed = 1f;
+    [SerializeField] float casterAttackStampMax = 8f;
+    [SerializeField] float casterRange = 30f;
+    [SerializeField] GameObject projectiles;
+    [SerializeField] GameObject projectilesPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -132,7 +141,15 @@ public class Enemy : MonoBehaviour
     {
         float distanceFromTarget = Vector3.Distance(target.position, gameObject.transform.position);
 
-        if (distanceFromTarget <= agent.stoppingDistance && attackStamp >= attackStampMax)
+        if (distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance && attackStamp >= casterAttackStampMax)
+        {
+            attackStamp = 0f;
+            casterAttack();
+
+            //anim.SetTrigger("Attack");
+        }
+
+        else if (distanceFromTarget <= agent.stoppingDistance && attackStamp >= attackStampMax)
         {
             attackStamp = 0f;
 
@@ -141,6 +158,14 @@ public class Enemy : MonoBehaviour
 
         else if (attackStamp < attackStampMax)
             attackStamp += Time.deltaTime;
+    }
+
+    void casterAttack()
+    {
+        GameObject Projectiles = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+        Rigidbody rbProjectiles = Projectiles.GetComponent<Rigidbody>();
+        
+        rbProjectiles.velocity = transform.forward * Time.deltaTime * projectilesSpeed;
     }
 
     //Hit Method
@@ -191,4 +216,5 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
+
 }

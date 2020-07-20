@@ -116,6 +116,36 @@ Transform:
   m_Father: {fileID: 4277048582270183561}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 83.98763, y: -0.048385613, z: -0.048119456}
+--- !u!1 &3128413732375316188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1464449028295859752}
+  m_Layer: 9
+  m_Name: projectilesPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1464449028295859752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3128413732375316188}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.593, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4622405978093960874}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4013768020481713601
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +214,7 @@ Transform:
   - {fileID: 4622405979317916323}
   - {fileID: 4622405979491602371}
   - {fileID: 7533461485827095963}
+  - {fileID: 1464449028295859752}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -285,6 +316,13 @@ MonoBehaviour:
   p_hit: {fileID: 4622405979317916321}
   p_die: {fileID: 4622405979491602381}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
+  isCaster: 1
+  projectilesSpeed: 500
+  casterAttackStampMax: 3
+  casterRange: 30
+  projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,
+    type: 3}
+  projectilesPoint: {fileID: 3128413732375316188}
 --- !u!114 &5634877151389325694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,8 +340,8 @@ MonoBehaviour:
   attackRadius: 1
   attackDamage: 1
   delay: 0
-  attackPosition: {fileID: 0}
-  displayPreview: 0
+  attackPosition: {fileID: 4774638271472354384}
+  displayPreview: 1
 --- !u!1 &4622405979317916320
 GameObject:
   m_ObjectHideFlags: 0

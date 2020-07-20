@@ -78,8 +78,8 @@ public class CameraCheckPoint : MonoBehaviour
         {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = true;
             Transform camContainer = cam.GetComponentInParent<CameraEffects>().transform;
-            camContainer.position = Vector3.Lerp(cam.transform.position, cameraPosition, 0.1f);
-            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(cameraRotation), 0.1f);
+            camContainer.position = Vector3.Lerp(cam.transform.position, cameraPosition, 0.05f);
+            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(cameraRotation), 0.05f);
         }
 
         else

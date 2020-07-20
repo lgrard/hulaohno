@@ -36,12 +36,19 @@ public class EnemySpawner : MonoBehaviour
         while (enemyCount > 0 && isSpawning)
         {
             Vector3 spawnPos = Vector3.Lerp(position1, position2, Random.Range(0f, 1f));
-            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-            enemy.GetComponent<Enemy>().spawner = this;
 
-            enemyCount--;
+            if (!Physics.CheckSphere(spawnPos, 0.5f))
+            {
+                GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+                enemy.GetComponent<Enemy>().spawner = this;
 
-            yield return new WaitForSeconds(spawnRate*Random.Range(0.8f,1f));
+                enemyCount--;
+
+                yield return new WaitForSeconds(spawnRate * Random.Range(0.8f, 1f));
+            }
+
+            else
+                yield return null;
         }
 
         isSpawning = false;

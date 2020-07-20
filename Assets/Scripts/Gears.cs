@@ -37,7 +37,7 @@ public class Gears : MonoBehaviour
 
     private void Update()
     {
-        if (isTaken && progress < 1)
+        if (isTaken && progress < 1 && target != null)
         {
             progress += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, target.transform.position, progress);

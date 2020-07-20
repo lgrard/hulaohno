@@ -9749,7 +9749,7 @@ MonoBehaviour:
   - {fileID: -469414139639468200, guid: d3c202a14396c5d4cb23e71877e75274, type: 3}
   - {fileID: -7019499404158029721, guid: b14031fe656f1e04886782c4db16ae25, type: 3}
   - {fileID: 5450868857409853636, guid: ea66fcdddeaddbc4da9b2f515fe43fb9, type: 3}
-  scoreAmount: 100
+  scoreAmount: 1
   moboMat: {fileID: 2100000, guid: 6adb9adbe20a81447bdc78cae8fabc21, type: 2}
   p_take: {fileID: 4639681265320464678}
 --- !u!1 &7072129026004022139

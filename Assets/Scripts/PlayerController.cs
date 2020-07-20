@@ -29,9 +29,7 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Values")]
     [SerializeField] int attackDepth;
     [SerializeField] int attackDepthMax = 3;
-    [SerializeField] float attackRadius;
     [SerializeField] LayerMask enemyLayers;
-    [SerializeField] Transform punchPoint;
     [SerializeField] float attackTimerMax = 0.15f;
     [SerializeField] float attackTimeStamp = 0f;
 
@@ -178,7 +176,6 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawLine(gameObject.transform.position, new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y - groundCheckDistance, gameObject.transform.position.z));
-        Gizmos.DrawWireSphere(punchPoint.position, attackRadius);
     }
 
     public void TakeDamage(int damageTaken)

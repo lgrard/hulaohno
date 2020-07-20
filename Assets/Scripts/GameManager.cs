@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     public Color player1Color;
     public Color player2Color;
 
+    [Header("Collectible")]
+    public GameObject collectible;
+
     private PlayerInputManager inputManager;
 
     private void Start()
@@ -38,8 +41,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Special();
-
         if (inputManager.playerCount == 0 && inputManager.joiningEnabled)
             inputManager.playerPrefab = player0prefab;
 
@@ -55,8 +56,15 @@ public class GameManager : MonoBehaviour
         score += amount;
     }
 
-    private void Special()
+    public IEnumerator AddCollectible(int collectibleAmount, Transform origin)
     {
-
+        for (int i = 0; i < collectibleAmount; i++)
+        {
+            Vector3 position = Random.insideUnitSphere * 2 + origin.position;
+            position = new Vector3(position.x, origin.position.y, position.z);
+            Instantiate(collectible, position, Quaternion.identity);
+            yield return new WaitForEndOfFrame();
+        }
     }
+
 }

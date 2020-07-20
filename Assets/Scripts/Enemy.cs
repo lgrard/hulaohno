@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     private float attackStamp = 0f;
     [SerializeField] float attackStampMax = 3f;
     private float hitStamp = 0f;
-    [SerializeField] float shitStampMax = 3f;
+    [SerializeField] int collectibleAmount = 3;
     private Vector3 knockBackDir;
 
     [SerializeField] float attackRadius = 2f;
@@ -103,6 +103,8 @@ public class Enemy : MonoBehaviour
             spawner.enemyRemaining -= 1;
 
         StartCoroutine(Blink());
+        StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform));
+
         gameManager.Scoring(scoreAmount);
         anim.SetTrigger("Dies");
         p_die.Play();
@@ -110,6 +112,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject,0.3f);
         this.enabled = false;
     }
+
 
     //Blinking while damage method
     private IEnumerator Blink()

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Projectiles : MonoBehaviour
 {
-    [SerializeField] int damage = 2;
+    [SerializeField] int damage = 1;
     [SerializeField] float lifeTime = 8f;
+    Rigidbody rb;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         Destroy(gameObject, lifeTime);
-
     }
 
     void OnTriggerEnter(Collider collider)
@@ -18,13 +19,14 @@ public class Projectiles : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             collider.GetComponent<PlayerController>().TakeDamage(damage);
-            
+
             Destroy(gameObject);
         }
 
         else if (collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Destroy(gameObject, 0.5f);
+            print("projectiles hit ground");
+            Destroy(gameObject, 0.3f);
         }
     }
 

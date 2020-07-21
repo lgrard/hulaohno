@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -44,9 +45,12 @@ public class Enemy : MonoBehaviour
     private bool isKnockedBack;
 
     [Header("Caster")]
-    public bool isCaster;
+    public bool isLinearCaster;
+    public bool isRadialCaster;
     [SerializeField] float projectilesSpeed = 1f;
     [SerializeField] float casterAttackStampMax = 8f;
+    [SerializeField] int gustNumber = 2;
+    [SerializeField] int radialProjectilesNumber = 4;
     [SerializeField] float casterRange = 30f;
     [SerializeField] GameObject projectiles;
     [SerializeField] GameObject projectilesPoint;
@@ -62,6 +66,11 @@ public class Enemy : MonoBehaviour
         HP = maxHp;
 
         Targetting();
+
+        if (isLinearCaster)
+            isRadialCaster = false;
+        else if (isRadialCaster)
+            isLinearCaster = false;
     }
 
     private void Update()
@@ -141,15 +150,21 @@ public class Enemy : MonoBehaviour
     {
         float distanceFromTarget = Vector3.Distance(target.position, gameObject.transform.position);
 
-        if (distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance && attackStamp >= casterAttackStampMax)
+        if (isLinearCaster && !isRadialCaster && distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance + 4 && attackStamp >= casterAttackStampMax)
         {
             attackStamp = 0f;
-            casterAttack();
-
-            //anim.SetTrigger("Attack");
+            
+            StartCoroutine(LinearCasterAttack());
         }
 
-        else if (distanceFromTarget <= agent.stoppingDistance && attackStamp >= attackStampMax)
+        else if (isRadialCaster && !isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance + 4 && attackStamp >= casterAttackStampMax)
+        {
+            attackStamp = 0f;
+
+            StartCoroutine(RadialCasterAttack());
+        }
+
+        else if (distanceFromTarget <= agent.stoppingDistance + 4 && attackStamp >= attackStampMax)
         {
             attackStamp = 0f;
 
@@ -160,12 +175,40 @@ public class Enemy : MonoBehaviour
             attackStamp += Time.deltaTime;
     }
 
-    void casterAttack()
+    private IEnumerator LinearCasterAttack()
     {
-        GameObject Projectiles = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-        Rigidbody rbProjectiles = Projectiles.GetComponent<Rigidbody>();
-        
-        rbProjectiles.velocity = transform.forward * Time.deltaTime * projectilesSpeed;
+        for(int i = 0; i < gustNumber; i++)
+        {
+            GameObject Projectiles = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+            Rigidbody rbProjectiles = Projectiles.GetComponent<Rigidbody>();
+            rbProjectiles.velocity = transform.forward * projectilesSpeed;
+            
+            yield return new WaitForSeconds(0.5f);
+        }  
+    }
+
+    private IEnumerator RadialCasterAttack()
+    {
+        for (int i = 0; i < gustNumber; i++)
+        {
+            GameObject Projectiles = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+            Rigidbody rbProjectiles = Projectiles.GetComponent<Rigidbody>();
+            rbProjectiles.velocity = transform.forward * projectilesSpeed;
+
+            GameObject Projectiles2 = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+            Rigidbody rbProjectiles2 = Projectiles2.GetComponent<Rigidbody>();
+            rbProjectiles2.velocity = transform.forward * -1 * projectilesSpeed;
+
+            GameObject Projectiles3 = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+            Rigidbody rbProjectiles3 = Projectiles3.GetComponent<Rigidbody>();
+            rbProjectiles3.velocity = transform.right * projectilesSpeed;
+
+            GameObject Projectiles4 = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+            Rigidbody rbProjectiles4 = Projectiles4.GetComponent<Rigidbody>();
+            rbProjectiles4.velocity = transform.right * -1 * projectilesSpeed;
+
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     //Hit Method

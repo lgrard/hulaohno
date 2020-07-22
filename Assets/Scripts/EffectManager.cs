@@ -5,6 +5,7 @@ using UnityEngine;
 public class EffectManager : MonoBehaviour
 {
     public ParticleSystem p_land;
+    public ParticleSystem p_jump;
     public ParticleSystem p_run;
     public ParticleSystem p_hit;
     public ParticleSystem p_die;

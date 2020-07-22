@@ -14,12 +14,10 @@ public class GameManager : MonoBehaviour
     public Transform camContainer;
 
     [Header("Score and combos")]
-    public int score;
+    public int score1;
+    public int score2;
     public int combo1;
     public int combo2;
-    public float specialGauge0 = 0;
-    public float specialGauge1 = 0;
-    private float specialGaugeGlobal = 0;
 
     [Header("Players scripts")]
     public PlayerController player0;
@@ -51,10 +49,8 @@ public class GameManager : MonoBehaviour
             inputManager.DisableJoining();
     }
 
-    public void Scoring(int amount)
-    {
-        score += amount;
-    }
+    public void Scoring1(int amount) => score1 += amount;
+    public void Scoring2(int amount) => score2 += amount;
 
     public IEnumerator AddCollectible(int collectibleAmount, Transform origin)
     {

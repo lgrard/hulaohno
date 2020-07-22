@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     private Vector3 knockBackDir;
     private Transform target;
     private GameObject[] targetList;
+    private int lastHitIndex;
 
     [SerializeField] LayerMask enemyLayers;
 
@@ -101,8 +102,10 @@ public class Enemy : MonoBehaviour
     #endregion
 
     //When the ennemy takes damage
-    public void TakeDamage(int damageTaken)
+    public void TakeDamage(int damageTaken, int index)
     {
+        lastHitIndex = index;
+
         HP -= damageTaken;
         attackStamp = 0f;
 
@@ -126,7 +129,11 @@ public class Enemy : MonoBehaviour
         StartCoroutine(Blink());
         StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform));
 
-        gameManager.Scoring(scoreAmount);
+        if (lastHitIndex == 0)
+            gameManager.Scoring1(scoreAmount);
+        else
+            gameManager.Scoring2(scoreAmount);
+
         anim.SetTrigger("Dies");
         p_die.Play();
         gameObject.GetComponent<Collider>().enabled = false;

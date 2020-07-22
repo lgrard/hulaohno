@@ -26,7 +26,9 @@ public class UIManagement : MonoBehaviour
     [SerializeField] GameObject p2_5;
 
     [Header("Score counter")]
-    [SerializeField] Text scoreCounter;
+    [SerializeField] Text scoreCounter1;
+    [SerializeField] Text scoreCounter2;
+
 
     private GameObject[] p1HPBar;
     private GameObject[] p2HPBar;
@@ -46,24 +48,32 @@ public class UIManagement : MonoBehaviour
         player2 = gameManager.player1;
 
         if (player1 != null) 
-            HealthBar(player1, p1HPBar, globalBar1);
+            HealthBar(player1, p1HPBar, globalBar1, scoreCounter1);
 
         else
+        {
             globalBar1.SetActive(false);
+            scoreCounter1.enabled = false;
+        }
 
 
         if (player2 != null)
-            HealthBar(player2, p2HPBar, globalBar2);
+            HealthBar(player2, p2HPBar, globalBar2, scoreCounter2);
 
         else
+        {
             globalBar2.SetActive(false);
+            scoreCounter2.enabled = false;
+        }
 
 
-        ScoreSetting();
+        ScoreSetting(gameManager.score1, scoreCounter1);
+        ScoreSetting(gameManager.score2, scoreCounter2);
     }
 
-    private void HealthBar(PlayerController player, GameObject[] pbar, GameObject globalBar)
+    private void HealthBar(PlayerController player, GameObject[] pbar, GameObject globalBar, Text scoreCounter)
     {
+        scoreCounter.enabled = true;
         globalBar.SetActive(true);
 
         int HP1 = player.HP;
@@ -79,8 +89,8 @@ public class UIManagement : MonoBehaviour
         }
     }
 
-    private void ScoreSetting()
+    private void ScoreSetting(int playerScore, Text scoreContainer)
     {
-        scoreCounter.text = "SCORE - " + gameManager.score.ToString();
+        scoreContainer.text = "SCORE - " + playerScore.ToString();
     }
 }

@@ -51,13 +51,19 @@ public class Gears : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+
             gameObject.GetComponent<Animator>().SetTrigger("Take");
             audioSource.pitch = Random.Range(0.8f, 1f);
             audioSource.Play();
             target = collision.transform;
             gameObject.GetComponent<BoxCollider>().enabled = false;
             p_take.Play();
-            gameManager.Scoring(scoreAmount);
+
+            if(collision.gameObject.GetComponent<PlayerController>().playerIndex == 0)
+                gameManager.Scoring1(scoreAmount);
+            else
+                gameManager.Scoring2(scoreAmount);
+
             isTaken = true;
         }
     }

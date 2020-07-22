@@ -159,7 +159,9 @@ public class PlayerController : MonoBehaviour
     {
         if(isGrounded && !isAttacking && !isDashing)
         {
-            rb.AddForce(0, jumpHeight, 0);
+            Vector3 upDir = new Vector3(0, jumpHeight, 0);
+            rb.AddForce(upDir);
+            effectManager.p_jump.Play();
             meshAnim.SetTrigger("Jump");
         }
     }
@@ -310,7 +312,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (Collider hit in hitEnemies)
         {
-            hit.GetComponent<Enemy>().TakeDamage(attack.attackDamage);
+            hit.GetComponent<Enemy>().TakeDamage(attack.attackDamage,playerIndex);
             effectManager.p_impact.transform.position = hit.transform.position;
             effectManager.p_impact.Play();
         }

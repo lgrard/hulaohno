@@ -152,14 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 373249734151103063}
-  attackPoint: {fileID: 4774638271472354384}
   spawner: {fileID: 0}
   maxHp: 10
   scoreAmount: 10
-  attackDamage: 1
   attackStampMax: 3
   collectibleAmount: 5
-  attackRadius: 1
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -172,7 +169,7 @@ MonoBehaviour:
   casterAttackStampMax: 3
   gustNumber: 2
   radialProjectilesNumber: 4
-  radius: 0
+  radius: 1
   casterRange: 30
   gustSpacing: 0.5
   projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,

@@ -9813,7 +9813,7 @@ MonoBehaviour:
   casterAttackStampMax: 3
   gustNumber: 1
   radialProjectilesNumber: 4
-  radius: 0
+  radius: 1
   casterRange: 30
   gustSpacing: 0.5
   projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,
@@ -9836,7 +9836,7 @@ MonoBehaviour:
   attackRadius: 1
   attackDamage: 1
   delay: 0.05
-  attackPosition: {fileID: 0}
+  attackPosition: {fileID: 7120627176903354345}
   displayPreview: 1
 --- !u!95 &2175261127097123879
 Animator:

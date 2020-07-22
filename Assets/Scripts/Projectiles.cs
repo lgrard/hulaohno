@@ -6,7 +6,11 @@ public class Projectiles : MonoBehaviour
 {
     [SerializeField] int damage = 1;
     [SerializeField] float lifeTime = 8f;
+    [SerializeField] float speed = 8f;
+    [SerializeField] ParticleSystem p_hit;
+    public Vector3 direction;
     Rigidbody rb;
+    bool hasHit = false;
 
     void Start()
     {
@@ -14,19 +18,32 @@ public class Projectiles : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
+    private void FixedUpdate()
+    {
+        if(!hasHit)
+            rb.velocity = direction * speed;
+    }
+
+    void HitSomething()
+    {
+        hasHit = true;
+        gameObject.GetComponent<SphereCollider>().enabled = false;
+        rb.velocity = Vector3.zero;
+        p_hit.Play();
+        Destroy(gameObject,0.2f);
+    }
+
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
+            HitSomething();
             collider.GetComponent<PlayerController>().TakeDamage(damage);
-
-            Destroy(gameObject);
         }
 
         else if (collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            print("projectiles hit ground");
-            Destroy(gameObject, 0.3f);
+            HitSomething();
         }
     }
 

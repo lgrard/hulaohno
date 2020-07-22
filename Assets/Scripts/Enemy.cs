@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float casterAttackStampMax = 8f;
     [SerializeField] int gustNumber = 2;
     [SerializeField] int radialProjectilesNumber = 4;
-    [SerializeField] float radius;
+    [SerializeField] float radius = 1f;
     [SerializeField] float casterRange = 30f;
     [SerializeField] float gustSpacing = 0.5f;
     [SerializeField] GameObject projectiles;

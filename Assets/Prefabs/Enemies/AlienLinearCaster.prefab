@@ -9811,7 +9811,7 @@ MonoBehaviour:
   casterAttackStampMax: 3
   gustNumber: 3
   radialProjectilesNumber: 4
-  radius: 0
+  radius: 1
   casterRange: 30
   gustSpacing: 0.5
   projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,
@@ -14685,6 +14685,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4622405978093960874}
     m_Modifications:
+    - target: {fileID: -8718769943576871904, guid: 6cae0e3657534ac459d000f3753188d9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f4f07d8bf6676e64588885dafdd5192a, type: 2}
     - target: {fileID: -4216859302048453862, guid: 6cae0e3657534ac459d000f3753188d9,
         type: 3}
       propertyPath: m_LocalPosition.x

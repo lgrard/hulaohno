@@ -205,7 +205,7 @@ public class PlayerController : MonoBehaviour
         meshAnim.SetTrigger("Dies");
         effectManager.p_die.Play();
         //gameObject.GetComponent<Collider>().enabled = false;
-        Destroy(gameObject, 0.5f);
+        gameObject.SetActive(false);
     }
 
 

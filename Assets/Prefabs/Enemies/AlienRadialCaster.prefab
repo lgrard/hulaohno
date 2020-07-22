@@ -9813,7 +9813,7 @@ MonoBehaviour:
   casterAttackStampMax: 3
   gustNumber: 1
   radialProjectilesNumber: 4
-  radius: 0
+  radius: 1
   casterRange: 30
   gustSpacing: 0.5
   projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,
@@ -9836,7 +9836,7 @@ MonoBehaviour:
   attackRadius: 1
   attackDamage: 1
   delay: 0.05
-  attackPosition: {fileID: 0}
+  attackPosition: {fileID: 7120627176903354345}
   displayPreview: 1
 --- !u!95 &2175261127097123879
 Animator:
@@ -14685,6 +14685,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4622405978093960874}
     m_Modifications:
+    - target: {fileID: -8718769943576871904, guid: 6cae0e3657534ac459d000f3753188d9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6aa39d00eb6ba4b41bbd6dc9803606f3, type: 2}
     - target: {fileID: -4216859302048453862, guid: 6cae0e3657534ac459d000f3753188d9,
         type: 3}
       propertyPath: m_LocalPosition.x

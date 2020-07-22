@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
 {
     [Header("Mesh and attack point")]
     [SerializeField] GameObject mesh;
-    [SerializeField] Transform attackPoint;
 
     [Header("Components")]
     public EnemySpawner spawner;
@@ -18,22 +17,21 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     private NavMeshAgent agent;
     private GameManager gameManager;
+    private Attack attackScript;
 
     [Header("Values")]
     [SerializeField] int maxHp = 10;
-    [SerializeField] Transform target;
-    private GameObject[] targetList;
-    [SerializeField] int scoreAmount = 10;
-    [SerializeField] int attackDamage = 1;
-    private float blinkingTime = 0.05f;
     private int HP;
+    [SerializeField] int scoreAmount = 10;
+    private float blinkingTime = 0.05f;
     private float attackStamp = 0f;
     [SerializeField] float attackStampMax = 3f;
     private float hitStamp = 0f;
     [SerializeField] int collectibleAmount = 3;
     private Vector3 knockBackDir;
+    private Transform target;
+    private GameObject[] targetList;
 
-    [SerializeField] float attackRadius = 2f;
     [SerializeField] LayerMask enemyLayers;
 
     [Header("Effects")]
@@ -44,35 +42,39 @@ public class Enemy : MonoBehaviour
     [Header("States")]
     private bool isKnockedBack;
 
-    [Header("Caster")]
+    [Header("Enemy type")]
+    public bool isMelee;
     public bool isLinearCaster;
     public bool isRadialCaster;
-    [SerializeField] float projectilesSpeed = 1f;
+
+    [Header("Caster")]
     [SerializeField] float casterAttackStampMax = 8f;
     [SerializeField] int gustNumber = 2;
     [SerializeField] int radialProjectilesNumber = 4;
+    [SerializeField] float radius;
     [SerializeField] float casterRange = 30f;
+    [SerializeField] float gustSpacing = 0.5f;
     [SerializeField] GameObject projectiles;
     [SerializeField] GameObject projectilesPoint;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (isMelee)
+            attackScript = gameObject.GetComponent<Attack>();
+
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         agent = gameObject.GetComponent<NavMeshAgent>();
-        anim = gameObject.GetComponent<Animator>();
-        renderer = mesh.GetComponentInChildren<Renderer>();
+        anim = gameObject.GetComponentInChildren<Animator>();
+        renderer = mesh.GetComponent<Renderer>();
         defMat = renderer.material;
         HP = maxHp;
 
         Targetting();
-
-        if (isLinearCaster)
-            isRadialCaster = false;
-        else if (isRadialCaster)
-            isLinearCaster = false;
     }
 
+    //Unity Cycles
+    #region Cycle
     private void Update()
     {
         if (target == null)
@@ -96,6 +98,7 @@ public class Enemy : MonoBehaviour
         if(target != null && !isKnockedBack)
             gameObject.transform.LookAt(target);
     }
+    #endregion
 
     //When the ennemy takes damage
     public void TakeDamage(int damageTaken)
@@ -131,7 +134,6 @@ public class Enemy : MonoBehaviour
         this.enabled = false;
     }
 
-
     //Blinking while damage method
     private IEnumerator Blink()
     {
@@ -151,25 +153,13 @@ public class Enemy : MonoBehaviour
         float distanceFromTarget = Vector3.Distance(target.position, gameObject.transform.position);
 
         if (isLinearCaster && !isRadialCaster && distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance + 4 && attackStamp >= casterAttackStampMax)
-        {
-            attackStamp = 0f;
-            
             StartCoroutine(LinearCasterAttack());
-        }
 
         else if (isRadialCaster && !isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance + 4 && attackStamp >= casterAttackStampMax)
-        {
-            attackStamp = 0f;
-
             StartCoroutine(RadialCasterAttack());
-        }
 
         else if (distanceFromTarget <= agent.stoppingDistance + 4 && attackStamp >= attackStampMax)
-        {
-            attackStamp = 0f;
-
-            anim.SetTrigger("Attack");
-        }
+            StartCoroutine(Hit());
 
         else if (attackStamp < attackStampMax)
             attackStamp += Time.deltaTime;
@@ -177,47 +167,55 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator LinearCasterAttack()
     {
-        for(int i = 0; i < gustNumber; i++)
+        attackStamp = 0f;
+
+        for (int i = 0; i < gustNumber; i++)
         {
-            GameObject Projectiles = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-            Rigidbody rbProjectiles = Projectiles.GetComponent<Rigidbody>();
-            rbProjectiles.velocity = transform.forward * projectilesSpeed;
-            
-            yield return new WaitForSeconds(0.5f);
+            GameObject projectileInstance = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
+            projectileInstance.GetComponent<Projectiles>().direction = new Vector3(transform.forward.x,0,transform.forward.z)
+                ;
+            yield return new WaitForSeconds(gustSpacing);
         }  
     }
 
     private IEnumerator RadialCasterAttack()
     {
+        attackStamp = 0f;
+
+        float angleStep = 360 / radialProjectilesNumber;
+        float angle = 0;
+
         for (int i = 0; i < gustNumber; i++)
         {
-            GameObject Projectiles = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-            Rigidbody rbProjectiles = Projectiles.GetComponent<Rigidbody>();
-            rbProjectiles.velocity = transform.forward * projectilesSpeed;
+            for (int u = 0; u <= radialProjectilesNumber - 1; u++)
+            {
+                float projectileDirXposition = projectilesPoint.transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180 * radius);
+                float projectileDirZposition = projectilesPoint.transform.position.z + Mathf.Cos((angle * Mathf.PI) / 180 * radius);
+                Vector3 projectileDir = new Vector3(projectileDirXposition, projectilesPoint.transform.position.y, projectileDirZposition);
+                Vector3 projectileMoveDirection = (projectileDir - projectilesPoint.transform.position).normalized; 
+                GameObject projectileInstance = Instantiate(projectiles, projectileDir, Quaternion.identity);
+                projectileInstance.GetComponent<Projectiles>().direction = projectileMoveDirection;
+                angle += angleStep;
 
-            GameObject Projectiles2 = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-            Rigidbody rbProjectiles2 = Projectiles2.GetComponent<Rigidbody>();
-            rbProjectiles2.velocity = transform.forward * -1 * projectilesSpeed;
+                yield return null;
+            }
 
-            GameObject Projectiles3 = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-            Rigidbody rbProjectiles3 = Projectiles3.GetComponent<Rigidbody>();
-            rbProjectiles3.velocity = transform.right * projectilesSpeed;
-
-            GameObject Projectiles4 = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-            Rigidbody rbProjectiles4 = Projectiles4.GetComponent<Rigidbody>();
-            rbProjectiles4.velocity = transform.right * -1 * projectilesSpeed;
-
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(gustSpacing);
         }
     }
 
     //Hit Method
-    private void Hit()
+    private IEnumerator Hit()
     {
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRadius, enemyLayers);
+        attackStamp = 0f;
+
+        anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(attackScript.delay);
+
+        Collider[] hitEnemies = Physics.OverlapSphere(attackScript.attackPosition.position, attackScript.attackRadius, enemyLayers);
 
         foreach (Collider hit in hitEnemies)
-            hit.GetComponent<PlayerController>().TakeDamage(attackDamage);
+            hit.GetComponent<PlayerController>().TakeDamage(attackScript.attackDamage);
     }
 
     //Targetting method
@@ -254,10 +252,4 @@ public class Enemy : MonoBehaviour
         agent.speed = 1.5f;
         agent.angularSpeed = 120;
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-    }
-
 }

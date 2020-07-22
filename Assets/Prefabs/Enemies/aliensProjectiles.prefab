@@ -77,6 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   lifeTime: 6
+  speed: 8
+  p_hit: {fileID: 8086693201790788358}
 --- !u!1001 &3689407586178024594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144,27 +146,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7209730712083615588, guid: b3072d78433be954395c6dd7f8f754d9,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7209730712083615588, guid: b3072d78433be954395c6dd7f8f754d9,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7209730712083615588, guid: b3072d78433be954395c6dd7f8f754d9,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1789603259941621582, guid: b3072d78433be954395c6dd7f8f754d9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3072d78433be954395c6dd7f8f754d9, type: 3}
 --- !u!4 &6286307393965001718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7209730712083615588, guid: b3072d78433be954395c6dd7f8f754d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 3689407586178024594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8086693201790788358 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4830915691060897684, guid: b3072d78433be954395c6dd7f8f754d9,
     type: 3}
   m_PrefabInstance: {fileID: 3689407586178024594}
   m_PrefabAsset: {fileID: 0}

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public int playerIndex = 0;
 
     [Header("Values")]
-    [SerializeField] int maxHp = 5;
+    public int maxHp = 5;
     public int HP;
     [SerializeField] float jumpHeight = 10f;
     [SerializeField] float speed = 10f;

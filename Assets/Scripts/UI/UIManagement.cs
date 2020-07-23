@@ -9,6 +9,8 @@ public class UIManagement : MonoBehaviour
     private PlayerController player1;
     private PlayerController player2;
 
+    #region old bar
+    /*
     [Header("P1 HP Bar")]
     [SerializeField] GameObject globalBar1;
     [SerializeField] GameObject p1_1;
@@ -25,20 +27,32 @@ public class UIManagement : MonoBehaviour
     [SerializeField] GameObject p2_4;
     [SerializeField] GameObject p2_5;
 
-    [Header("Score counter")]
-    [SerializeField] Text scoreCounter1;
-    [SerializeField] Text scoreCounter2;
-
 
     private GameObject[] p1HPBar;
     private GameObject[] p2HPBar;
+    */
+    #endregion
+
+    [Header("HP bar")]
+    [SerializeField] GameObject p1HPBar;
+    [SerializeField] GameObject p2HPBar;
+    [SerializeField] RectTransform waveHp1;
+    [SerializeField] RectTransform waveHp2;
+
+    [Header("Score counter")]
+    [SerializeField] Text scoreCounter1;
+    [SerializeField] Text scoreCounter2;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        #region old bar
+        /*
         p1HPBar = new GameObject[] { p1_1, p1_2, p1_3, p1_4, p1_5};
         p2HPBar = new GameObject[] { p2_1, p2_2, p2_3, p2_4, p2_5 };
+        */
+        #endregion
     }
 
     // Update is called once per frame
@@ -47,37 +61,38 @@ public class UIManagement : MonoBehaviour
         player1 = gameManager.player0;
         player2 = gameManager.player1;
 
-        if (player1 != null) 
-            HealthBar(player1, p1HPBar, globalBar1, scoreCounter1);
+        //Display score and health if player is assigned        
 
+        if (player1 != null)
+            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1);
         else
-        {
-            globalBar1.SetActive(false);
-            scoreCounter1.enabled = false;
-        }
-
+            p1HPBar.SetActive(false);
 
         if (player2 != null)
-            HealthBar(player2, p2HPBar, globalBar2, scoreCounter2);
-
+            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2);
         else
-        {
-            globalBar2.SetActive(false);
-            scoreCounter2.enabled = false;
-        }
-
-
-        ScoreSetting(gameManager.score1, scoreCounter1);
-        ScoreSetting(gameManager.score2, scoreCounter2);
+            p2HPBar.SetActive(false);
+        
     }
 
-    private void HealthBar(PlayerController player, GameObject[] pbar, GameObject globalBar, Text scoreCounter)
+
+    //Initialize and manage the HP bar and score display
+    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer)
     {
-        scoreCounter.enabled = true;
+        //Hp setting
         globalBar.SetActive(true);
 
-        int HP1 = player.HP;
+        float Hp = player.HP;
+        float maxHp = player.maxHp;
+        float currentRatio = Hp / maxHp;
 
+        waveHp.localScale = new Vector2(currentRatio, 1);
+
+        //Score setting
+        scoreContainer.text = "SCORE - " + playerScore.ToString("000000");
+
+        #region old bar
+        /*
         foreach (GameObject bar in pbar)
         {
             int number = int.Parse (bar.name.Substring(bar.name.Length - 1));
@@ -87,10 +102,7 @@ public class UIManagement : MonoBehaviour
             else
                 bar.SetActive(true);
         }
-    }
-
-    private void ScoreSetting(int playerScore, Text scoreContainer)
-    {
-        scoreContainer.text = "SCORE - " + playerScore.ToString();
+        */
+        #endregion
     }
 }

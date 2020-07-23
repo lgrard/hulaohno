@@ -182,6 +182,11 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageTaken)
     {
+        if (playerIndex == 0)
+            gameManager.TakeDamage1();
+        else
+            gameManager.TakeDamage2();
+
         StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
         if(rumbleActive)
             StartCoroutine(Rumble(2, 2, 0.1f));

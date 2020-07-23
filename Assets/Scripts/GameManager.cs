@@ -31,10 +31,16 @@ public class GameManager : MonoBehaviour
     public GameObject collectible;
 
     private PlayerInputManager inputManager;
+    private UIManagement uiManagement;
+
+    private bool p1HasTakenDamage = false;
+    private bool p2HasTakenDamage = false;
+
 
     private void Start()
     {
         inputManager = GetComponent<PlayerInputManager>();
+        uiManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
     }
 
     private void Update()
@@ -49,8 +55,27 @@ public class GameManager : MonoBehaviour
             inputManager.DisableJoining();
     }
 
-    public void Scoring1(int amount) => score1 += amount;
-    public void Scoring2(int amount) => score2 += amount;
+    public void TakeDamage1()
+    {
+        uiManagement.Damage1();
+        p1HasTakenDamage = true;
+    }
+    public void TakeDamage2()
+    {
+        uiManagement.Damage2();
+        p2HasTakenDamage = true;
+    }
+
+    public void Scoring1(int amount)
+    {
+        uiManagement.ScorePlus1();
+        score1 += amount;
+    }
+    public void Scoring2(int amount)
+    {
+        uiManagement.ScorePlus2();
+        score2 += amount;
+    }
 
     public IEnumerator AddCollectible(int collectibleAmount, Transform origin)
     {

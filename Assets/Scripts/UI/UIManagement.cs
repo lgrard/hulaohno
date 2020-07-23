@@ -72,8 +72,15 @@ public class UIManagement : MonoBehaviour
             BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2);
         else
             p2HPBar.SetActive(false);
-        
     }
+
+    //Play an animation when score increases
+    public void ScorePlus1() => p1HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
+    public void ScorePlus2() => p2HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
+
+    //Play an animation when takes damage
+    public void Damage1() => p1HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
+    public void Damage2() => p2HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
 
 
     //Initialize and manage the HP bar and score display

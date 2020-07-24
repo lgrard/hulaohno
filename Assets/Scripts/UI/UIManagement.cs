@@ -43,6 +43,12 @@ public class UIManagement : MonoBehaviour
     [SerializeField] Text scoreCounter1;
     [SerializeField] Text scoreCounter2;
 
+    [Header("Event bar")]
+    public GameObject eventBar;
+    public Text eventObjective;
+    public Text eventTimer;
+    public Text eventAmount;
+
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();

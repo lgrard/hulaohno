@@ -49431,7 +49431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
-  maxHp: 5
+  maxHp: 15
   HP: 0
   jumpHeight: 500
   speed: 10

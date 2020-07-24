@@ -479,6 +479,9 @@ MonoBehaviour:
   waveHp2: {fileID: 5845881169903060684}
   scoreCounter1: {fileID: 4522241473381049633}
   scoreCounter2: {fileID: 3123579518546327915}
+  eventObjective: {fileID: 1018735771693458761}
+  eventTimer: {fileID: 3725500293167518681}
+  eventAmount: {fileID: 1666766705451506196}
 --- !u!1 &2149262039810967987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1029,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0:00
+  m_Text: 00
 --- !u!1 &5900978874452910138
 GameObject:
   m_ObjectHideFlags: 0

@@ -126,7 +126,24 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         if (spawner != null)
+        {
             spawner.enemyRemaining -= 1;
+
+            if(spawner.linkedCameraCheckpoint != null && spawner.linkedCameraCheckpoint.TryGetComponent(out Events events))
+            {
+                if(events.currentType == Events.EventsType.killGlobal)
+                    events.amountLeft += 1;
+
+                else if (events.currentType == Events.EventsType.killMelee && isMelee)
+                    events.amountLeft += 1;
+
+                else if (events.currentType == Events.EventsType.killCasterLinear && isLinearCaster)
+                    events.amountLeft += 1;
+
+                else if (events.currentType == Events.EventsType.killCasterRadial && isRadialCaster)
+                    events.amountLeft += 1;
+            }
+        }
 
         StartCoroutine(Blink());
         StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform));

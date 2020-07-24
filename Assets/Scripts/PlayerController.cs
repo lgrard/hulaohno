@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     private Transform camContainer;
     private AudioSource audioSource;
     private GameManager gameManager;
+    [SerializeField] List <GameObject> targets;
+    private GameObject currenttarget;
 
     [Header("States")]
     public bool isGrounded;
@@ -285,6 +287,7 @@ public class PlayerController : MonoBehaviour
                 {
                     isAttacking = true;
                     rb.velocity = mesh.transform.forward * attackStepAmount;
+                    StartCoroutine(Targetting());
                 }
 
                 meshAnim.SetTrigger("Punch");
@@ -403,6 +406,37 @@ public class PlayerController : MonoBehaviour
 
             if (enemy != null)
                 StartCoroutine(enemy.KnockBack(dashPush));
+        }
+    }
+
+    //Targetting system
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            targets.Add(other.gameObject);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            targets.Remove(other.gameObject);
+    }
+
+    private IEnumerator Targetting()
+    {
+        if (targets.Count > 0)
+        {
+            currenttarget = targets[0];
+            
+            foreach(GameObject target in targets)
+            {
+                if (Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(currenttarget.transform.position, transform.position))
+                    currenttarget = target;
+
+                yield return null;
+            }
+
+            Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(currenttarget.transform.position.x, 0, currenttarget.transform.position.z));
+            mesh.transform.LookAt(currenttarget.transform);
         }
     }
 }

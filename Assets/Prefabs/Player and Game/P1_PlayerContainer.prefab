@@ -49060,6 +49060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6710283594800337943}
   - component: {fileID: 6710283594800337947}
+  - component: {fileID: 3001157725399506095}
   - component: {fileID: 6710283594800337940}
   - component: {fileID: 5833161521050908525}
   - component: {fileID: 8402540324464193413}
@@ -49105,6 +49106,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!135 &3001157725399506095
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710283594800337945}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &6710283594800337940
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -49278,6 +49292,7 @@ MonoBehaviour:
     m_Bits: 512
   attackTimerMax: 0.3
   attackTimeStamp: 0
+  attackStepAmount: 5
   attackManager: {fileID: 632097015259804482}
   mesh: {fileID: 3332200238471951228}
   effectManager: {fileID: 6710283594785633503}

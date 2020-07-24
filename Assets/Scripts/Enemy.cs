@@ -181,8 +181,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < gustNumber; i++)
         {
             GameObject projectileInstance = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
-            projectileInstance.GetComponent<Projectiles>().direction = new Vector3(transform.forward.x,0,transform.forward.z)
-                ;
+            projectileInstance.GetComponent<Projectiles>().direction = new Vector3(transform.forward.x,0,transform.forward.z);
             yield return new WaitForSeconds(gustSpacing);
         }  
     }

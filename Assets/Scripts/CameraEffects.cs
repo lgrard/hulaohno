@@ -24,9 +24,10 @@ public class CameraEffects : MonoBehaviour
 
         cam = Camera.main;
         
+        //Offset auto setting at start
         //offset  = cameraContainer.transform.position - cameraTarget.transform.position;
-        offset = new Vector3(0, 6.5f, cameraContainer.transform.position.z);
         
+        offset = new Vector3(0, 6.5f, cameraContainer.transform.position.z);        
         rotOffset = cam.transform.rotation.eulerAngles;
     }
 

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1181221108042828485}
   - component: {fileID: 1181221108042828480}
   - component: {fileID: 8994912033996419364}
-  - component: {fileID: 1181221108042828481}
   - component: {fileID: 2995923079778650604}
+  - component: {fileID: 1181221108042828481}
   m_Layer: 0
   m_Name: HP Item
   m_TagString: Untagged
@@ -146,20 +146,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1181221108042828481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181221108042828494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 251751f2e4c4166429e36b3bf01881dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 1
-  p_take: {fileID: 1763310695049670834}
 --- !u!95 &2995923079778650604
 Animator:
   serializedVersion: 3
@@ -179,6 +165,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1181221108042828481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181221108042828494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251751f2e4c4166429e36b3bf01881dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 1
+  p_take: {fileID: 1763310695049670834}
 --- !u!1 &2727595777320599853
 GameObject:
   m_ObjectHideFlags: 0

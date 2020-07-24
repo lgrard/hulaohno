@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh: {fileID: 373249734151103063}
   spawner: {fileID: 0}
-  maxHp: 10
+  maxHp: 5
   scoreAmount: 10
   attackStampMax: 3
   collectibleAmount: 5

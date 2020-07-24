@@ -33,6 +33,14 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c491c84-4325-402b-8b93-63e9293c7968"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -68,6 +76,17 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
                     ""action"": ""Join"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccf370c1-db29-4f0c-88b8-d2cb60aaa739"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +97,7 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
         m_Global = asset.FindActionMap("Global", throwIfNotFound: true);
         m_Global_Move = m_Global.FindAction("Move", throwIfNotFound: true);
         m_Global_Join = m_Global.FindAction("Join", throwIfNotFound: true);
+        m_Global_Pause = m_Global.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -129,12 +149,14 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
     private IGlobalActions m_GlobalActionsCallbackInterface;
     private readonly InputAction m_Global_Move;
     private readonly InputAction m_Global_Join;
+    private readonly InputAction m_Global_Pause;
     public struct GlobalActions
     {
         private @GlobalScheme m_Wrapper;
         public GlobalActions(@GlobalScheme wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Global_Move;
         public InputAction @Join => m_Wrapper.m_Global_Join;
+        public InputAction @Pause => m_Wrapper.m_Global_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Global; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -150,6 +172,9 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
                 @Join.started -= m_Wrapper.m_GlobalActionsCallbackInterface.OnJoin;
                 @Join.performed -= m_Wrapper.m_GlobalActionsCallbackInterface.OnJoin;
                 @Join.canceled -= m_Wrapper.m_GlobalActionsCallbackInterface.OnJoin;
+                @Pause.started -= m_Wrapper.m_GlobalActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GlobalActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GlobalActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GlobalActionsCallbackInterface = instance;
             if (instance != null)
@@ -160,6 +185,9 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
                 @Join.started += instance.OnJoin;
                 @Join.performed += instance.OnJoin;
                 @Join.canceled += instance.OnJoin;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -168,5 +196,6 @@ public class @GlobalScheme : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJoin(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

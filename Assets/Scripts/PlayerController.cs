@@ -25,13 +25,14 @@ public class PlayerController : MonoBehaviour
     private float dashStamp;
     private Vector2 input;
     private float blinkingTime = 0.05f;
+    private float invincibilityTime = 1f; 
 
     [Header("Attack Values")]
-    [SerializeField] int attackDepth;
-    [SerializeField] int attackDepthMax = 3;
     [SerializeField] LayerMask enemyLayers;
+    private int attackDepth;
+    [SerializeField] int attackDepthMax = 3;
     [SerializeField] float attackTimerMax = 0.15f;
-    [SerializeField] float attackTimeStamp = 0f;
+    private float attackTimeStamp = 0f;
     [SerializeField] float attackStepAmount = 5f;
 
     [SerializeField] GameObject attackManager;
@@ -47,16 +48,17 @@ public class PlayerController : MonoBehaviour
     private Transform camContainer;
     private AudioSource audioSource;
     private GameManager gameManager;
-    [SerializeField] List <GameObject> targets;
+    private List <GameObject> targets = new List<GameObject>();
     private GameObject currenttarget;
 
     [Header("States")]
     public bool isGrounded;
     public bool isAttacking;
-    [SerializeField] bool rumbleActive;
+    [SerializeField] bool rumbleActive = false;
     bool isRumbling = false;
     bool isDashing = false;
     bool canDash = true;
+    bool isInvincible = false;
 
     PlayerInput playerInput;
     Animator meshAnim;
@@ -111,10 +113,7 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
     }
 
-    private void OnMovement(InputValue value)
-    {
-        input = value.Get<Vector2>();
-    }
+    private void OnMovement(InputValue value) => input = value.Get<Vector2>();
 
     //Movement method
     private void HandleMovement()
@@ -185,25 +184,31 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageTaken)
     {
-        if (playerIndex == 0)
-            gameManager.TakeDamage1();
-        else
-            gameManager.TakeDamage2();
-
-        StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
-        if(rumbleActive)
-            StartCoroutine(Rumble(2, 2, 0.1f));
-
-        HP -= damageTaken;
-
-        if (HP <= 0)
-            Die();
-
-        else
+        if (!isInvincible)
         {
-            meshAnim.SetTrigger("GetHit");
-            effectManager.p_hit.Play();
-            StartCoroutine(Blink());
+            isInvincible = true;
+            StartCoroutine(Invincibility());
+
+            if (playerIndex == 0)
+                gameManager.TakeDamage1();
+            else
+                gameManager.TakeDamage2();
+
+            StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
+            if(rumbleActive)
+                StartCoroutine(Rumble(2, 2, 0.1f));
+
+            HP -= damageTaken;
+
+            if (HP <= 0)
+                Die();
+
+            else
+            {
+                meshAnim.SetTrigger("GetHit");
+                effectManager.p_hit.Play();
+                StartCoroutine(Blink());
+            }
         }
     }
 
@@ -217,7 +222,7 @@ public class PlayerController : MonoBehaviour
         HP += hpGained;
     }
 
-
+    //Death method
     private void Die()
     {
         meshAnim.SetTrigger("Dies");
@@ -226,6 +231,11 @@ public class PlayerController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private IEnumerator Invincibility()
+    {
+        yield return new WaitForSeconds(invincibilityTime);
+        isInvincible = false;
+    }
 
     //Dash input method
     private void OnDash()

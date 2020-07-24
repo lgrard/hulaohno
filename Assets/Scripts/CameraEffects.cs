@@ -23,8 +23,10 @@ public class CameraEffects : MonoBehaviour
             cameraTarget.transform.position = gameManager.player0.transform.position;
 
         cam = Camera.main;
-        offset  = cameraContainer.transform.position - cameraTarget.transform.position;
-        offset = new Vector3(offset.x, offset.y, cameraContainer.transform.position.z);
+        
+        //offset  = cameraContainer.transform.position - cameraTarget.transform.position;
+        offset = new Vector3(0, 6.5f, cameraContainer.transform.position.z);
+        
         rotOffset = cam.transform.rotation.eulerAngles;
     }
 

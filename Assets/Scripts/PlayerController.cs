@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask enemyLayers;
     [SerializeField] float attackTimerMax = 0.15f;
     [SerializeField] float attackTimeStamp = 0f;
+    [SerializeField] float attackStepAmount = 5f;
 
     [SerializeField] GameObject attackManager;
     private Attack[] attackArray;
@@ -265,7 +266,7 @@ public class PlayerController : MonoBehaviour
     //Attack method
     private void OnPunch()
     {
-        var progressState = meshAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        var progressState = meshAnim.GetCurrentAnimatorStateInfo(1).normalizedTime;
 
         if (isGrounded && !isDashing)
         {
@@ -283,7 +284,7 @@ public class PlayerController : MonoBehaviour
                 if (!isAttacking)
                 {
                     isAttacking = true;
-                    rb.velocity = mesh.transform.forward * 5;
+                    rb.velocity = mesh.transform.forward * attackStepAmount;
                 }
 
                 meshAnim.SetTrigger("Punch");

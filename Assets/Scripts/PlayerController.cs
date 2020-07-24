@@ -427,16 +427,20 @@ public class PlayerController : MonoBehaviour
         {
             currenttarget = targets[0];
             
-            foreach(GameObject target in targets)
+
+            if (currenttarget != null)
             {
-                if (Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(currenttarget.transform.position, transform.position))
-                    currenttarget = target;
+                foreach(GameObject target in targets)
+                {
+                    if (Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(currenttarget.transform.position, transform.position) && currenttarget != null)
+                        currenttarget = target;
 
-                yield return null;
+                    yield return null;
+                }
+
+                Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(currenttarget.transform.position.x, 0, currenttarget.transform.position.z));
+                mesh.transform.LookAt(currenttarget.transform);
             }
-
-            Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(currenttarget.transform.position.x, 0, currenttarget.transform.position.z));
-            mesh.transform.LookAt(currenttarget.transform);
         }
     }
 }

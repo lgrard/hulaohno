@@ -9799,6 +9799,8 @@ MonoBehaviour:
   scoreAmount: 10
   attackStampMax: 3
   collectibleAmount: 5
+  itemDropRate: 0.03
+  stoppingDistance: 12
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -9808,7 +9810,6 @@ MonoBehaviour:
   isMelee: 0
   isLinearCaster: 1
   isRadialCaster: 0
-  casterAttackStampMax: 3
   gustNumber: 3
   radialProjectilesNumber: 4
   radius: 1
@@ -9834,7 +9835,7 @@ MonoBehaviour:
   attackRadius: 1
   attackDamage: 1
   delay: 0.05
-  attackPosition: {fileID: 0}
+  attackPosition: {fileID: 1245224276704878750}
   displayPreview: 1
 --- !u!1 &8187203343973425869
 GameObject:

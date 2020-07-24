@@ -9802,6 +9802,7 @@ MonoBehaviour:
   attackStampMax: 3
   collectibleAmount: 5
   itemDropRate: 0.03
+  stoppingDistance: 12
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024

@@ -26,9 +26,9 @@ public class Enemy : MonoBehaviour
     private float blinkingTime = 0.05f;
     private float attackStamp = 0f;
     [SerializeField] float attackStampMax = 3f;
-    private float hitStamp = 0f;
     [SerializeField] int collectibleAmount = 3;
     [SerializeField] float itemDropRate = 0.03f; 
+    [SerializeField] float stoppingDistance;
     private Vector3 knockBackDir;
     private Transform target;
     private GameObject[] targetList;
@@ -50,7 +50,6 @@ public class Enemy : MonoBehaviour
     public bool isRadialCaster;
 
     [Header("Caster")]
-    [SerializeField] float casterAttackStampMax = 8f;
     [SerializeField] int gustNumber = 2;
     [SerializeField] int radialProjectilesNumber = 4;
     [SerializeField] float radius = 1f;
@@ -62,11 +61,13 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (isMelee)
             attackScript = gameObject.GetComponent<Attack>();
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         agent = gameObject.GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = stoppingDistance;
         anim = gameObject.GetComponentInChildren<Animator>();
         renderer = mesh.GetComponent<Renderer>();
         defMat = renderer.material;
@@ -125,7 +126,24 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         if (spawner != null)
+        {
             spawner.enemyRemaining -= 1;
+
+            if(spawner.linkedCameraCheckpoint != null && spawner.linkedCameraCheckpoint.TryGetComponent(out Events events))
+            {
+                if(events.currentType == Events.EventsType.killGlobal)
+                    events.amountLeft += 1;
+
+                else if (events.currentType == Events.EventsType.killMelee && isMelee)
+                    events.amountLeft += 1;
+
+                else if (events.currentType == Events.EventsType.killCasterLinear && isLinearCaster)
+                    events.amountLeft += 1;
+
+                else if (events.currentType == Events.EventsType.killCasterRadial && isRadialCaster)
+                    events.amountLeft += 1;
+            }
+        }
 
         StartCoroutine(Blink());
         StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform));
@@ -161,14 +179,17 @@ public class Enemy : MonoBehaviour
     {
         float distanceFromTarget = Vector3.Distance(target.position, gameObject.transform.position);
 
-        if (isLinearCaster && !isRadialCaster && distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance + 4 && attackStamp >= casterAttackStampMax)
-            StartCoroutine(LinearCasterAttack());
+        if(attackStamp >= attackStampMax)
+        {
+            if (isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
+                StartCoroutine(LinearCasterAttack());
 
-        else if (isRadialCaster && !isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget >= agent.stoppingDistance + 4 && attackStamp >= casterAttackStampMax)
-            StartCoroutine(RadialCasterAttack());
+            else if (isRadialCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
+                StartCoroutine(RadialCasterAttack());
 
-        else if (distanceFromTarget <= agent.stoppingDistance + 4 && attackStamp >= attackStampMax)
-            StartCoroutine(Hit());
+            else if (isMelee && distanceFromTarget <= agent.stoppingDistance && attackStamp >= attackStampMax)
+                StartCoroutine(Hit());
+        }
 
         else if (attackStamp < attackStampMax)
             attackStamp += Time.deltaTime;
@@ -259,5 +280,11 @@ public class Enemy : MonoBehaviour
         agent.velocity = Vector3.zero;
         agent.speed = 1.5f;
         agent.angularSpeed = 120;
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, stoppingDistance);
     }
 }

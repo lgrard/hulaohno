@@ -25,6 +25,9 @@ public class EnemySpawner : MonoBehaviour
     [HideInInspector]
     public bool noMoreEnemies = false;
 
+    [HideInInspector]
+    public GameObject linkedCameraCheckpoint =null;
+
     private void OnEnable()
     {
         enemyRemaining = enemyCount;

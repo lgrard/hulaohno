@@ -36,12 +36,19 @@ public class CameraCheckPoint : MonoBehaviour
     float timeStamp = 1;
     int playerLayer;
     Camera cam;
+    Events linkedEvents;
 
 
 
     //Initialize
     private void Start()
     {
+        if(TryGetComponent(out Events events))
+        {
+            linkedEvents = events;
+            linkedEvents.enabled = false;
+        }
+
         playerLayer = LayerMask.GetMask("Player");
         cam = Camera.main;
 
@@ -49,6 +56,7 @@ public class CameraCheckPoint : MonoBehaviour
         {
             spawner.isSpawning = true;
             spawner.enabled = false;
+            spawner.linkedCameraCheckpoint = gameObject;
         }
     }
 
@@ -101,6 +109,8 @@ public class CameraCheckPoint : MonoBehaviour
 
             foreach (EnemySpawner spawner in linkedSpawner)
                 spawner.enabled = true;
+
+            linkedEvents.enabled = true;
         }
 
         if (linkedSpawner.Count > 0 && linkedSpawner.Count > endedSpawner.Count)

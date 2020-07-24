@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float attackStampMax = 3f;
     private float hitStamp = 0f;
     [SerializeField] int collectibleAmount = 3;
+    [SerializeField] float itemDropRate = 0.03f; 
     private Vector3 knockBackDir;
     private Transform target;
     private GameObject[] targetList;
@@ -128,6 +129,7 @@ public class Enemy : MonoBehaviour
 
         StartCoroutine(Blink());
         StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform));
+        gameManager.AddItems(transform, itemDropRate);
 
         if (lastHitIndex == 0)
             gameManager.Scoring1(scoreAmount);

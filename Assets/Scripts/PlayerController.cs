@@ -204,7 +204,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void GainHP(int hpGained) => HP += hpGained;
+    public void GainHP(int hpGained)
+    {
+        if (playerIndex == 0)
+            gameManager.GainHP1();
+        else
+            gameManager.GainHP2();
+
+        HP += hpGained;
+    }
 
 
     private void Die()

@@ -14,6 +14,8 @@ public class HPItem : MonoBehaviour
             GetComponent<BoxCollider>().enabled = false;
             playerController.GainHP(amount);
             p_take.Play();
+            gameObject.GetComponent<AudioSource>().Play();
+            gameObject.GetComponent<Animator>().SetTrigger("Take");
             Destroy(gameObject,0.5f);
         }
     }

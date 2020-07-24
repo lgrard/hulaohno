@@ -82,6 +82,8 @@ public class UIManagement : MonoBehaviour
     public void Damage1() => p1HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
     public void Damage2() => p2HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
 
+    public void Heal1() => p1HPBar.GetComponent<Animator>().SetTrigger("Heal");
+    public void Heal2() => p2HPBar.GetComponent<Animator>().SetTrigger("Heal");
 
     //Initialize and manage the HP bar and score display
     private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer)

@@ -28,13 +28,16 @@ public class GameManager : MonoBehaviour
     public Color player2Color;
 
     [Header("Collectible")]
-    public GameObject collectible;
+    [SerializeField] GameObject collectible;
+    [SerializeField] GameObject[] items;
 
     private PlayerInputManager inputManager;
     private UIManagement uiManagement;
 
     private bool p1HasTakenDamage = false;
     private bool p2HasTakenDamage = false;
+    private bool p1HasHealed = false;
+    private bool p2HasHealed = false;
 
 
     private void Start()
@@ -66,6 +69,17 @@ public class GameManager : MonoBehaviour
         p2HasTakenDamage = true;
     }
 
+    public void GainHP1()
+    {
+        uiManagement.Heal1();
+        p1HasHealed = true;
+    }
+    public void GainHP2()
+    {
+        uiManagement.Heal2();
+        p2HasHealed = true;
+    }
+
     public void Scoring1(int amount)
     {
         uiManagement.ScorePlus1();
@@ -88,4 +102,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void AddItems(Transform origin, float dropRate)
+    {
+        float randomPick = Random.Range(0f, 1f);
+
+        if (randomPick <= dropRate)
+        {
+            Vector3 position = Random.insideUnitSphere * 2 + origin.position;
+            position = new Vector3(position.x, origin.position.y, position.z);
+            Instantiate(items[Random.Range(0,items.Length)], position, Quaternion.identity);
+        }
+    }
 }

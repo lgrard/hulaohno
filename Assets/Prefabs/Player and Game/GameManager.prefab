@@ -95,17 +95,19 @@ MonoBehaviour:
   player1prefab: {fileID: 6710283594800337945, guid: 02710c8c904c81c4fbe8254c97881d80,
     type: 3}
   camContainer: {fileID: 0}
-  score: 0
+  score1: 0
+  score2: 0
   combo1: 0
   combo2: 0
-  specialGauge0: 0
-  specialGauge1: 0
   player0: {fileID: 0}
   player1: {fileID: 0}
   player1Color: {r: 0.2216981, g: 0.44339633, b: 0.8867924, a: 0}
   player2Color: {r: 0.8207547, g: 0.2206746, b: 0.36069316, a: 0}
   collectible: {fileID: 4487142428442181861, guid: 32be4a8f23d86ac47b154b02092be55b,
     type: 3}
+  items:
+  - {fileID: 1181221108042828494, guid: 1baada9d1bf387f4890501b49ba9f9dd, type: 3}
+  - {fileID: 8717496389440717317, guid: a2aeba165f94fac46895a9a78778ce31, type: 3}
 --- !u!1 &3748544916844917707
 GameObject:
   m_ObjectHideFlags: 0

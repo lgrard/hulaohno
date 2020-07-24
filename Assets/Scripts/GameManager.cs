@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
 
     public void TakeDamage1()
     {
-        Debug.Log("Oui oui");
         uiManagement.Damage1();
         p1HasTakenDamage = true;
     }

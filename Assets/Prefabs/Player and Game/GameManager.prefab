@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player0prefab: {fileID: 6710283594800337945, guid: bc0f8adc93e1bdb46b54696baecc9ed3,
     type: 3}
-  player1prefab: {fileID: 6710283594800337945, guid: 02710c8c904c81c4fbe8254c97881d80,
+  player1prefab: {fileID: 6710283594800337945, guid: 427aaeccf79543148844d732453901ab,
     type: 3}
   camContainer: {fileID: 0}
   score1: 0

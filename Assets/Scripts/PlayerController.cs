@@ -407,8 +407,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(blinkingTime);
     }
 
-    //Collision management
-    private void OnCollisionEnter(Collision other)
+    //Targetting system
+    private void OnTriggerEnter(Collider other)
     {
         if (isDashing)
         {
@@ -417,11 +417,7 @@ public class PlayerController : MonoBehaviour
             if (enemy != null)
                 StartCoroutine(enemy.KnockBack(dashPush));
         }
-    }
 
-    //Targetting system
-    private void OnTriggerEnter(Collider other)
-    {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             targets.Add(other.gameObject);
     }

@@ -1236,13 +1236,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524195357}
-  m_LocalRotation: {x: -0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 0.2, y: 1.8, z: 30}
+  m_LocalRotation: {x: -0.021814799, y: 0, z: 0, w: 0.999762}
+  m_LocalPosition: {x: 0.2, y: 1.17, z: 30.03}
   m_LocalScale: {x: 23.496563, y: 4.74443, z: 4.74443}
   m_Children: []
   m_Father: {fileID: 1028709645}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -5, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.5, y: 0, z: 0}
 --- !u!1 &528615211
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,12 +1804,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01e407684d390645bb8a3e6d729c023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4622405978093960878, guid: 7469cb701fde2454ca6e09f5df3b360c,
+  enemyPrefab: {fileID: 4622405978093960878, guid: 97f3bd72d89680540a76d15bd1f70e13,
     type: 3}
   position1: {x: 30.398008, y: 2.2747564, z: 5.1942234}
   position2: {x: 30.200737, y: 1.8120489, z: -8.973211}
-  spawnRate: 2
-  enemyCount: 20
+  spawnRate: 10
+  enemyCount: 2
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0

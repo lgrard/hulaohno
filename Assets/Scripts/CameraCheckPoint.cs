@@ -56,7 +56,9 @@ public class CameraCheckPoint : MonoBehaviour
         {
             spawner.isSpawning = true;
             spawner.enabled = false;
-            spawner.linkedCameraCheckpoint = gameObject;
+
+            if(linkedEvents != null)
+                spawner.linkedCameraCheckpoint = gameObject;
         }
     }
 
@@ -110,7 +112,8 @@ public class CameraCheckPoint : MonoBehaviour
             foreach (EnemySpawner spawner in linkedSpawner)
                 spawner.enabled = true;
 
-            linkedEvents.enabled = true;
+            if (linkedEvents != null)
+                linkedEvents.enabled = true;
         }
 
         if (linkedSpawner.Count > 0 && linkedSpawner.Count > endedSpawner.Count)

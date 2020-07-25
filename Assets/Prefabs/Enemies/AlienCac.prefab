@@ -155,10 +155,10 @@ MonoBehaviour:
   spawner: {fileID: 0}
   maxHp: 5
   scoreAmount: 10
-  attackStampMax: 3
+  attackStampMax: 5
   collectibleAmount: 5
   itemDropRate: 0.03
-  stoppingDistance: 4
+  stoppingDistance: 3
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -168,7 +168,6 @@ MonoBehaviour:
   isMelee: 1
   isLinearCaster: 0
   isRadialCaster: 0
-  casterAttackStampMax: 3
   gustNumber: 2
   radialProjectilesNumber: 4
   radius: 1
@@ -191,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Attack
   attackIndex: 0
-  attackRadius: 1
+  attackRadius: 0.5
   attackDamage: 1
   delay: 0.05
   attackPosition: {fileID: 4774638271472354384}
@@ -9862,7 +9861,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6447528761330189966}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.00039723198, y: -0.011718325, z: 0.004513995}
+  m_LocalPosition: {x: -0.00039723198, y: -0.00927, z: 0.0045}
   m_LocalScale: {x: 0.018055998, y: 0.018056003, z: 0.018056003}
   m_Children: []
   m_Father: {fileID: 6920461496421975121}
@@ -14750,12 +14749,12 @@ PrefabInstance:
     - target: {fileID: -3477909521383019446, guid: 6cae0e3657534ac459d000f3753188d9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -0.048385613
+      value: -0.048385605
       objectReference: {fileID: 0}
     - target: {fileID: -3477909521383019446, guid: 6cae0e3657534ac459d000f3753188d9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.048119456
+      value: -0.048117943
       objectReference: {fileID: 0}
     - target: {fileID: -1389706179863368070, guid: 6cae0e3657534ac459d000f3753188d9,
         type: 3}
@@ -14800,7 +14799,7 @@ PrefabInstance:
     - target: {fileID: 6422294703605376397, guid: 6cae0e3657534ac459d000f3753188d9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.000019733507
+      value: 0.000020727888
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cae0e3657534ac459d000f3753188d9, type: 3}

@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject collectible;
     [SerializeField] GameObject[] items;
 
+    [Header("Respawn")]
+    public Vector3 currentProgressionCp;
+
     private PlayerInputManager inputManager;
     private UIManagement uiManagement;
 
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
     private bool p2HasTakenDamage = false;
     private bool p1HasHealed = false;
     private bool p2HasHealed = false;
+    private bool p1IsDead = false;
+    private bool p2IsDead = false;
 
 
     private void Start()
@@ -91,6 +96,14 @@ public class GameManager : MonoBehaviour
         score2 += amount;
     }
 
+    public void GetThroughSpawner()
+    {
+        if(player0 != null)
+            player0.GainHP(player0.maxHp);
+        if(player1 != null)
+            player1.GainHP(player1.maxHp);
+    }
+
     public IEnumerator AddCollectible(int collectibleAmount, Transform origin)
     {
         for (int i = 0; i < collectibleAmount; i++)
@@ -112,5 +125,11 @@ public class GameManager : MonoBehaviour
             position = new Vector3(position.x, origin.position.y, position.z);
             Instantiate(items[Random.Range(0,items.Length)], position, Quaternion.identity);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(currentProgressionCp, 0.4f);
     }
 }

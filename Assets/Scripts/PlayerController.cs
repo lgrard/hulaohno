@@ -60,6 +60,10 @@ public class PlayerController : MonoBehaviour
     bool canDash = true;
     bool isInvincible = false;
 
+    [Header("Item and item states")]
+    public GameObject i_shield;
+    public bool shieldActive = false;
+
     PlayerInput playerInput;
     Animator meshAnim;
     Rigidbody rb;
@@ -189,25 +193,34 @@ public class PlayerController : MonoBehaviour
             isInvincible = true;
             StartCoroutine(Invincibility());
 
-            if (playerIndex == 0)
-                gameManager.TakeDamage1();
-            else
-                gameManager.TakeDamage2();
-
-            StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
-            if(rumbleActive)
-                StartCoroutine(Rumble(2, 2, 0.1f));
-
-            HP -= damageTaken;
-
-            if (HP <= 0)
-                Die();
+            if (shieldActive)
+            {
+                i_shield.SetActive(false);
+                shieldActive = false;
+            }
 
             else
             {
-                meshAnim.SetTrigger("GetHit");
-                effectManager.p_hit.Play();
-                StartCoroutine(Blink());
+                if (playerIndex == 0)
+                    gameManager.TakeDamage1();
+                else
+                    gameManager.TakeDamage2();
+
+                StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.06f));
+                if(rumbleActive)
+                    StartCoroutine(Rumble(2, 2, 0.1f));
+
+                HP -= damageTaken;
+
+                if (HP <= 0)
+                    Die();
+
+                else
+                {
+                    meshAnim.SetTrigger("GetHit");
+                    effectManager.p_hit.Play();
+                    StartCoroutine(Blink());
+                }
             }
         }
     }
@@ -225,6 +238,11 @@ public class PlayerController : MonoBehaviour
     //Death method
     private void Die()
     {
+        if (playerIndex == 0)
+            gameManager.p1IsDead = true;
+        else
+            gameManager.p2IsDead = true;
+
         meshAnim.SetTrigger("Dies");
         effectManager.p_die.Play();
         //gameObject.GetComponent<Collider>().enabled = false;
@@ -250,6 +268,7 @@ public class PlayerController : MonoBehaviour
         canDash = false;
 
         isDashing = true;
+        isInvincible = true;
         meshAnim.SetBool("Dash", true);
 
         effectManager.t_dashTrail.enabled = true;
@@ -267,6 +286,7 @@ public class PlayerController : MonoBehaviour
         }
 
         effectManager.t_dashTrail.enabled = false;
+        isInvincible = false;
         isDashing = false;
         meshAnim.SetBool("Dash", false);
 

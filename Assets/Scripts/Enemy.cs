@@ -179,7 +179,7 @@ public class Enemy : MonoBehaviour
     {
         float distanceFromTarget = Vector3.Distance(target.position, gameObject.transform.position);
 
-        if(attackStamp >= attackStampMax)
+        if (attackStamp >= attackStampMax)
         {
             if (isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
                 StartCoroutine(LinearCasterAttack());
@@ -191,8 +191,11 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(Hit());
         }
 
-        else if (attackStamp < attackStampMax)
+        else if (attackStamp < attackStampMax && distanceFromTarget <= agent.stoppingDistance)
             attackStamp += Time.deltaTime;
+
+        else if (attackStamp < attackStampMax && distanceFromTarget >= agent.stoppingDistance)
+            attackStamp = 0;
     }
 
     private IEnumerator LinearCasterAttack()

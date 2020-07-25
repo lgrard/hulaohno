@@ -37,12 +37,12 @@ public class GameManager : MonoBehaviour
     private PlayerInputManager inputManager;
     private UIManagement uiManagement;
 
-    private bool p1HasTakenDamage = false;
-    private bool p2HasTakenDamage = false;
-    private bool p1HasHealed = false;
-    private bool p2HasHealed = false;
-    private bool p1IsDead = false;
-    private bool p2IsDead = false;
+    public bool p1HasTakenDamage = false;
+    public bool p2HasTakenDamage = false;
+    public bool p1HasHealed = false;
+    public bool p2HasHealed = false;
+    public bool p1IsDead = false;
+    public bool p2IsDead = false;
 
 
     private void Start()

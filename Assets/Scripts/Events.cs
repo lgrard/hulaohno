@@ -25,20 +25,26 @@ public class Events : MonoBehaviour
     [SerializeField] float timeMax;
     public float currentTime;
 
+    private GameManager gameManager;
     private UIManagement uIManagement;
-    private bool eventCleared;
+    private bool eventCleared = false;
+    private bool eventMissed = false;
 
     private void Start()
     {
         currentTime = timeMax;
         amountLeft = 0;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uIManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
         uIManagement.eventBar.SetActive(true);
+        uIManagement.eventBar.GetComponent<AudioSource>().Play();
+        gameManager.p1IsDead = false;
+        gameManager.p2IsDead = false;
     }
 
     private void Update()
     {
-        if (!eventCleared)
+        if (!eventCleared && !eventMissed)
         {
             uIManagement.eventTimer.text = currentTime.ToString("00");
 
@@ -68,19 +74,13 @@ public class Events : MonoBehaviour
                     break;
 
                 case EventsType.dontDie:
-
+                    DontDie();
                     break;
 
                 case EventsType.dontTakeDamage:
 
                     break;
             }
-        }
-
-        else
-        {
-            uIManagement.eventBar.SetActive(false);
-            this.enabled = false;
         }
     }
 
@@ -90,6 +90,43 @@ public class Events : MonoBehaviour
         uIManagement.eventAmount.text = amountLeft.ToString() + "/" + amountMax.ToString();
 
         if (amountLeft >= amountMax)
-            eventCleared = true;
+            StartCoroutine(EventCleared());
+
+        else if (amountLeft < amountMax && currentTime <= 0)
+            StartCoroutine(EventMissed());
+    }
+
+    private void DontDie()
+    {
+        uIManagement.eventObjective.text = "Don't die";
+        uIManagement.eventAmount.text = "";
+
+        if (gameManager.p1IsDead || gameManager.p2IsDead)
+            StartCoroutine(EventMissed());
+
+        else if (!gameManager.p1IsDead && !gameManager.p2IsDead && currentTime <= 0)
+            StartCoroutine(EventCleared());
+    }
+
+    private IEnumerator EventCleared()
+    {
+        eventCleared = true;
+        uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventCleared");
+        yield return new WaitForEndOfFrame();
+        uIManagement.eventClearedAudio.Play();
+        yield return new WaitForSeconds(1f);
+        uIManagement.eventBar.SetActive(false);
+        this.enabled = false;
+    }
+
+    private IEnumerator EventMissed()
+    {
+        eventMissed = true;
+        uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventMissed");
+        yield return new WaitForEndOfFrame();
+        uIManagement.eventMissedAudio.Play();
+        yield return new WaitForSeconds(1f);
+        uIManagement.eventBar.SetActive(false);
+        this.enabled = false;
     }
 }

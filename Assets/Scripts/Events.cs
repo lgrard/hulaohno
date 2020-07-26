@@ -35,11 +35,14 @@ public class Events : MonoBehaviour
         currentTime = timeMax;
         amountLeft = 0;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.currentEvent = this;
         uIManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
         uIManagement.eventBar.SetActive(true);
         uIManagement.eventBar.GetComponent<AudioSource>().Play();
         gameManager.p1IsDead = false;
         gameManager.p2IsDead = false;
+        gameManager.p1HasTakenDamage = false;
+        gameManager.p2HasTakenDamage = false;
     }
 
     private void Update()
@@ -70,7 +73,7 @@ public class Events : MonoBehaviour
                     break;
 
                 case EventsType.pickUpItems:
-
+                    PickUpItems();
                     break;
 
                 case EventsType.dontDie:
@@ -78,7 +81,7 @@ public class Events : MonoBehaviour
                     break;
 
                 case EventsType.dontTakeDamage:
-
+                    DontTakeDamage();
                     break;
             }
         }
@@ -86,7 +89,7 @@ public class Events : MonoBehaviour
 
     private void Kill(string enemyName)
     {
-        uIManagement.eventObjective.text = "Kill " + amountMax.ToString() + " " + enemyName;
+        uIManagement.eventObjective.text = "Kill " + amountMax.ToString() + " " + enemyName +" !";
         uIManagement.eventAmount.text = amountLeft.ToString() + "/" + amountMax.ToString();
 
         if (amountLeft >= amountMax)
@@ -98,7 +101,7 @@ public class Events : MonoBehaviour
 
     private void DontDie()
     {
-        uIManagement.eventObjective.text = "Don't die";
+        uIManagement.eventObjective.text = "Don't die !";
         uIManagement.eventAmount.text = "";
 
         if (gameManager.p1IsDead || gameManager.p2IsDead)
@@ -106,6 +109,30 @@ public class Events : MonoBehaviour
 
         else if (!gameManager.p1IsDead && !gameManager.p2IsDead && currentTime <= 0)
             StartCoroutine(EventCleared());
+    }
+
+    private void DontTakeDamage()
+    {
+        uIManagement.eventObjective.text = "Don't get hit !";
+        uIManagement.eventAmount.text = "";
+
+        if (gameManager.p1HasTakenDamage || gameManager.p1HasTakenDamage)
+            StartCoroutine(EventMissed());
+
+        else if (!gameManager.p1HasTakenDamage && !gameManager.p1HasTakenDamage && currentTime <= 0)
+            StartCoroutine(EventCleared());
+    }
+
+    private void PickUpItems()
+    {
+        uIManagement.eventObjective.text = "Pick up " + amountMax.ToString() + " gears !";
+        uIManagement.eventAmount.text = amountLeft.ToString() + "/" + amountMax.ToString();
+
+        if (amountLeft >= amountMax)
+            StartCoroutine(EventCleared());
+
+        else if (amountLeft < amountMax && currentTime <= 0)
+            StartCoroutine(EventMissed());
     }
 
     private IEnumerator EventCleared()

@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private PlayerInputManager inputManager;
     private UIManagement uiManagement;
 
+    public Events currentEvent = null;
     public bool p1HasTakenDamage = false;
     public bool p2HasTakenDamage = false;
     public bool p1HasHealed = false;

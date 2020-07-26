@@ -48,6 +48,8 @@ public class UIManagement : MonoBehaviour
     public Text eventObjective;
     public Text eventTimer;
     public Text eventAmount;
+    public AudioSource eventClearedAudio;
+    public AudioSource eventMissedAudio;
 
     private void Start()
     {

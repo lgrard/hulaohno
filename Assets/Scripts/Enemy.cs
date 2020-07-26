@@ -129,19 +129,19 @@ public class Enemy : MonoBehaviour
         {
             spawner.enemyRemaining -= 1;
 
-            if(spawner.linkedCameraCheckpoint != null && spawner.linkedCameraCheckpoint.TryGetComponent(out Events events))
+            if(gameManager.currentEvent != null)
             {
-                if(events.currentType == Events.EventsType.killGlobal)
-                    events.amountLeft += 1;
+                if(gameManager.currentEvent.currentType == Events.EventsType.killGlobal)
+                    gameManager.currentEvent.amountLeft += 1;
 
-                else if (events.currentType == Events.EventsType.killMelee && isMelee)
-                    events.amountLeft += 1;
+                else if (gameManager.currentEvent.currentType == Events.EventsType.killMelee && isMelee)
+                    gameManager.currentEvent.amountLeft += 1;
 
-                else if (events.currentType == Events.EventsType.killCasterLinear && isLinearCaster)
-                    events.amountLeft += 1;
+                else if (gameManager.currentEvent.currentType == Events.EventsType.killCasterLinear && isLinearCaster)
+                    gameManager.currentEvent.amountLeft += 1;
 
-                else if (events.currentType == Events.EventsType.killCasterRadial && isRadialCaster)
-                    events.amountLeft += 1;
+                else if (gameManager.currentEvent.currentType == Events.EventsType.killCasterRadial && isRadialCaster)
+                    gameManager.currentEvent.amountLeft += 1;
             }
         }
 
@@ -179,7 +179,7 @@ public class Enemy : MonoBehaviour
     {
         float distanceFromTarget = Vector3.Distance(target.position, gameObject.transform.position);
 
-        if(attackStamp >= attackStampMax)
+        if (attackStamp >= attackStampMax)
         {
             if (isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
                 StartCoroutine(LinearCasterAttack());
@@ -191,8 +191,11 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(Hit());
         }
 
-        else if (attackStamp < attackStampMax)
+        else if (attackStamp < attackStampMax && distanceFromTarget <= agent.stoppingDistance)
             attackStamp += Time.deltaTime;
+
+        else if (attackStamp < attackStampMax && distanceFromTarget >= agent.stoppingDistance)
+            attackStamp = 0;
     }
 
     private IEnumerator LinearCasterAttack()

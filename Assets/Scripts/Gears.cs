@@ -59,6 +59,9 @@ public class Gears : MonoBehaviour
             gameObject.GetComponent<BoxCollider>().enabled = false;
             p_take.Play();
 
+            if (gameManager.currentEvent != null && gameManager.currentEvent.currentType == Events.EventsType.pickUpItems)
+                gameManager.currentEvent.amountLeft += 1;
+
             if(collision.gameObject.GetComponent<PlayerController>().playerIndex == 0)
                 gameManager.Scoring1(scoreAmount);
             else

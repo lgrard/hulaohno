@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Gears : MonoBehaviour
 {
-    [SerializeField] Mesh[] meshes;
+    [SerializeField] Mesh[] meshes = null;
     
-    MeshFilter meshFilter;
-    GameManager gameManager;
-    AudioSource audioSource;
+    MeshFilter meshFilter = null;
+    GameManager gameManager = null;
+    AudioSource audioSource = null;
 
     bool isTaken = false;
     float progress = 0;
     Transform target = null;
     
-    [SerializeField] int scoreAmount;
-    [SerializeField] Material moboMat;
-    [SerializeField] ParticleSystem p_take;
+    [SerializeField] int scoreAmount = 0;
+    [SerializeField] Material moboMat = null;
+    [SerializeField] ParticleSystem p_take = null;
 
     private void Start()
     {

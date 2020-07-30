@@ -38,6 +38,8 @@ public class UIManagement : MonoBehaviour
     [SerializeField] GameObject p2HPBar;
     [SerializeField] RectTransform waveHp1;
     [SerializeField] RectTransform waveHp2;
+    [SerializeField] Text respawnTimer1;
+    [SerializeField] Text respawnTimer2;
 
     [Header("Score counter")]
     [SerializeField] Text scoreCounter1;
@@ -72,12 +74,12 @@ public class UIManagement : MonoBehaviour
         //Display score and health if player is assigned        
 
         if (player1 != null)
-            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1);
+            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1, gameManager.respawnStamp1);
         else
             p1HPBar.SetActive(false);
 
         if (player2 != null)
-            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2);
+            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2, respawnTimer2, gameManager.respawnStamp2);
         else
             p2HPBar.SetActive(false);
     }
@@ -94,7 +96,7 @@ public class UIManagement : MonoBehaviour
     public void Heal2() => p2HPBar.GetComponent<Animator>().SetTrigger("Heal");
 
     //Initialize and manage the HP bar and score display
-    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer)
+    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer, Text respawnTimer, float respawnStamp)
     {
         //Hp setting
         globalBar.SetActive(true);
@@ -107,6 +109,16 @@ public class UIManagement : MonoBehaviour
 
         //Score setting
         scoreContainer.text = "SCORE - " + playerScore.ToString("000000");
+
+        //Respawn timer setting
+        if (Mathf.CeilToInt(respawnStamp) > 0)
+        {
+            respawnTimer.enabled = true;
+            respawnTimer.text = Mathf.CeilToInt(respawnStamp).ToString();
+        }
+
+        else
+            respawnTimer.enabled = false;
 
         #region old bar
         /*

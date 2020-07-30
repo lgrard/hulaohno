@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private Attack[] attackArray;
 
     [Header("Object")]
+    public Transform playerSpawnPoint;
     [SerializeField] GameObject mesh;
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
@@ -78,6 +79,11 @@ public class PlayerController : MonoBehaviour
             gameManager.player0 = this;
         else
             gameManager.player1 = this;
+    }
+
+    private void OnEnable()
+    {
+        Spawn();
     }
 
     //Initialize
@@ -239,13 +245,19 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         if (playerIndex == 0)
+        {
             gameManager.p1IsDead = true;
+            gameManager.Respawn1();
+        }
+
         else
+        {
             gameManager.p2IsDead = true;
+            gameManager.Respawn2();
+        }
 
         meshAnim.SetTrigger("Dies");
         effectManager.p_die.Play();
-        //gameObject.GetComponent<Collider>().enabled = false;
         gameObject.SetActive(false);
     }
 
@@ -453,12 +465,11 @@ public class PlayerController : MonoBehaviour
         {
             currenttarget = targets[0];
             
-
             if (currenttarget != null)
             {
                 foreach(GameObject target in targets)
                 {
-                    if (Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(currenttarget.transform.position, transform.position) && currenttarget != null)
+                    if (currenttarget != null && Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(currenttarget.transform.position, transform.position))
                         currenttarget = target;
 
                     yield return null;
@@ -467,6 +478,30 @@ public class PlayerController : MonoBehaviour
                 Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(currenttarget.transform.position.x, 0, currenttarget.transform.position.z));
                 mesh.transform.LookAt(currenttarget.transform);
             }
+        }
+    }
+
+    private void Spawn()
+    {
+        effectManager.p_spawn.Play();
+        HP = maxHp;
+
+        if (playerIndex == 0)
+        {
+            if(gameManager.player1 == null || !gameManager.player1.gameObject.activeSelf)
+                transform.position = gameManager.currentProgressionCp;
+            
+            else if(gameManager.player1 != null || gameManager.player1.gameObject.activeSelf)
+                transform.position = gameManager.player1.playerSpawnPoint.position;
+        }
+
+        else if (playerIndex == 1)
+        {
+            if (gameManager.player0 == null || !gameManager.player0.gameObject.activeSelf)
+                transform.position = gameManager.currentProgressionCp;
+
+            else if (gameManager.player0 != null || gameManager.player0.gameObject.activeSelf)
+                transform.position = gameManager.player0.playerSpawnPoint.position;
         }
     }
 }

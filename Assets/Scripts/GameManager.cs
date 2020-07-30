@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,9 +34,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Respawn")]
     public Vector3 currentProgressionCp;
+    [SerializeField] float respawnTime = 15f;
+    public float respawnStamp1 = 15f;
+    public float respawnStamp2 = 15f;
 
     private PlayerInputManager inputManager;
     private UIManagement uiManagement;
+    private PlayerAssignement playerAssignement;
 
     public Events currentEvent = null;
     public bool p1HasTakenDamage = false;
@@ -45,10 +50,15 @@ public class GameManager : MonoBehaviour
     public bool p1IsDead = false;
     public bool p2IsDead = false;
 
+    private void Awake()
+    {
+        inputManager = GetComponent<PlayerInputManager>();
+        playerAssignement = gameObject.GetComponent<PlayerAssignement>();
+        playerAssignement.SpawnPlayers(inputManager);
+    }
 
     private void Start()
     {
-        inputManager = GetComponent<PlayerInputManager>();
         uiManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
     }
 
@@ -99,10 +109,20 @@ public class GameManager : MonoBehaviour
 
     public void GetThroughSpawner()
     {
-        if(player0 != null)
+        StopCoroutine(Respawn(player0));
+        StopCoroutine(Respawn(player1));
+
+        if (player0 != null)
+        {
             player0.GainHP(player0.maxHp);
+            player0.gameObject.SetActive(true);
+        }
+
         if(player1 != null)
-            player1.GainHP(player1.maxHp);
+        {
+            player1.GainHP(player0.maxHp);
+            player1.gameObject.SetActive(true);
+        }
     }
 
     public IEnumerator AddCollectible(int collectibleAmount, Transform origin)
@@ -126,6 +146,51 @@ public class GameManager : MonoBehaviour
             position = new Vector3(position.x, origin.position.y, position.z);
             Instantiate(items[Random.Range(0,items.Length)], position, Quaternion.identity);
         }
+    }
+
+    public void Respawn1() => StartCoroutine(Respawn(player0));
+    public void Respawn2() => StartCoroutine(Respawn(player1));
+
+    private IEnumerator Respawn(PlayerController playerToRespawn)
+    {
+        if (player0 != null && player1 != null)
+        {
+            if (playerToRespawn = player0)
+            {
+                respawnStamp1 = respawnTime;
+
+                while (respawnStamp1 > 0)
+                {
+                    respawnStamp1 -= Time.deltaTime;
+                    yield return new WaitForEndOfFrame();
+                }
+
+                playerToRespawn.gameObject.SetActive(true);
+                respawnStamp1 = 0;
+            }
+
+            else
+            {
+                respawnStamp2 = respawnTime;
+
+                while (respawnStamp2 > 0)
+                {
+                    respawnStamp2 -= Time.deltaTime;
+                    yield return new WaitForEndOfFrame();
+                }
+
+                playerToRespawn.gameObject.SetActive(true);
+                respawnStamp2 = 0;
+            }
+        }
+
+        else
+            Restart();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnDrawGizmos()

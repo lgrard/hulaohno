@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88cccc2d932e0a246bfbe9cc9284d6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  device0Paired: 0
+  device1Paired: 0
 --- !u!114 &3748544916753437708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +117,8 @@ MonoBehaviour:
   player1: {fileID: 0}
   player1Color: {r: 0.2216981, g: 0.44339633, b: 0.8867924, a: 1}
   player2Color: {r: 0.8207547, g: 0.2206746, b: 0.36069316, a: 1}
+  playerOutRange: 0
+  maxDistance: 15
   collectible: {fileID: 4487142428442181861, guid: 32be4a8f23d86ac47b154b02092be55b,
     type: 3}
   items:

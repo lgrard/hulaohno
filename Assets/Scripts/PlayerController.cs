@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 input;
     private float blinkingTime = 0.05f;
     private float invincibilityTime = 1f; 
+    [SerializeField] float gravityAmount = 1.5f;
 
     [Header("Attack Values")]
     [SerializeField] LayerMask enemyLayers;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
         defMat = renderer.material;
         playerInput = GetComponent<PlayerInput>();
-        playerIndex = playerInput.playerIndex;
+        //playerIndex = playerInput.playerIndex;
         if(playerInput.actions == null)
             playerInput.actions = inputAction;
 
@@ -130,8 +131,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking && !isDashing)
         {            
-            //rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
-            
             #region variables
             Vector3 camForward = camContainer.transform.forward;
             Vector3 camRight = camContainer.transform.right;
@@ -140,12 +139,16 @@ public class PlayerController : MonoBehaviour
             #endregion
 
             //Move player's RigidBody
-            if(isGrounded)
+            if (isGrounded)
                 rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
 
             else
-                rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, rb.velocity.y, DesiredPosition.z * speed * airControlAmount);
+            {
+                float gravity = 0f;
 
+                gravity = rb.velocity.y - Time.deltaTime * gravityAmount;
+                rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, gravity, DesiredPosition.z * speed * airControlAmount);
+            }
 
             //Rotate player's Mesh
             if (DesiredPosition != Vector3.zero && isGrounded)

@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
     public Color player1Color;
     public Color player2Color;
 
+    [Header("Player distance")]
+    public bool playerOutRange = false;
+    [SerializeField] float maxDistance = 27f;
+
     [Header("Collectible")]
     [SerializeField] GameObject collectible;
     [SerializeField] GameObject[] items;
@@ -72,6 +76,9 @@ public class GameManager : MonoBehaviour
 
         if (inputManager.playerCount == 2 && inputManager.joiningEnabled)
             inputManager.DisableJoining();
+
+
+        DistanceCheck();
     }
 
     public void TakeDamage1()
@@ -191,6 +198,20 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void DistanceCheck()
+    {
+        if (player0 != null && player1 != null && player0.gameObject.activeSelf && player1.gameObject.activeSelf)
+        {
+            if(Vector3.Distance(player0.transform.position, player1.transform.position) < maxDistance)
+                playerOutRange = false;
+            else
+                playerOutRange = true;
+        }
+
+        else
+            playerOutRange = false;
     }
 
     private void OnDrawGizmos()

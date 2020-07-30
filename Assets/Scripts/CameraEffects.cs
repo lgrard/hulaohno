@@ -9,6 +9,13 @@ public class CameraEffects : MonoBehaviour
     [SerializeField] GameObject cameraContainer;
     [SerializeField] float smoothingAmount = 0.95f;
     [SerializeField] GameObject cameraTarget;
+
+    [Header("Distance management")]
+    [SerializeField] BoxCollider wallL = null;
+    [SerializeField] BoxCollider wallR = null;
+    [SerializeField] LineRenderer distanceLine;
+    [SerializeField] float lineOffset = 0.5f;
+
     private GameManager gameManager;
     private Vector3 offset;
     private Camera cam;
@@ -33,6 +40,8 @@ public class CameraEffects : MonoBehaviour
 
     private void FixedUpdate()
     {
+        WallSetting();
+
         if (gameManager.player0 != null && gameManager.player1 != null)
             cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
 
@@ -52,6 +61,25 @@ public class CameraEffects : MonoBehaviour
             cam.transform.rotation = Quaternion.Slerp(Quaternion.Euler(desiredRotation), cam.transform.rotation,smoothingAmount);
         }
     }
+
+    void WallSetting()
+    {
+        wallL.enabled = gameManager.playerOutRange;
+        wallR.enabled = gameManager.playerOutRange;
+
+        distanceLine.enabled = gameManager.playerOutRange;
+
+        if (distanceLine.enabled)
+        {
+            Vector3 player0Pos = new Vector3(gameManager.player0.transform.position.x, gameManager.player0.transform.position.y + lineOffset, gameManager.player0.transform.position.z);
+            Vector3 player1Pos = new Vector3(gameManager.player1.transform.position.x, gameManager.player1.transform.position.y + lineOffset, gameManager.player1.transform.position.z);
+
+            distanceLine.SetPosition(0, player0Pos);
+            distanceLine.SetPosition(1, Vector3.Lerp(player0Pos, player1Pos, 0.5f));
+            distanceLine.SetPosition(2, player1Pos);
+        }
+    }
+
 
     // Shake Function
     public IEnumerator Shake (float Duration, float Force)

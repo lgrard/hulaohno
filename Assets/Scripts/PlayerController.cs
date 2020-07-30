@@ -130,8 +130,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking && !isDashing)
         {            
-            //rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
-            
             #region variables
             Vector3 camForward = camContainer.transform.forward;
             Vector3 camRight = camContainer.transform.right;
@@ -140,12 +138,11 @@ public class PlayerController : MonoBehaviour
             #endregion
 
             //Move player's RigidBody
-            if(isGrounded)
+            if (isGrounded)
                 rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
 
             else
                 rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, rb.velocity.y, DesiredPosition.z * speed * airControlAmount);
-
 
             //Rotate player's Mesh
             if (DesiredPosition != Vector3.zero && isGrounded)

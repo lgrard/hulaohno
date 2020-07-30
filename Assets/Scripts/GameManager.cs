@@ -202,13 +202,16 @@ public class GameManager : MonoBehaviour
 
     private void DistanceCheck()
     {
-        if (player0 != null && player1 != null)
+        if (player0 != null && player1 != null && player0.gameObject.activeSelf && player1.gameObject.activeSelf)
         {
             if(Vector3.Distance(player0.transform.position, player1.transform.position) < maxDistance)
                 playerOutRange = false;
             else
                 playerOutRange = true;
         }
+
+        else
+            playerOutRange = false;
     }
 
     private void OnDrawGizmos()

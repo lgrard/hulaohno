@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] float speed;
+    [SerializeField] float delay = 2f;
     private GameObject platform;
     [SerializeField] Transform waypointsA;
     [SerializeField] Transform waypointsB;
@@ -21,18 +22,28 @@ public class MovingPlatform : MonoBehaviour
     {
         platform.transform.localPosition = Vector3.Lerp(waypointsA.localPosition, waypointsB.localPosition, progress);
 
-        if(aToB)
-            progress += Time.deltaTime* speed;
-
-        else
-            progress -= Time.deltaTime * speed;
-
-        if (progress <= 0)
-            aToB = true;
-
-        else if (progress >= 1)
-            aToB = false;
+        StartCoroutine(Move());
     }
+
+    //add delay to the platform movement
+    private IEnumerator Move()
+    {
+        if (progress <= 0.005 && progress >= -0.005 || progress >= 0.995 && progress <= 1.005)
+            yield return new WaitForSeconds(delay);
+        
+            if (aToB)
+                progress += Time.deltaTime * speed;
+
+            else
+                progress -= Time.deltaTime * speed;
+
+            if (progress <= 0)
+                aToB = true;
+
+            else if (progress >= 1)
+                aToB = false;
+    }
+
 
     private void OnDrawGizmos()
     {

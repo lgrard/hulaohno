@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
     {
         if (player0 != null && player1 != null)
         {
-            if (playerToRespawn = player0)
+            if (playerToRespawn == player0)
             {
                 respawnStamp1 = respawnTime;
 

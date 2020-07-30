@@ -10115,7 +10115,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587487610275932448}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -10170,6 +10170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59acc96815630ac42a5e29ac13f1a175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 768
   size: 0.6
 --- !u!1 &2019089414239244031
 GameObject:
@@ -49546,7 +49549,7 @@ MonoBehaviour:
   HP: 0
   jumpHeight: 500
   speed: 10
-  airControlAmount: 0.5
+  airControlAmount: 0.75
   groundLayer:
     serializedVersion: 2
     m_Bits: 1280
@@ -49554,6 +49557,7 @@ MonoBehaviour:
   dashPush: 25
   dashDuration: 0.15
   dashCooldown: 0.5
+  gravityAmount: 50
   enemyLayers:
     serializedVersion: 2
     m_Bits: 512

@@ -104,7 +104,7 @@ public class CameraCheckPoint : MonoBehaviour
         if (playerInsideTrigger && !blockTriggered)
         {
             Collider[] colliders = Physics.OverlapBox(zonePosition, triggerSize / 2, Quaternion.identity, playerLayer);
-            if(colliders.Length == 1)
+            if(colliders.Length == 1 && gameManager.player0 != null && gameManager.player1 != null)
             {
                 if (colliders[0].gameObject.GetComponent<PlayerController>().playerIndex == 0)
                     gameManager.player1.transform.position = gameManager.player0.playerSpawnPoint.position;

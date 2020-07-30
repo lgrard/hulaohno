@@ -9,6 +9,7 @@ public class PlayerIndicator : MonoBehaviour
     Camera cam;
     SpriteRenderer spriteRenderer;
 
+    [SerializeField] LayerMask layerMask;
     [SerializeField] float size = 0.6f;
     private float distance;
 
@@ -29,6 +30,11 @@ public class PlayerIndicator : MonoBehaviour
 
         transform.LookAt(cam.transform);
         transform.localScale = new Vector3(distance,distance,distance);
+    }
+
+    private void FixedUpdate()
+    {
+        spriteRenderer.enabled = Physics.Linecast(gameObject.transform.position, cam.transform.position,layerMask);
     }
 
     private void ColorSet()

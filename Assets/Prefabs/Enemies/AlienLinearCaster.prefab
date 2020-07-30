@@ -9810,7 +9810,7 @@ MonoBehaviour:
   isMelee: 0
   isLinearCaster: 1
   isRadialCaster: 0
-  gustNumber: 3
+  gustNumber: 1
   radialProjectilesNumber: 4
   radius: 1
   casterRange: 30

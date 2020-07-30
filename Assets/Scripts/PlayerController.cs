@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
         defMat = renderer.material;
         playerInput = GetComponent<PlayerInput>();
-        playerIndex = playerInput.playerIndex;
+        //playerIndex = playerInput.playerIndex;
         if(playerInput.actions == null)
             playerInput.actions = inputAction;
 

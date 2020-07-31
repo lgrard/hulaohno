@@ -28,20 +28,24 @@ public class MovingPlatform : MonoBehaviour
     //add delay to the platform movement
     private IEnumerator Move()
     {
-        if (progress <= 0.005 && progress >= -0.005 || progress >= 0.995 && progress <= 1.005)
+        if (aToB && progress <= 1)
+            progress += Time.deltaTime * speed;
+
+        else if(!aToB && progress >= 0)
+            progress -= Time.deltaTime * speed;
+
+
+        if (progress <= 0)
+        {
             yield return new WaitForSeconds(delay);
-        
-            if (aToB)
-                progress += Time.deltaTime * speed;
+            aToB = true;
+        }
 
-            else
-                progress -= Time.deltaTime * speed;
-
-            if (progress <= 0)
-                aToB = true;
-
-            else if (progress >= 1)
-                aToB = false;
+        else if (progress >= 1)
+        {
+            yield return new WaitForSeconds(delay);
+            aToB = false;
+        }
     }
 
 

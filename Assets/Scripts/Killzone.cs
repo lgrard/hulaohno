@@ -8,13 +8,9 @@ public class Killzone : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.GetType() == typeof(CapsuleCollider))
+        if (collider.TryGetComponent(out PlayerController playerController) && collider.GetType() == typeof(CapsuleCollider))
         {
-            if (collider.gameObject.CompareTag("Player"))
-            {
-                collider.GetComponent<PlayerController>().TakeDamage(damage);
-            }
+            playerController.TakeDamage(damage);
         }
-        
     }
 }

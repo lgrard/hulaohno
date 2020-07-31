@@ -7,7 +7,7 @@ public class ShieldItem : MonoBehaviour
     [SerializeField] ParticleSystem p_take;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out PlayerController playerController))
+        if (other.TryGetComponent(out PlayerController playerController) && other.GetType() == typeof(CapsuleCollider))
         {
             GetComponent<BoxCollider>().enabled = false;
             playerController.i_shield.SetActive(true);

@@ -49,9 +49,8 @@ public class Gears : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.TryGetComponent(out PlayerController playerController) && collision.GetType() == typeof(CapsuleCollider))
         {
-
             gameObject.GetComponent<Animator>().SetTrigger("Take");
             audioSource.pitch = Random.Range(0.8f, 1f);
             audioSource.Play();
@@ -62,7 +61,7 @@ public class Gears : MonoBehaviour
             if (gameManager.currentEvent != null && gameManager.currentEvent.currentType == Events.EventsType.pickUpItems)
                 gameManager.currentEvent.amountLeft += 1;
 
-            if(collision.gameObject.GetComponent<PlayerController>().playerIndex == 0)
+            if(playerController.playerIndex == 0)
                 gameManager.Scoring1(scoreAmount);
             else
                 gameManager.Scoring2(scoreAmount);

@@ -146,8 +146,8 @@ public class Enemy : MonoBehaviour
         }
 
         StartCoroutine(Blink());
-        StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform));
-        gameManager.AddItems(transform, itemDropRate);
+        StartCoroutine(gameManager.AddCollectible(collectibleAmount,transform, 2f));
+        gameManager.AddItems(transform, itemDropRate,2f);
 
         if (lastHitIndex == 0)
             gameManager.Scoring1(scoreAmount);

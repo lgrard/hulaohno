@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private float blinkingTime = 0.05f;
     private float invincibilityTime = 1f; 
     [SerializeField] float gravityAmount = 1.5f;
+    [SerializeField] float airContactRadius = 1.5f;
 
     [Header("Attack Values")]
     [SerializeField] LayerMask enemyLayers;
@@ -144,10 +145,14 @@ public class PlayerController : MonoBehaviour
 
             else
             {
+                bool airContact = Physics.CheckSphere(transform.position, airContactRadius,groundLayer);
                 float gravity = 0f;
-
                 gravity = rb.velocity.y - Time.deltaTime * gravityAmount;
-                rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, gravity, DesiredPosition.z * speed * airControlAmount);
+
+                if (!airContact)
+                    rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, gravity, DesiredPosition.z * speed * airControlAmount);
+                else
+                    rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
             }
 
             //Rotate player's Mesh
@@ -374,7 +379,12 @@ public class PlayerController : MonoBehaviour
 
         foreach (Collider hit in hitEnemies)
         {
-            hit.GetComponent<Enemy>().TakeDamage(attack.attackDamage,playerIndex);
+            if (hit.TryGetComponent(out Enemy enemy))
+                enemy.TakeDamage(attack.attackDamage,playerIndex);
+
+            if (hit.TryGetComponent(out Destructible destructible))
+                destructible.OpenChest(attack.attackDamage);
+
             effectManager.p_impact.transform.position = hit.transform.position;
             effectManager.p_impact.Play();
         }
@@ -414,10 +424,10 @@ public class PlayerController : MonoBehaviour
     //Rumble management
     private IEnumerator Rumble(float low, float high, float duration)
     {
+        InputDevice playerDevice = playerInput.devices[playerIndex];
+        
         if (!isRumbling)
         {
-            InputDevice playerDevice = playerInput.devices[playerIndex];
-
             isRumbling = true;
             var gamePad = (Gamepad)InputSystem.GetDeviceById(playerDevice.deviceId);
             gamePad.SetMotorSpeeds(low, high);

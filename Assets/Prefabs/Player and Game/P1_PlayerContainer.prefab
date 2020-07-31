@@ -49558,9 +49558,10 @@ MonoBehaviour:
   dashDuration: 0.15
   dashCooldown: 0.5
   gravityAmount: 20
+  airContactRadius: 1.4
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   attackDepthMax: 3
   attackTimerMax: 0.3
   attackStepAmount: 5

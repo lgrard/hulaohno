@@ -132,26 +132,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator AddCollectible(int collectibleAmount, Transform origin)
+    public IEnumerator AddCollectible(int collectibleAmount, Transform origin, float dispertion)
     {
         for (int i = 0; i < collectibleAmount; i++)
         {
-            Vector3 position = Random.insideUnitSphere * 2 + origin.position;
+            Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
             position = new Vector3(position.x, origin.position.y, position.z);
             Instantiate(collectible, position, Quaternion.identity);
             yield return new WaitForEndOfFrame();
         }
     }
 
-    public void AddItems(Transform origin, float dropRate)
+    public void AddItems(Transform origin, float dropRate, float dispertion)
     {
         float randomPick = Random.Range(0f, 1f);
 
         if (randomPick <= dropRate)
         {
-            Vector3 position = Random.insideUnitSphere * 2 + origin.position;
+            Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
             position = new Vector3(position.x, origin.position.y, position.z);
             Instantiate(items[Random.Range(0,items.Length)], position, Quaternion.identity);
+        }
+    }
+
+    public IEnumerator AddSpecificItems(Transform origin, GameObject[] itemToAdd, float dispertion)
+    {
+        if(itemToAdd.Length > 0)
+        {
+            foreach(GameObject item in itemToAdd)
+            {
+                Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
+                position = new Vector3(position.x, origin.position.y, position.z);
+                Instantiate(item, position, Quaternion.identity);
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 
@@ -162,7 +176,7 @@ public class GameManager : MonoBehaviour
     {
         if (player0 != null && player1 != null)
         {
-            if (playerToRespawn = player0)
+            if (playerToRespawn == player0)
             {
                 respawnStamp1 = respawnTime;
 

@@ -22,6 +22,7 @@ public class Destructible : MonoBehaviour
 
     [Header("Current chest type")]
     [SerializeField] ChestType currentType;
+    [SerializeField] bool getsDestroyed = true;
 
     [Header("Colectible options")]
     [SerializeField] int collectibleAmount;
@@ -64,8 +65,12 @@ public class Destructible : MonoBehaviour
                     break;
             }
 
+            if (getsDestroyed)
+            {
+                Destroy(gameObject, timeToDespawn);
+            }
+            
             gameObject.GetComponent<BoxCollider>().enabled = false;
-            Destroy(gameObject, timeToDespawn);
 
             audioSource.Play();
             anim.SetTrigger("Opens");

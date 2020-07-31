@@ -49552,7 +49552,7 @@ MonoBehaviour:
   airControlAmount: 0.75
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 2304
   dashAmount: 40
   dashPush: 25
   dashDuration: 0.15

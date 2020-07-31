@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
         HP = maxHp;
         rb = gameObject.GetComponent<Rigidbody>();
-        groundLayer = LayerMask.GetMask("Ground");
+        //groundLayer = LayerMask.GetMask("Ground");
         meshAnim = mesh.GetComponent<Animator>();
         audioSource = gameObject.GetComponent<AudioSource>();
 

@@ -31,9 +31,11 @@ public class Destructible : MonoBehaviour
 
     private GameManager gameManager;
     private Animator anim;
+    private AudioSource audioSource;
 
     private void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         anim = gameObject.GetComponent<Animator>();
         HP = maxHp;
@@ -65,6 +67,7 @@ public class Destructible : MonoBehaviour
             gameObject.GetComponent<BoxCollider>().enabled = false;
             Destroy(gameObject, timeToDespawn);
 
+            audioSource.Play();
             anim.SetTrigger("Opens");
             p_opens.Play();
         }
@@ -72,6 +75,7 @@ public class Destructible : MonoBehaviour
         else
         {
             HP -= damage;
+            audioSource.Play();
             anim.SetTrigger("TakeDamage");
         }
     }

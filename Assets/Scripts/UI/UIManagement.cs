@@ -36,6 +36,10 @@ public class UIManagement : MonoBehaviour
     */
     #endregion
 
+    [Header("Win menu")]
+    [SerializeField] GameObject winMenu;
+    [SerializeField] Button nextLevelButton;
+
     [Header("Pause menu")]
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject lastSelectedObject;
@@ -181,12 +185,20 @@ public class UIManagement : MonoBehaviour
             toggle.OnSelect(null);
     }
 
+    public void OpenWin()
+    {
+        winMenu.SetActive(true);
+        eventSystem.SetSelectedGameObject(nextLevelButton.gameObject);
+        nextLevelButton.OnSelect(null);
+    }
+
     //Pause menu methods
-    public void OnResume() => gameManager.isPaused = false;
+    public void OnResume() => gameManager.PauseGame();
     public void OnQuit()
     {
         gameManager.isPaused = false;
         SceneManager.LoadScene("MainMenu");
     }
     public void OnRestart() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    public void OnNextLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
 }

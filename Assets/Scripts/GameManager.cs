@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
     public bool p2IsDead = false;
 
     public bool isPaused = false;
+    public bool isEnded = false;
 
     //Init
     private void Awake()
@@ -96,11 +97,6 @@ public class GameManager : MonoBehaviour
 
         if (inputManager.playerCount == 2 && inputManager.joiningEnabled)
             inputManager.DisableJoining();
-
-        if (isPaused)
-            Time.timeScale = 0f;
-        else
-            Time.timeScale = 1f;
 
         ComboManagement();
         DistanceCheck();
@@ -289,9 +285,33 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        isPaused = !isPaused;
-        if(isPaused)
-            uiManagement.OpenMenu();
+        if (!isEnded)
+        {
+            isPaused = !isPaused;
+            if(isPaused)
+                uiManagement.OpenMenu();
+
+            if (isPaused)
+                Time.timeScale = 0f;
+            else
+                Time.timeScale = 1f;
+        }
+    }
+
+    public void LevelEnd()
+    {
+        if (!isEnded)
+        {
+            if(player0!=null)
+                player0.enabled = false;
+            if (player1 != null)
+                player1.enabled = false;
+
+            isEnded = true;
+            Time.timeScale = 0;
+
+            uiManagement.OpenWin();
+        }
     }
 
     private void AudioManagement()

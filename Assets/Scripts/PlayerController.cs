@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
     //Jump Method
     private void OnJump()
     {
-        if(isGrounded && !isAttacking && !isDashing && !gameManager.isPaused)
+        if(isGrounded && !isAttacking && !isDashing && !gameManager.isPaused && !gameManager.isEnded)
         {
             Vector3 upDir = new Vector3(0, jumpHeight, 0);
             rb.AddForce(upDir);
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
     //Dash input method
     private void OnDash()
     {
-        if(canDash && !gameManager.isPaused)
+        if(canDash && !gameManager.isPaused && !gameManager.isEnded)
             StartCoroutine(HandleDash());
 
         if(gameManager.isPaused)

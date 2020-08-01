@@ -150,9 +150,9 @@ public class Enemy : MonoBehaviour
         gameManager.AddItems(transform, itemDropRate,2f);
 
         if (lastHitIndex == 0)
-            gameManager.Scoring1(scoreAmount);
+            gameManager.Scoring1(scoreAmount, true);
         else
-            gameManager.Scoring2(scoreAmount);
+            gameManager.Scoring2(scoreAmount, true);
 
         anim.SetTrigger("Dies");
         p_die.Play();

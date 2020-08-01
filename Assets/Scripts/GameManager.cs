@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public int score2;
     public int combo1;
     public int combo2;
+    [SerializeField] float comboStampMax = 10f;
+    private float comboStamp1;
+    private float comboStamp2;
 
     [Header("Players scripts")]
     public PlayerController player0;
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
         if (inputManager.playerCount == 2 && inputManager.joiningEnabled)
             inputManager.DisableJoining();
 
-
+        ComboManagement();
         DistanceCheck();
     }
 
@@ -103,16 +106,31 @@ public class GameManager : MonoBehaviour
         p2HasHealed = true;
     }
 
-    public void Scoring1(int amount)
+    public void Scoring1(int amount, bool combo)
     {
+        if (combo)
+        {
+            combo1 += 1;
+            comboStamp1 = comboStampMax;
+            uiManagement.ComboPlus1();
+        }
+
+        score1 += amount * combo1;
         uiManagement.ScorePlus1();
-        score1 += amount;
     }
-    public void Scoring2(int amount)
+    public void Scoring2(int amount, bool combo)
     {
+        if (combo)
+        {
+            combo2 += 1;
+            comboStamp2 = comboStampMax;
+            uiManagement.ComboPlus2();
+        }
+
+        score2 += amount * combo2;
         uiManagement.ScorePlus2();
-        score2 += amount;
     }
+
 
     public void GetThroughSpawner()
     {
@@ -226,6 +244,21 @@ public class GameManager : MonoBehaviour
 
         else
             playerOutRange = false;
+    }
+
+    private void ComboManagement()
+    {
+        if (combo1 > 0 && comboStamp1 > 0)
+            comboStamp1 -= Time.deltaTime;
+
+        else if (combo1 > 0 && comboStamp1 <= 0)
+            combo1 = 0;
+
+        if (combo2 > 0 && comboStamp2 > 0)
+            comboStamp2 -= Time.deltaTime;
+
+        else if (combo2 > 0 && comboStamp2 <= 0)
+            combo2 = 0;
     }
 
     private void OnDrawGizmos()

@@ -45,6 +45,10 @@ public class UIManagement : MonoBehaviour
     [SerializeField] Text scoreCounter1;
     [SerializeField] Text scoreCounter2;
 
+    [Header("Combo counter")]
+    [SerializeField] Text comboCounter1;
+    [SerializeField] Text comboCounter2;
+
     [Header("Event bar")]
     public GameObject eventBar;
     public Text eventObjective;
@@ -74,12 +78,12 @@ public class UIManagement : MonoBehaviour
         //Display score and health if player is assigned        
 
         if (player1 != null)
-            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1, gameManager.respawnStamp1);
+            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1, gameManager.respawnStamp1, gameManager.combo1);
         else
             p1HPBar.SetActive(false);
 
         if (player2 != null)
-            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2, respawnTimer2, gameManager.respawnStamp2);
+            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2, respawnTimer2, gameManager.respawnStamp2, gameManager.combo2);
         else
             p2HPBar.SetActive(false);
     }
@@ -87,6 +91,10 @@ public class UIManagement : MonoBehaviour
     //Play an animation when score increases
     public void ScorePlus1() => p1HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
     public void ScorePlus2() => p2HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
+
+    //Play an animation when combo increases
+    public void ComboPlus1() => p1HPBar.GetComponent<Animator>().SetTrigger("ComboPlus");
+    public void ComboPlus2() => p2HPBar.GetComponent<Animator>().SetTrigger("ComboPlus");
 
     //Play an animation when takes damage
     public void Damage1() => p1HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
@@ -96,7 +104,7 @@ public class UIManagement : MonoBehaviour
     public void Heal2() => p2HPBar.GetComponent<Animator>().SetTrigger("Heal");
 
     //Initialize and manage the HP bar and score display
-    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer, Text respawnTimer, float respawnStamp)
+    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer, Text respawnTimer, float respawnStamp, int playerCombo)
     {
         //Hp setting
         globalBar.SetActive(true);
@@ -109,6 +117,8 @@ public class UIManagement : MonoBehaviour
 
         //Score setting
         scoreContainer.text = "SCORE - " + playerScore.ToString("000000");
+        //Combo setting
+        comboCounter1.text = "x" + playerCombo.ToString();
 
         //Respawn timer setting
         if (Mathf.CeilToInt(respawnStamp) > 0)
@@ -119,6 +129,8 @@ public class UIManagement : MonoBehaviour
 
         else
             respawnTimer.enabled = false;
+
+        comboCounter1.enabled = playerCombo >= 1;
 
         #region old bar
         /*

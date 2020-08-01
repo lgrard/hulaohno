@@ -62,9 +62,9 @@ public class Gears : MonoBehaviour
                 gameManager.currentEvent.amountLeft += 1;
 
             if(playerController.playerIndex == 0)
-                gameManager.Scoring1(scoreAmount);
+                gameManager.Scoring1(scoreAmount, false);
             else
-                gameManager.Scoring2(scoreAmount);
+                gameManager.Scoring2(scoreAmount, false);
 
             isTaken = true;
         }

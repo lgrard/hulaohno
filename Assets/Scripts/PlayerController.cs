@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool somethingForward;
 
 
+    //Initialize
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -86,13 +87,10 @@ public class PlayerController : MonoBehaviour
         else
             gameManager.player1 = this;
     }
-
     private void OnEnable()
     {
         Spawn();
     }
-
-    //Initialize
     void Start()
     {
         airControlAmount = Mathf.Clamp(airControlAmount, 0f, 1f);
@@ -124,7 +122,6 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
         AttackState();
     }
-
     private void FixedUpdate()
     {
         HandleMovement();
@@ -188,7 +185,7 @@ public class PlayerController : MonoBehaviour
     //Jump Method
     private void OnJump()
     {
-        if(isGrounded && !isAttacking && !isDashing)
+        if(isGrounded && !isAttacking && !isDashing && !gameManager.isPaused)
         {
             Vector3 upDir = new Vector3(0, jumpHeight, 0);
             rb.AddForce(upDir);
@@ -203,12 +200,6 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics.Raycast(new Ray(gameObject.transform.position, gameObject.transform.up * -1),groundCheckDistance,groundLayer);
 
         meshAnim.SetBool("Grounded", isGrounded);
-    }
-
-    //Draw various things on Gizmo
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawLine(gameObject.transform.position, new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y - groundCheckDistance, gameObject.transform.position.z));
     }
 
     public void TakeDamage(int damageTaken)
@@ -289,8 +280,11 @@ public class PlayerController : MonoBehaviour
     //Dash input method
     private void OnDash()
     {
-        if(canDash)
+        if(canDash && !gameManager.isPaused)
             StartCoroutine(HandleDash());
+
+        if(gameManager.isPaused)
+            gameManager.PauseGame();
     }
     
     //Dash handling method
@@ -373,6 +367,8 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Attack(attackArray[4]));
         }
     }
+
+    private void OnPause() => gameManager.PauseGame();
 
     //Reference attack method
     private IEnumerator Attack(Attack attack)
@@ -530,5 +526,12 @@ public class PlayerController : MonoBehaviour
             else if (gameManager.player0 != null || gameManager.player0.gameObject.activeSelf)
                 transform.position = gameManager.player0.playerSpawnPoint.position;
         }
+    }
+
+
+    //Draw various things on Gizmo
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawLine(gameObject.transform.position, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - groundCheckDistance, gameObject.transform.position.z));
     }
 }

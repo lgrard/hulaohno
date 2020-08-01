@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Audio")]
+    public float audioVolume;
+    public float musicVolume;
+    [SerializeField] AudioSource musicManager;
+
     [Header("Players prefabs")]
     public GameObject player0prefab;
     public GameObject player1prefab;
@@ -57,18 +62,30 @@ public class GameManager : MonoBehaviour
     public bool p1IsDead = false;
     public bool p2IsDead = false;
 
+    public bool isPaused = false;
+
+    //Init
     private void Awake()
     {
+        if(!PlayerPrefs.HasKey("audioVolumePref"))
+            PlayerPrefs.SetFloat("audioVolumePref", 1);
+
+        if (!PlayerPrefs.HasKey("musicVolumePref"))
+            PlayerPrefs.SetFloat("musicVolumePref", 1);
+
+        audioVolume = PlayerPrefs.GetFloat("audioVolumePref");
+        musicVolume = PlayerPrefs.GetFloat("musicVolumePref");
+
         inputManager = GetComponent<PlayerInputManager>();
         playerAssignement = gameObject.GetComponent<PlayerAssignement>();
         playerAssignement.SpawnPlayers(inputManager);
     }
-
     private void Start()
     {
         uiManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
     }
 
+    //Unity Cycle
     private void Update()
     {
         if (inputManager.playerCount == 0 && inputManager.joiningEnabled)
@@ -80,10 +97,17 @@ public class GameManager : MonoBehaviour
         if (inputManager.playerCount == 2 && inputManager.joiningEnabled)
             inputManager.DisableJoining();
 
+        if (isPaused)
+            Time.timeScale = 0f;
+        else
+            Time.timeScale = 1f;
+
         ComboManagement();
         DistanceCheck();
+        AudioManagement();
     }
 
+    #region Dual methods
     public void TakeDamage1()
     {
         uiManagement.Damage1();
@@ -131,64 +155,9 @@ public class GameManager : MonoBehaviour
         uiManagement.ScorePlus2();
     }
 
-
-    public void GetThroughSpawner()
-    {
-        StopCoroutine(Respawn(player0));
-        StopCoroutine(Respawn(player1));
-
-        if (player0 != null)
-        {
-            player0.GainHP(player0.maxHp);
-            player0.gameObject.SetActive(true);
-        }
-
-        if(player1 != null)
-        {
-            player1.GainHP(player0.maxHp);
-            player1.gameObject.SetActive(true);
-        }
-    }
-
-    public IEnumerator AddCollectible(int collectibleAmount, Transform origin, float dispertion)
-    {
-        for (int i = 0; i < collectibleAmount; i++)
-        {
-            Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
-            position = new Vector3(position.x, origin.position.y, position.z);
-            Instantiate(collectible, position, Quaternion.identity);
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-    public void AddItems(Transform origin, float dropRate, float dispertion)
-    {
-        float randomPick = Random.Range(0f, 1f);
-
-        if (randomPick <= dropRate)
-        {
-            Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
-            position = new Vector3(position.x, origin.position.y, position.z);
-            Instantiate(items[Random.Range(0,items.Length)], position, Quaternion.identity);
-        }
-    }
-
-    public IEnumerator AddSpecificItems(Transform origin, GameObject[] itemToAdd, float dispertion)
-    {
-        if(itemToAdd.Length > 0)
-        {
-            foreach(GameObject item in itemToAdd)
-            {
-                Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
-                position = new Vector3(position.x, origin.position.y, position.z);
-                Instantiate(item, position, Quaternion.identity);
-                yield return new WaitForEndOfFrame();
-            }
-        }
-    }
-
     public void Respawn1() => StartCoroutine(Respawn(player0));
     public void Respawn2() => StartCoroutine(Respawn(player1));
+    #endregion
 
     private IEnumerator Respawn(PlayerController playerToRespawn)
     {
@@ -227,6 +196,63 @@ public class GameManager : MonoBehaviour
             Restart();
     }
 
+    public void GetThroughSpawner()
+    {
+        StopCoroutine(Respawn(player0));
+        StopCoroutine(Respawn(player1));
+
+        if (player0 != null)
+        {
+            player0.GainHP(player0.maxHp);
+            player0.gameObject.SetActive(true);
+        }
+
+        if(player1 != null)
+        {
+            player1.GainHP(player0.maxHp);
+            player1.gameObject.SetActive(true);
+        }
+    }
+
+    #region Add items and collectibles methods
+    public IEnumerator AddCollectible(int collectibleAmount, Transform origin, float dispertion)
+    {
+        for (int i = 0; i < collectibleAmount; i++)
+        {
+            Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
+            position = new Vector3(position.x, origin.position.y, position.z);
+            Instantiate(collectible, position, Quaternion.identity);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public void AddItems(Transform origin, float dropRate, float dispertion)
+    {
+        float randomPick = Random.Range(0f, 1f);
+
+        if (randomPick <= dropRate)
+        {
+            Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
+            position = new Vector3(position.x, origin.position.y, position.z);
+            Instantiate(items[Random.Range(0,items.Length)], position, Quaternion.identity);
+        }
+    }
+
+    public IEnumerator AddSpecificItems(Transform origin, GameObject[] itemToAdd, float dispertion)
+    {
+        if(itemToAdd.Length > 0)
+        {
+            foreach(GameObject item in itemToAdd)
+            {
+                Vector3 position = Random.insideUnitSphere * dispertion + origin.position;
+                position = new Vector3(position.x, origin.position.y, position.z);
+                Instantiate(item, position, Quaternion.identity);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+    }
+    #endregion
+
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -261,6 +287,23 @@ public class GameManager : MonoBehaviour
             combo2 = 0;
     }
 
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
+        if(isPaused)
+            uiManagement.OpenMenu();
+    }
+
+    private void AudioManagement()
+    {
+        AudioListener.volume = audioVolume;
+        musicManager.volume = musicVolume;
+
+        PlayerPrefs.SetFloat("audioVolumePref", audioVolume);
+        PlayerPrefs.SetFloat("musicVolumePref", musicVolume);
+    }
+
+    //Draw various things on Gizmo
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;

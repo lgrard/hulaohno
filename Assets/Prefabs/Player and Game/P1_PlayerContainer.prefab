@@ -49577,7 +49577,7 @@ MonoBehaviour:
   rumbleActive: 0
   i_shield: {fileID: 7803965094228671374}
   shieldActive: 0
-  groundCheckDistance: 0.1
+  somethingForward: 0
 --- !u!1 &7803965094228671374
 GameObject:
   m_ObjectHideFlags: 0

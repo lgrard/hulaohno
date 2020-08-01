@@ -73,6 +73,14 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=0.21)""
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ead5f08-57fd-466a-b463-c7433ffeef27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -273,6 +281,28 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""action"": ""SpecialCharge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81bde7ee-070a-400a-9e16-728e62e8f665"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""443e67ef-0485-42e1-a9e1-3ce3db12ba1c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -311,6 +341,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_SpecialCharge = m_Player.FindAction("SpecialCharge", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -367,6 +398,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Join;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_SpecialCharge;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @ControlScheme m_Wrapper;
@@ -378,6 +410,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         public InputAction @Join => m_Wrapper.m_Player_Join;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @SpecialCharge => m_Wrapper.m_Player_SpecialCharge;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -408,6 +441,9 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 @SpecialCharge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialCharge;
                 @SpecialCharge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialCharge;
                 @SpecialCharge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpecialCharge;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -433,6 +469,9 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 @SpecialCharge.started += instance.OnSpecialCharge;
                 @SpecialCharge.performed += instance.OnSpecialCharge;
                 @SpecialCharge.canceled += instance.OnSpecialCharge;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -464,5 +503,6 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         void OnJoin(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnSpecialCharge(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

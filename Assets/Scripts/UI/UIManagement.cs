@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 
 public class UIManagement : MonoBehaviour
 {
@@ -33,6 +36,15 @@ public class UIManagement : MonoBehaviour
     */
     #endregion
 
+    [Header("Pause menu")]
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject lastSelectedObject;
+    [SerializeField] EventSystem eventSystem;
+
+    [Header("Settings")]
+    [SerializeField] Slider audioSlider;
+    [SerializeField] Slider musicSlider;
+
     [Header("HP bar")]
     [SerializeField] GameObject p1HPBar;
     [SerializeField] GameObject p2HPBar;
@@ -60,6 +72,8 @@ public class UIManagement : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        audioSlider.value = gameManager.audioVolume;
+        musicSlider.value = gameManager.musicVolume;
 
         #region old bar
         /*
@@ -72,11 +86,18 @@ public class UIManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        gameManager.audioVolume = audioSlider.value;
+        gameManager.musicVolume = musicSlider.value;
+
         player1 = gameManager.player0;
         player2 = gameManager.player1;
 
-        //Display score and health if player is assigned        
+        pauseMenu.SetActive(gameManager.isPaused);
 
+        if (pauseMenu.activeSelf)
+            lastSelectedObject = eventSystem.currentSelectedGameObject;
+
+        //Display score and health if player is assigned        
         if (player1 != null)
             BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1, gameManager.respawnStamp1, gameManager.combo1);
         else
@@ -146,4 +167,26 @@ public class UIManagement : MonoBehaviour
         */
         #endregion
     }
+
+    public void OpenMenu()
+    {
+        eventSystem.SetSelectedGameObject(lastSelectedObject);
+        if(lastSelectedObject.TryGetComponent<Button>(out Button button))
+            button.OnSelect(null);
+        if (lastSelectedObject.TryGetComponent<Slider>(out Slider slider))
+            slider.OnSelect(null);
+        if (lastSelectedObject.TryGetComponent<Dropdown>(out Dropdown dropDown))
+            dropDown.OnSelect(null);
+        if (lastSelectedObject.TryGetComponent<Toggle>(out Toggle toggle))
+            toggle.OnSelect(null);
+    }
+
+    //Pause menu methods
+    public void OnResume() => gameManager.isPaused = false;
+    public void OnQuit()
+    {
+        gameManager.isPaused = false;
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void OnRestart() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 }

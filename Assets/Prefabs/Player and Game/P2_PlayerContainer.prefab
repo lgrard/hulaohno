@@ -49558,7 +49558,6 @@ MonoBehaviour:
   dashDuration: 0.15
   dashCooldown: 0.5
   gravityAmount: 50
-  airContactRadius: 1.4
   enemyLayers:
     serializedVersion: 2
     m_Bits: 2560
@@ -49572,11 +49571,13 @@ MonoBehaviour:
   inputAction: {fileID: -944628639613478452, guid: 2ff868cadc31b094c807d3dfe081088a,
     type: 3}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
+  noFrictionMat: {fileID: 13400000, guid: 34b94140f52eb2646947d0d252107f36, type: 2}
   isGrounded: 0
   isAttacking: 0
   rumbleActive: 0
   i_shield: {fileID: 7803965094228671374}
   shieldActive: 0
+  somethingForward: 0
 --- !u!1 &7803965094228671374
 GameObject:
   m_ObjectHideFlags: 0

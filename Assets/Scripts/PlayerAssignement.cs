@@ -59,7 +59,7 @@ public class PlayerAssignement : MonoBehaviour
 
     void Reset(CallbackContext ctx)
     {
-        SceneManager.LoadScene("CharacterSet");
+        //SceneManager.LoadScene("CharacterSet");
     }
 
     public void SpawnPlayers(PlayerInputManager playerInputManager)

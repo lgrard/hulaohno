@@ -67,6 +67,9 @@ public class CameraCheckPoint : MonoBehaviour
     //Update method
     private void Update()
     {
+        if (blocksPlayers)
+            triggerOffset = Mathf.Clamp(triggerOffset, 6, 10000);
+
         triggerSize = new Vector3(zoneSize.x - triggerOffset, zoneSize.y, zoneSize.z - triggerOffset);
 
         wallL.transform.localScale = new Vector3(1,10,zoneSize.z);

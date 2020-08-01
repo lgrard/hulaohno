@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     private float blinkingTime = 0.05f;
     private float invincibilityTime = 1f; 
     [SerializeField] float gravityAmount = 1.5f;
-    [SerializeField] float airContactRadius = 1.5f;
 
     [Header("Attack Values")]
     [SerializeField] LayerMask enemyLayers;
@@ -46,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
+    [SerializeField] PhysicMaterial noFrictionMat;
     private Material defMat;
     private SkinnedMeshRenderer renderer;
     private Transform camContainer;
@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     private List <GameObject> targets = new List<GameObject>();
     private GameObject currenttarget;
+    private SphereCollider dashCollider;
+    private CapsuleCollider playerCollider;
 
     [Header("States")]
     public bool isGrounded;
@@ -70,8 +72,10 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     Animator meshAnim;
     Rigidbody rb;
-    float groundCheckDistance = 0.5f;
+    float groundCheckDistance = 0.25f;
     float rotationSmoothingAmount = 0.75f;
+    [SerializeField] bool somethingForward;
+
 
     private void Awake()
     {
@@ -93,16 +97,17 @@ public class PlayerController : MonoBehaviour
     {
         airControlAmount = Mathf.Clamp(airControlAmount, 0f, 1f);
 
+        dashCollider = gameObject.GetComponent<SphereCollider>();
+        playerCollider = gameObject.GetComponent<CapsuleCollider>();
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
         defMat = renderer.material;
         playerInput = GetComponent<PlayerInput>();
-        //playerIndex = playerInput.playerIndex;
-        if(playerInput.actions == null)
+
+        if (playerInput.actions == null)
             playerInput.actions = inputAction;
 
         HP = maxHp;
         rb = gameObject.GetComponent<Rigidbody>();
-        //groundLayer = LayerMask.GetMask("Ground");
         meshAnim = mesh.GetComponent<Animator>();
         audioSource = gameObject.GetComponent<AudioSource>();
 
@@ -130,6 +135,8 @@ public class PlayerController : MonoBehaviour
     //Movement method
     private void HandleMovement()
     {
+        somethingForward = Physics.Raycast(new Ray(gameObject.transform.position + new Vector3(0, 0.5f, 0), mesh.transform.forward), 3, groundLayer);
+
         if (!isAttacking && !isDashing)
         {            
             #region variables
@@ -140,19 +147,20 @@ public class PlayerController : MonoBehaviour
             #endregion
 
             //Move player's RigidBody
-            if (isGrounded)
-                rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
-
-            else
+            if (isGrounded && !somethingForward)
             {
-                bool airContact = Physics.CheckSphere(transform.position, airContactRadius,groundLayer);
+                playerCollider.material = null;
+                rb.velocity = new Vector3(DesiredPosition.x * speed, rb.velocity.y, DesiredPosition.z * speed);
+            }
+
+            else if (!isGrounded || isGrounded && somethingForward)
+            {
+                playerCollider.material = noFrictionMat;
+
                 float gravity = 0f;
                 gravity = rb.velocity.y - Time.deltaTime * gravityAmount;
 
-                if (!airContact)
-                    rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, gravity, DesiredPosition.z * speed * airControlAmount);
-                else
-                    rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
+                rb.velocity = new Vector3(DesiredPosition.x * speed * airControlAmount, gravity, DesiredPosition.z * speed * airControlAmount);
             }
 
             //Rotate player's Mesh
@@ -165,6 +173,9 @@ public class PlayerController : MonoBehaviour
             //Set player's Animator speed
             meshAnim.SetFloat("Speed", rb.velocity.magnitude);
         }
+
+        else
+            playerCollider.material = null;
 
         //Set running particles
         if (isGrounded && rb.velocity.magnitude > 2 && !effectManager.p_run.isPlaying)
@@ -291,6 +302,9 @@ public class PlayerController : MonoBehaviour
         isInvincible = true;
         meshAnim.SetBool("Dash", true);
 
+        dashCollider.enabled = false;
+        dashCollider.enabled = true;
+
         effectManager.t_dashTrail.enabled = true;
         effectManager.p_dash.Play();
         dashStamp = 0;
@@ -337,7 +351,7 @@ public class PlayerController : MonoBehaviour
                 {
                     isAttacking = true;
                     rb.velocity = mesh.transform.forward * attackStepAmount;
-                    StartCoroutine(Targetting());
+                    //StartCoroutine(Targetting());
                 }
 
                 meshAnim.SetTrigger("Punch");

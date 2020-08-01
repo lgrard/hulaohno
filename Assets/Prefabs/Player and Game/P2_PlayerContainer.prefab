@@ -49547,7 +49547,7 @@ MonoBehaviour:
   playerIndex: 1
   maxHp: 15
   HP: 0
-  jumpHeight: 500
+  jumpHeight: 750
   speed: 10
   airControlAmount: 0.75
   groundLayer:

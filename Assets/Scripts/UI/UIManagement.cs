@@ -194,11 +194,7 @@ public class UIManagement : MonoBehaviour
 
     //Pause menu methods
     public void OnResume() => gameManager.PauseGame();
-    public void OnQuit()
-    {
-        gameManager.isPaused = false;
-        SceneManager.LoadScene("MainMenu");
-    }
+    public void OnQuit() => SceneManager.LoadScene("MainMenu");
     public void OnRestart() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     public void OnNextLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
 }

@@ -75,6 +75,7 @@ public class UIManagement : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         audioSlider.value = gameManager.audioVolume;
         musicSlider.value = gameManager.musicVolume;

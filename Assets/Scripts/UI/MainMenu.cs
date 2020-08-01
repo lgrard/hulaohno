@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         anim = gameObject.GetComponent<Animator>();
         playerAssignement = gameObject.GetComponent<PlayerAssignement>();
     }

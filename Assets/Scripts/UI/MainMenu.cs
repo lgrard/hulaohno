@@ -35,6 +35,7 @@ public class MainMenu : MonoBehaviour
 
     PlayerAssignement playerAssignement;
     Animator anim;
+    bool isLoading = false;
 
     //Initilialize
     private void Awake()
@@ -65,8 +66,14 @@ public class MainMenu : MonoBehaviour
     {
         PlayerAssignementMenu();
         AudioManagement();
+        OnLoadLevel(SceneManager.GetActiveScene().buildIndex+1);
     }
 
+    private void OnLoadLevel(int levelToLoad)
+    {
+        if (playerAssignement.device0Paired && playerAssignement.device1Paired && !isLoading)
+            StartCoroutine(LoadLevel(levelToLoad));
+    }
     private void PlayerAssignementMenu()
     {
         if (playerAssignementMenu.activeSelf)
@@ -136,6 +143,13 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         playerAssignementMenu.SetActive(false);
         menu1.SetActive(true);
+    }
+    private IEnumerator LoadLevel(int levelToLoad)
+    {
+        isLoading = true;
+        anim.SetTrigger("Transition");
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(levelToLoad);
     }
 
     private void CancelQuit(CallbackContext ctx)

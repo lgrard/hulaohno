@@ -38566,7 +38566,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -2.5, y: 3.7}
-  m_SizeDelta: {x: 288.74872, y: 55.173935}
+  m_SizeDelta: {x: 298.85455, y: 55.173935}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1532345884
 MonoBehaviour:
@@ -38873,9 +38873,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 259116236}
     m_SelectOnDown: {fileID: 2129962684}
-    m_SelectOnLeft: {fileID: 259116236}
+    m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -40130,7 +40130,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 288.74872, y: 55.173935}
+  m_SizeDelta: {x: 307.69714, y: 55.173935}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1765370003
 MonoBehaviour:
@@ -46102,7 +46102,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RESUME
+  m_Text: QUIT
 --- !u!222 &1953151395
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -46586,7 +46586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.000076293945, y: 0}
+  m_AnchoredPosition: {x: 20.400002, y: 0}
   m_SizeDelta: {x: 15, y: 15}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2096954608
@@ -46734,7 +46734,7 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 1687892051}
     m_SelectOnDown: {fileID: 839215090}
-    m_SelectOnLeft: {fileID: 259116236}
+    m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:

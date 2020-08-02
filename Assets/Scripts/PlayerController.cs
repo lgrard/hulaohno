@@ -274,6 +274,8 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Invincibility()
     {
         yield return new WaitForSeconds(invincibilityTime);
+        playerCollider.enabled = false;
+        playerCollider.enabled = true;
         isInvincible = false;
     }
 

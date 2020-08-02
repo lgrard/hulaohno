@@ -60,13 +60,13 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerController playerController) && collision.GetType() == typeof(CapsuleCollider))
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController) && collision.collider.GetType() == typeof(CapsuleCollider))
             collision.gameObject.transform.SetParent(platform.transform);
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerController playerController) && collision.GetType() == typeof(CapsuleCollider))
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController) && collision.collider.GetType() == typeof(CapsuleCollider))
             collision.gameObject.transform.SetParent(null);
     }
 }

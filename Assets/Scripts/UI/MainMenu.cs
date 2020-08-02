@@ -58,6 +58,7 @@ public class MainMenu : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         playerAssignement = gameObject.GetComponent<PlayerAssignement>();
         eventSystemInput = eventSystem.gameObject.GetComponent<InputSystemUIInputModule>();
+        eventSystemInput.enabled = true;
         eventSystem.firstSelectedGameObject.GetComponent<Button>().OnSelect(null);
     }
 
@@ -128,9 +129,11 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator AdventureTransition()
     {
+        eventSystemInput.enabled = false;
         anim.SetTrigger("Transition");
         yield return new WaitForSeconds(0.5f);
         menu1.SetActive(false);
+        eventSystemInput.enabled = true;
         playerAssignementMenu.SetActive(true);
         playerAssignement.enabled = true;
         eventSystemInput.cancel.action.performed += OnCancelAssignement;
@@ -138,14 +141,20 @@ public class MainMenu : MonoBehaviour
     private IEnumerator PlayerAssignementTransition()
     {
         eventSystemInput.cancel.action.performed -= OnCancelAssignement;
+        eventSystemInput.enabled = false;
         playerAssignement.enabled = false;
         anim.SetTrigger("Transition");
         yield return new WaitForSeconds(0.5f);
+        eventSystemInput.enabled = true;
         playerAssignementMenu.SetActive(false);
         menu1.SetActive(true);
     }
     private IEnumerator LoadLevel(int levelToLoad)
     {
+        eventSystemInput.cancel.action.performed -= OnCancelAssignement;
+        eventSystemInput.submit.action.performed -= Quit;
+        eventSystemInput.cancel.action.performed -= CancelQuit;
+        eventSystemInput.enabled = false;
         isLoading = true;
         anim.SetTrigger("Transition");
         yield return new WaitForSeconds(0.5f);

@@ -35,10 +35,10 @@ public class Projectiles : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Player"))
+        if (collider.TryGetComponent(out PlayerController playerController) && collider.GetType() == typeof(CapsuleCollider))
         {
             HitSomething();
-            collider.GetComponent<PlayerController>().TakeDamage(damage);
+            playerController.TakeDamage(damage);
         }
 
         else if (collider.gameObject.layer == LayerMask.NameToLayer("Ground"))

@@ -54,7 +54,8 @@ public class CameraEffects : MonoBehaviour
 
         if (cameraTarget != null && !checkPointActive && gameManager.player0 != null)
         {
-            Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
+            //Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
+            Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, cameraTarget.transform.position.z + offset.z);
             cameraContainer.transform.position = Vector3.Lerp(desiredPosition, cameraContainer.transform.position, smoothingAmount);
 
             Vector3 desiredRotation = rotOffset;

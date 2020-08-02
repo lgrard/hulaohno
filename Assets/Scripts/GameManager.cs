@@ -170,6 +170,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 playerToRespawn.gameObject.SetActive(true);
+                playerToRespawn.Spawn();
                 respawnStamp1 = 0;
             }
 
@@ -184,12 +185,17 @@ public class GameManager : MonoBehaviour
                 }
 
                 playerToRespawn.gameObject.SetActive(true);
+                playerToRespawn.Spawn();
                 respawnStamp2 = 0;
             }
         }
 
-        else
-            Restart();
+        else if(playerToRespawn == player0 && player1 == null)
+        {
+            yield return new WaitForEndOfFrame();
+            playerToRespawn.gameObject.SetActive(true);
+            playerToRespawn.Spawn();
+        }
     }
 
     public void GetThroughSpawner()

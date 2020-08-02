@@ -504,8 +504,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Spawn()
+    public void Spawn()
     {
+        input = Vector2.zero;
         effectManager.p_spawn.Play();
         HP = maxHp;
 

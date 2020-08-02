@@ -14,9 +14,13 @@ public class PlayerAssignement : MonoBehaviour
     public bool device0Paired = false;
     public bool device1Paired = false;
 
-    void OnEnable()
+    private void Awake()
     {
         _globalScheme = new GlobalScheme();
+    }
+
+    void OnEnable()
+    {
         _globalScheme.Enable();
         _globalScheme.Global.Join.performed += JoinPlayer;
         _globalScheme.Global.Cancel.performed += WithdrawPlayer;
@@ -24,6 +28,14 @@ public class PlayerAssignement : MonoBehaviour
 
         Debug.Log("1 : " + player0Device);
         Debug.Log("2 : " + player1Device);
+    }
+
+    private void OnDisable()
+    {
+        _globalScheme.Disable();
+        _globalScheme.Global.Join.performed -= JoinPlayer;
+        _globalScheme.Global.Cancel.performed -= WithdrawPlayer;
+        _globalScheme.Global.Pause.performed -= Reset;
     }
 
     private void Update()

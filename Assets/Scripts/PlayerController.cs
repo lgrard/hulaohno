@@ -509,6 +509,12 @@ public class PlayerController : MonoBehaviour
     public void Spawn()
     {
         gameObject.transform.SetParent(null);
+        isDashing = false;
+        canDash = true;
+        isInvincible = false;
+        shieldActive = false;
+        isAttacking = false;
+        attackTimeStamp = 0f;
 
         input = Vector2.zero;
         effectManager.p_spawn.Play();

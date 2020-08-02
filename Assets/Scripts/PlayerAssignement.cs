@@ -10,12 +10,16 @@ public class PlayerAssignement : MonoBehaviour
     static InputDevice player0Device;
     static InputDevice player1Device;
     private GlobalScheme _globalScheme;
+    private MainMenu mainMenu;
 
     public bool device0Paired = false;
     public bool device1Paired = false;
 
     private void Awake()
     {
+        if(gameObject.TryGetComponent<MainMenu>(out MainMenu mainMenuOut))
+            mainMenu = mainMenuOut;
+
         _globalScheme = new GlobalScheme();
     }
 
@@ -53,6 +57,9 @@ public class PlayerAssignement : MonoBehaviour
 
     void JoinPlayer(CallbackContext ctx)
     {
+        if (player0Device == ctx.control.device && mainMenu != null && device0Paired)
+            StartCoroutine(mainMenu.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+
         if (player0Device == null && player1Device != ctx.control.device)
             player0Device = ctx.control.device;
 

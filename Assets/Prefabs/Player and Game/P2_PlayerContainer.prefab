@@ -49557,7 +49557,7 @@ MonoBehaviour:
   dashPush: 25
   dashDuration: 0.15
   dashCooldown: 0.5
-  gravityAmount: 50
+  gravityAmount: 20
   enemyLayers:
     serializedVersion: 2
     m_Bits: 2560

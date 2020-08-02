@@ -149,7 +149,7 @@ public class MainMenu : MonoBehaviour
         playerAssignementMenu.SetActive(false);
         menu1.SetActive(true);
     }
-    private IEnumerator LoadLevel(int levelToLoad)
+    public IEnumerator LoadLevel(int levelToLoad)
     {
         eventSystemInput.cancel.action.performed -= OnCancelAssignement;
         eventSystemInput.submit.action.performed -= Quit;

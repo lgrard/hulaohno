@@ -88,6 +88,21 @@ public class CameraCPEditor : Editor
         camCP.controlsCam = EditorGUILayout.Toggle("Does this moves camera", camCP.controlsCam);
         GUILayout.EndHorizontal();
 
+        EditorGUILayout.Space();
+        GUILayout.BeginHorizontal();
+        camCP.automaticWall = EditorGUILayout.Toggle("Set Walls automaticaly", camCP.automaticWall);
+        if(GUILayout.Button("Reset wall", GUILayout.Height(40)))
+        {
+            camCP.wallL.transform.localScale = new Vector3(1, 10, camCP.zoneSize.z);
+            camCP.wallL.transform.localPosition = new Vector3(camCP.zoneSize.x / 2 + camCP.wallL.transform.localScale.x / 2, 2, 0);
+            camCP.wallL.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+            camCP.wallR.transform.localScale = new Vector3(2, 10, camCP.zoneSize.z);
+            camCP.wallR.transform.localPosition = new Vector3(-camCP.zoneSize.x / 2 - camCP.wallL.transform.localScale.x / 2, 2, 0);
+            camCP.wallR.transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+        GUILayout.EndHorizontal();
+
         GUILayout.Label("*Edit the linked spawner in Debug mode", EditorStyles.miniLabel);
     }
 }

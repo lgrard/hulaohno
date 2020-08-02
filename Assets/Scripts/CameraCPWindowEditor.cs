@@ -85,6 +85,8 @@ public class CameraCPWindowEditor : EditorWindow
         EditorGUILayout.Space();
 
         triggerOffset = EditorGUILayout.FloatField("Trigger zone offset", triggerOffset);
+        if(blocksPlayers)
+            triggerOffset = Mathf.Clamp(triggerOffset, 6, 10000);
 
         GUILayout.BeginHorizontal();
         spawnEnemies = EditorGUILayout.Toggle("Does this spawn enemies", spawnEnemies);
@@ -194,6 +196,10 @@ public class CameraCPWindowEditor : EditorWindow
 
             camCpScript.wallL = wallL as GameObject;
             camCpScript.wallR = wallR as GameObject;
+            camCpScript.wallL.transform.localScale = new Vector3(1, 10, zoneSize.z);
+            camCpScript.wallL.transform.localPosition = new Vector3(zoneSize.x / 2 + camCpScript.wallL.transform.localScale.x / 2, 2, 0);
+            camCpScript.wallR.transform.localScale = new Vector3(2, 10, zoneSize.z);
+            camCpScript.wallR.transform.localPosition = new Vector3(-zoneSize.x / 2 - camCpScript.wallL.transform.localScale.x / 2, 2, 0);
             camCpScript.wallL.SetActive(false);
             camCpScript.wallR.SetActive(false);
 

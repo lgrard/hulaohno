@@ -30,6 +30,7 @@ public class CameraCheckPoint : MonoBehaviour
 
     public float triggerOffset = 0;
 
+    public bool automaticWall;
     bool blockTriggered = false;
     bool playerInsideTrigger;
     bool playerInside;
@@ -44,7 +45,10 @@ public class CameraCheckPoint : MonoBehaviour
     //Initialize
     private void Start()
     {
-        if(TryGetComponent(out Events events))
+        wallL.SetActive(false);
+        wallR.SetActive(false);
+
+        if (TryGetComponent(out Events events))
         {
             linkedEvents = events;
             linkedEvents.enabled = false;
@@ -72,11 +76,16 @@ public class CameraCheckPoint : MonoBehaviour
 
         triggerSize = new Vector3(zoneSize.x - triggerOffset, zoneSize.y, zoneSize.z - triggerOffset);
 
-        wallL.transform.localScale = new Vector3(1,10,zoneSize.z);
-        wallL.transform.localPosition = new Vector3(zoneSize.x / 2 + wallL.transform.localScale.x/2, 2, 0);
+        if (automaticWall)
+        {
+            wallL.transform.localScale = new Vector3(1,10,zoneSize.z);
+            wallL.transform.localPosition = new Vector3(zoneSize.x / 2 + wallL.transform.localScale.x/2, 2, 0);
+            wallL.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-        wallR.transform.localScale = new Vector3(2, 10, zoneSize.z);
-        wallR.transform.localPosition = new Vector3(-zoneSize.x / 2 - wallL.transform.localScale.x / 2, 2, 0);
+            wallR.transform.localScale = new Vector3(2, 10, zoneSize.z);
+            wallR.transform.localPosition = new Vector3(-zoneSize.x / 2 - wallL.transform.localScale.x / 2, 2, 0);
+            wallR.transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
 
         gameObject.transform.position = zonePosition;
     }

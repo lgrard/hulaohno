@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: f80048f149362a646abfad7da1ea2875
   - enabled: 1
-    path: Assets/Scenes/CharacterSet.unity
-    guid: 624925314692715469b32caecdb45339
+    path: Assets/Scenes/RemyScene.unity
+    guid: 47e5f90a2c5c12b4a974ed38fd204287
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 8b8b74fbfc2bc7944ab00d597ada46d2,
       type: 2}

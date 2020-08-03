@@ -7,6 +7,7 @@ public class StandingSwitch : MonoBehaviour
     [SerializeField] Vector3 triggerSize;
     [SerializeField] Vector3 triggerOffset;
     [SerializeField] LayerMask playerLayer;
+    [SerializeField] GameObject switchMesh;
     bool playerInside;
     bool triggered;
 
@@ -27,6 +28,8 @@ public class StandingSwitch : MonoBehaviour
 
     private void Update()
     {
+        MeshBevahiour();
+
         if (playerInside && !triggered && linkedObjects != null)
         {
             triggered = true;
@@ -45,6 +48,15 @@ public class StandingSwitch : MonoBehaviour
 
         else if(!playerInside && triggered)
             triggered = false;
+    }
+
+    void MeshBevahiour()
+    {
+        if(playerInside && triggered)
+            switchMesh.transform.localPosition = new Vector2(0, 0);
+
+        if (!playerInside && !triggered)
+            switchMesh.transform.localPosition = new Vector2(0, 0.001f);
     }
 
     IEnumerator OpenDoor()

@@ -15,6 +15,8 @@ public class CameraEffects : MonoBehaviour
     [SerializeField] BoxCollider wallR = null;
     [SerializeField] LineRenderer distanceLine;
     [SerializeField] float lineOffset = 0.5f;
+    [SerializeField] float minDistanceCam = 16;
+    [SerializeField] float maxDistanceCam = 19;
 
     private GameManager gameManager;
     private Vector3 offset;
@@ -34,13 +36,14 @@ public class CameraEffects : MonoBehaviour
         //Offset auto setting at start
         //offset  = cameraContainer.transform.position - cameraTarget.transform.position;
         
-        offset = new Vector3(0, 6.5f, cameraContainer.transform.position.z);        
+        offset = new Vector3(0, 6.5f, -minDistanceCam);        
         rotOffset = cam.transform.rotation.eulerAngles;
     }
 
     private void FixedUpdate()
     {
         WallSetting();
+        DistanceSetting();
 
         if (gameManager.player0 != null && gameManager.player1 != null)
             cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
@@ -81,6 +84,14 @@ public class CameraEffects : MonoBehaviour
         }
     }
 
+    void DistanceSetting()
+    {
+        if (gameManager.player0 != null && gameManager.player1 != null)
+        {
+            float distanceCam = Mathf.Clamp(gameManager.distanceRatio * maxDistanceCam, minDistanceCam, maxDistanceCam);
+            offset = new Vector3(offset.x,offset.y, -distanceCam);
+        }
+    }
 
     // Shake Function
     public IEnumerator Shake (float Duration, float Force)

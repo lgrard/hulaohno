@@ -24030,6 +24030,7 @@ MonoBehaviour:
   prefabEnemyB: {fileID: 4622405978093960878, guid: 7469cb701fde2454ca6e09f5df3b360c,
     type: 3}
   respawnDelay: 3
+  spawnSpacing: 5
   enemyA: {fileID: 0}
   enemyB: {fileID: 0}
   link: {fileID: 7052415183317636717}

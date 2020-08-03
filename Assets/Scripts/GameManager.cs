@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     [Header("Player distance")]
     public bool playerOutRange = false;
     [SerializeField] float maxDistance = 27f;
+    private float distance;
+    public float distanceRatio;
 
     [Header("Collectible")]
     [SerializeField] GameObject collectible;
@@ -264,7 +266,10 @@ public class GameManager : MonoBehaviour
     {
         if (player0 != null && player1 != null && player0.gameObject.activeSelf && player1.gameObject.activeSelf)
         {
-            if(Vector3.Distance(player0.transform.position, player1.transform.position) < maxDistance)
+            distance = Vector3.Distance(player0.transform.position, player1.transform.position);
+            distanceRatio = distance / maxDistance;
+
+            if (distance < maxDistance)
                 playerOutRange = false;
             else
                 playerOutRange = true;

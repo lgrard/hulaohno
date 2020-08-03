@@ -438,6 +438,8 @@ MonoBehaviour:
   wallR: {fileID: 6611259945114324232}
   distanceLine: {fileID: 3673786675851782590}
   lineOffset: 0.5
+  minDistanceCam: 16
+  maxDistanceCam: 19
   checkPointActive: 0
 --- !u!1 &6244638071813190803
 GameObject:

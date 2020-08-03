@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyDuet : MonoBehaviour
 {
     public EnemySpawner spawner;
     private GameManager gameManager;
+    private Vector3 linkOffset = new Vector3(0, 0.5f, 0);
     [Header("Objects and values")]
     [SerializeField] GameObject prefabEnemyA;
     [SerializeField] GameObject prefabEnemyB;
     [SerializeField] float respawnDelay = 5f;
     [SerializeField] float spawnSpacing = 2f;
     private bool isSpawning = false;
+    private bool firstSpawn = true;
     private Vector3 nextSpawnPos;
 
     [HideInInspector]
@@ -28,7 +31,6 @@ public class EnemyDuet : MonoBehaviour
 
     private void Start()
     {
-        ComputeNextSpawn(gameObject);
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         SpawnEnemies();
         p_pestSpawn.startLifetime = respawnDelay;
@@ -40,9 +42,9 @@ public class EnemyDuet : MonoBehaviour
         if(enemyA != null && enemyB != null)
         {
             link.enabled = true;
-            link.SetPosition(0, enemyA.transform.position);
-            link.SetPosition(1, Vector3.Lerp(enemyA.transform.position,enemyB.transform.position,0.5f));
-            link.SetPosition(2, enemyB.transform.position);
+            link.SetPosition(0, enemyA.transform.position + linkOffset);
+            link.SetPosition(1, Vector3.Lerp(enemyA.transform.position + linkOffset, enemyB.transform.position + linkOffset, 0.5f));
+            link.SetPosition(2, enemyB.transform.position + linkOffset);
 
             p_pestA.transform.position = enemyA.transform.position;
             p_pestB.transform.position = enemyB.transform.position;
@@ -94,19 +96,35 @@ public class EnemyDuet : MonoBehaviour
 
     void SpawnEnemies()
     {
-        if (enemyA == null)
+        if (!firstSpawn)
         {
-            enemyA = Instantiate(prefabEnemyA, transform);
-            enemyA.transform.position = nextSpawnPos;
+            if (enemyA == null)
+            {
+                enemyA = Instantiate(prefabEnemyA, transform);
+                enemyA.transform.position = nextSpawnPos;
+            }
+
+            if (enemyB == null)
+            {
+                enemyB = Instantiate(prefabEnemyB, transform);
+                enemyB.transform.position = nextSpawnPos;
+            }
+
+            isSpawning = false;
         }
 
-        if (enemyB == null)
+        else
         {
+            firstSpawn = false;
+
+            ComputeNextSpawn(gameObject);
+            enemyA = Instantiate(prefabEnemyA, transform);
+            enemyA.transform.position = nextSpawnPos;
+
+            ComputeNextSpawn(enemyA);
             enemyB = Instantiate(prefabEnemyB, transform);
             enemyB.transform.position = nextSpawnPos;
         }
-
-        isSpawning = false;
     }
 
     void Die()

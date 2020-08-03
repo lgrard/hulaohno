@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_lava
+  m_Name: m_lava_2
   m_Shader: {fileID: -6465566751694194690, guid: ffea05041bf58f8468e9809f52cd525a,
     type: 3}
   m_ShaderKeywords: 
@@ -61,7 +61,7 @@ Material:
     - Vector1_15E4EB86: 6
     - Vector1_3162FED0: 200
     - Vector1_558C3C35: 0.3
-    - Vector1_EEF2ADBF: 50
+    - Vector1_EEF2ADBF: 80
     - Vector1_F528F737: 0
     - _AlphaClip: 0
     - _Blend: 0

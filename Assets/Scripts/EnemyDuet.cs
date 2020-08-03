@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyDuet : MonoBehaviour
 {
-    [HideInInspector]
     public EnemySpawner spawner;
     private GameManager gameManager;
     [Header("Objects and values")]
@@ -74,7 +73,7 @@ public class EnemyDuet : MonoBehaviour
             StartCoroutine(RespawnEnemy());
 
         if (enemyA == null && enemyB == null)
-            Destroy(gameObject);
+            Die();
     }
 
     private IEnumerator RespawnEnemy ()

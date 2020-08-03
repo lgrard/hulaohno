@@ -19,9 +19,15 @@ public class StandingSwitch : MonoBehaviour
         movePlatform,
     }
 
+    private void Awake()
+    {
+        if (currentType == InteractionType.movePlatform && linkedObjects != null)
+            StartCoroutine(InitMovePlat());
+    }
+
     private void Update()
     {
-        if (playerInside && !triggered)
+        if (playerInside && !triggered && linkedObjects != null)
         {
             triggered = true;
 
@@ -54,10 +60,29 @@ public class StandingSwitch : MonoBehaviour
             linkedObject.GetComponent<SwitchDoor>().isOpenning = false;
         }
     }
-
     IEnumerator movePlatform()
     {
-        yield return new WaitForEndOfFrame();
+        foreach (GameObject linkedObject in linkedObjects)
+        {
+            while (playerInside)
+            {
+                linkedObject.GetComponentInChildren<MovingPlatform>().isMoving = true;
+                yield return new WaitForEndOfFrame();
+            }
+
+            linkedObject.GetComponentInChildren<MovingPlatform>().isMoving = false;
+        }
+    }
+
+    IEnumerator InitMovePlat()
+    {
+        foreach (GameObject linkedObject in linkedObjects)
+        {
+            MovingPlatform movingPlatScript = linkedObject.GetComponentInChildren<MovingPlatform>();
+            movingPlatScript.currentType = MovingPlatform.MovementType.switchable;
+            linkedObject.GetComponentInChildren<MovingPlatform>().isMoving = false;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     //Checks if a player is in the zone

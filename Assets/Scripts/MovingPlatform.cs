@@ -12,21 +12,46 @@ public class MovingPlatform : MonoBehaviour
     private bool aToB = true;
     private float progress;
 
+    [HideInInspector]
+    public MovementType currentType = MovementType.automatic;
+    [HideInInspector]
+    public bool isMoving;
+
+
+    public enum MovementType
+    {
+        automatic,
+        switchable,
+    }
+
     private void Start()
     {
         platform = gameObject;
         platform.transform.localPosition = waypointsA.localPosition;
+        if (currentType == MovementType.automatic)
+            isMoving = true;
+        else
+            isMoving = false;
     }
 
     private void FixedUpdate()
     {
         platform.transform.localPosition = Vector3.Lerp(waypointsA.localPosition, waypointsB.localPosition, progress);
 
-        StartCoroutine(Move());
+        switch (currentType)
+        {
+            case MovementType.automatic:
+                StartCoroutine(MoveAuto());
+                break;
+
+            case MovementType.switchable:
+                MoveSwitch();
+                break;
+        }
     }
 
     //add delay to the platform movement
-    private IEnumerator Move()
+    private IEnumerator MoveAuto()
     {
         if (aToB && progress <= 1)
             progress += Time.deltaTime * speed;
@@ -47,7 +72,18 @@ public class MovingPlatform : MonoBehaviour
             aToB = false;
         }
     }
+    private void MoveSwitch()
+    {
+        if (isMoving && progress < 1)
+        {
+            progress += Time.deltaTime * speed;
+        }
 
+        else if (!isMoving && progress > 0)
+        {
+            progress -= Time.deltaTime * speed;
+        }
+    }
 
     private void OnDrawGizmos()
     {

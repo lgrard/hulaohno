@@ -88,6 +88,9 @@ public class Enemy : MonoBehaviour
             agent.SetDestination(target.position);
             Attack();
         }
+
+        if (!target.gameObject.activeSelf)
+            Targetting();
     }
 
     private void FixedUpdate()
@@ -253,7 +256,7 @@ public class Enemy : MonoBehaviour
     //Targetting method
     private void Targetting()
     {
-        if (gameManager.player0 != null && gameManager.player1 != null)
+        if (gameManager.player0 != null && gameManager.player1 != null && gameManager.player0.gameObject.activeSelf && gameManager.player1.gameObject.activeSelf)
         {
             targetList = new GameObject[] { gameManager.player0.gameObject, gameManager.player1.gameObject };
 
@@ -261,11 +264,11 @@ public class Enemy : MonoBehaviour
                 target = targetList[Random.Range(0, targetList.Length - 1)].transform;
         }
 
-        else if (gameManager.player0 != null && gameManager.player1 == null)
+        else if (gameManager.player0 != null && gameManager.player1 == null && gameManager.player0.gameObject.activeSelf)
             target = gameManager.player0.transform;
 
 
-        else if (gameManager.player1 != null && gameManager.player0 == null)
+        else if (gameManager.player1 != null && gameManager.player0 == null && gameManager.player1.gameObject.activeSelf)
             target = gameManager.player1.transform;
     }
 

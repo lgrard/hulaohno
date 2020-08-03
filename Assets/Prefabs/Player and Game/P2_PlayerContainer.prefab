@@ -49321,8 +49321,8 @@ MonoBehaviour:
   p_impact: {fileID: 5504030002710613989}
   t_dashTrail: {fileID: 2041233364048558868}
   p_dash: {fileID: 1512245231807078231}
-  p_spinCharge: {fileID: 0}
-  p_spinCharged: {fileID: 0}
+  p_spinCharge: {fileID: 9074149985846095556}
+  p_spinCharged: {fileID: 551833267268534214}
 --- !u!1 &6710283594800337945
 GameObject:
   m_ObjectHideFlags: 0

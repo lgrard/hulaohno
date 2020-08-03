@@ -97,13 +97,13 @@ public class Enemy : MonoBehaviour
         if (target == null)
             Targetting();
 
-        else if(!isKnockedBack)
+        else if(!isKnockedBack && target != null)
         {
             agent.SetDestination(target.position);
             Attack();
         }
 
-        if (!target.gameObject.activeSelf)
+        if (!target.gameObject.activeSelf && target != null)
             Targetting();
     }
 

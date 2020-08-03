@@ -11,6 +11,7 @@ public class EnemyDuet : MonoBehaviour
     [SerializeField] GameObject prefabEnemyA;
     [SerializeField] GameObject prefabEnemyB;
     [SerializeField] float respawnDelay = 5f;
+    [SerializeField] float spawnSpacing = 2f;
     private bool isSpawning = false;
     private Vector3 nextSpawnPos;
 
@@ -130,7 +131,7 @@ public class EnemyDuet : MonoBehaviour
 
     void ComputeNextSpawn(GameObject origin)
     {
-        Vector3 position = Random.insideUnitSphere.normalized + origin.transform.position;
+        Vector3 position = Random.insideUnitSphere.normalized * spawnSpacing + origin.transform.position;
         nextSpawnPos = new Vector3(position.x, transform.position.y, position.z);
     }
 }

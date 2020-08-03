@@ -10,6 +10,7 @@ public class Events : MonoBehaviour
         killMelee,
         killCasterLinear,
         killCasterRadial,
+        killDuet,
         pickUpItems,
         dontDie,
         dontTakeDamage,
@@ -70,6 +71,10 @@ public class Events : MonoBehaviour
 
                 case EventsType.killCasterRadial:
                     Kill("radial caster enemies");
+                    break;
+
+                case EventsType.killDuet:
+                    Kill("duet enemies");
                     break;
 
                 case EventsType.pickUpItems:

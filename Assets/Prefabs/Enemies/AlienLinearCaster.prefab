@@ -9807,9 +9807,7 @@ MonoBehaviour:
   p_hit: {fileID: 403438432802851146}
   p_die: {fileID: 4264984166153912663}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
-  isMelee: 0
-  isLinearCaster: 1
-  isRadialCaster: 0
+  currentType: 1
   gustNumber: 1
   radialProjectilesNumber: 4
   radius: 1

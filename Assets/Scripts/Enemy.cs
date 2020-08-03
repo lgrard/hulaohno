@@ -44,10 +44,24 @@ public class Enemy : MonoBehaviour
     [Header("States")]
     private bool isKnockedBack;
 
+    //public bool isMelee;
+    //public bool isLinearCaster;
+    //public bool isRadialCaster;
     [Header("Enemy type")]
-    public bool isMelee;
-    public bool isLinearCaster;
-    public bool isRadialCaster;
+    public EnemyType currentType;
+    public enum EnemyType
+    {
+        melee,
+        linearCaster,
+        radialCaster,
+    }
+    public SpecialType currentSpecialType;
+    public enum SpecialType
+    {
+        none,
+        duet,
+    }
+
 
     [Header("Caster")]
     [SerializeField] int gustNumber = 2;
@@ -62,7 +76,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
 
-        if (isMelee)
+        if (currentType == EnemyType.melee)
             attackScript = gameObject.GetComponent<Attack>();
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -137,13 +151,13 @@ public class Enemy : MonoBehaviour
                 if(gameManager.currentEvent.currentType == Events.EventsType.killGlobal)
                     gameManager.currentEvent.amountLeft += 1;
 
-                else if (gameManager.currentEvent.currentType == Events.EventsType.killMelee && isMelee)
+                else if (gameManager.currentEvent.currentType == Events.EventsType.killMelee && currentType == EnemyType.melee)
                     gameManager.currentEvent.amountLeft += 1;
 
-                else if (gameManager.currentEvent.currentType == Events.EventsType.killCasterLinear && isLinearCaster)
+                else if (gameManager.currentEvent.currentType == Events.EventsType.killCasterLinear && currentType == EnemyType.linearCaster)
                     gameManager.currentEvent.amountLeft += 1;
 
-                else if (gameManager.currentEvent.currentType == Events.EventsType.killCasterRadial && isRadialCaster)
+                else if (gameManager.currentEvent.currentType == Events.EventsType.killCasterRadial && currentType == EnemyType.radialCaster)
                     gameManager.currentEvent.amountLeft += 1;
             }
         }
@@ -184,13 +198,13 @@ public class Enemy : MonoBehaviour
 
         if (attackStamp >= attackStampMax)
         {
-            if (isLinearCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
+            if (currentType == EnemyType.linearCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
                 StartCoroutine(LinearCasterAttack());
 
-            else if (isRadialCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
+            else if (currentType == EnemyType.radialCaster && distanceFromTarget <= casterRange && distanceFromTarget <= agent.stoppingDistance)
                 StartCoroutine(RadialCasterAttack());
 
-            else if (isMelee && distanceFromTarget <= agent.stoppingDistance && attackStamp >= attackStampMax)
+            else if (currentType == EnemyType.melee && distanceFromTarget <= agent.stoppingDistance && attackStamp >= attackStampMax)
                 StartCoroutine(Hit());
         }
 

@@ -43,7 +43,11 @@ public class EnemySpawner : MonoBehaviour
             if (!Physics.CheckSphere(spawnPos, 0.5f))
             {
                 GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-                enemy.GetComponent<Enemy>().spawner = this;
+                if(enemy.TryGetComponent<Enemy>(out Enemy enemyScriptSolo))
+                    enemyScriptSolo.spawner = this;
+
+                if (enemy.TryGetComponent<EnemyDuet>(out EnemyDuet enemyDuet))
+                    enemyDuet.spawner = this;
 
                 enemyCount--;
 

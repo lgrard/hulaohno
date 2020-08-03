@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_water
+  m_Name: m_lava
   m_Shader: {fileID: -6465566751694194690, guid: ffea05041bf58f8468e9809f52cd525a,
     type: 3}
   m_ShaderKeywords: 
@@ -57,12 +57,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_146586C6: 5
-    - Vector1_15E4EB86: 22.8
+    - Vector1_146586C6: 3.18
+    - Vector1_15E4EB86: 6
     - Vector1_3162FED0: 2
-    - Vector1_558C3C35: 0.3
+    - Vector1_558C3C35: 0.96
     - Vector1_EEF2ADBF: 20
-    - Vector1_F528F737: 1.04
+    - Vector1_F528F737: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -85,7 +85,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_46FEB77B: {r: 0.13995194, g: 0.63002867, b: 0.8018868, a: 0}
+    - Color_46FEB77B: {r: 1, g: 0.28045616, b: 0, a: 0}
     - Color_CEF628F7: {r: 1, g: 0.67471427, b: 0.3443396, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

@@ -48,7 +48,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""id"": ""a621341e-5606-4506-8d1c-0d9cc8a618f3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.7)""
+                    ""interactions"": ""Press(behavior=1)""
                 },
                 {
                     ""name"": ""Join"",

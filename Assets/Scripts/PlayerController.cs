@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public int HP;
     [SerializeField] float jumpHeight = 10f;
     [SerializeField] float speed = 10f;
+    [SerializeField] float normalSpeed = 10f;
+    [SerializeField] float whileChargingSpeed = 5f;
     [Tooltip("Controls the amount of air control (value between 0 and 1)")]
     [SerializeField] float airControlAmount = 0.5f;
     [SerializeField] LayerMask groundLayer;
@@ -35,6 +37,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float attackTimerMax = 0.15f;
     private float attackTimeStamp = 0f;
     [SerializeField] float attackStepAmount = 5f;
+    private float specialStamp = 0;
+    [SerializeField] float specialStampMax = 1f;
 
     [SerializeField] GameObject attackManager;
     private Attack[] attackArray;
@@ -64,6 +68,7 @@ public class PlayerController : MonoBehaviour
     bool isDashing = false;
     bool canDash = true;
     bool isInvincible = false;
+    bool isChargingSpecial = false;
 
     [Header("Item and item states")]
     public GameObject i_shield;
@@ -360,7 +365,7 @@ public class PlayerController : MonoBehaviour
     //Special method
     private void OnSpecial()
     {
-        if (isGrounded)
+        if (isGrounded && specialStamp <= 0 && isChargingSpecial)
         {
             meshAnim.SetTrigger("Spin");
             isAttacking = true;
@@ -368,6 +373,9 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(Attack(attackArray[4]));
         }
+        effectManager.p_spinCharge.Stop();
+        effectManager.p_spinCharged.Stop();
+        isChargingSpecial = false;
     }
 
     private void OnPause() => gameManager.PauseGame();
@@ -409,8 +417,12 @@ public class PlayerController : MonoBehaviour
     //Set up effect on charge state
     private void OnSpecialCharge()
     {
-        if(isGrounded)
+        if (isGrounded)
+        {
             effectManager.p_spinCharge.Play();
+            specialStamp = specialStampMax;
+            isChargingSpecial = true;
+        }
     }
 
     //Set up the attack states
@@ -418,6 +430,20 @@ public class PlayerController : MonoBehaviour
     {
         meshAnim.SetBool("Attacking", isAttacking);
         meshAnim.SetInteger("Depth", attackDepth);
+
+        if (isGrounded && specialStamp <= 0 && isChargingSpecial)
+        {
+            speed = whileChargingSpeed;
+            effectManager.p_spinCharge.Stop();
+            effectManager.p_spinCharged.Play();
+            speed = whileChargingSpeed;
+        }
+
+        else
+            speed = normalSpeed;
+
+        if (isChargingSpecial && specialStamp > 0)
+            specialStamp -= Time.deltaTime;
 
         if (attackTimeStamp > 0f && isAttacking)
             attackTimeStamp -= Time.deltaTime;

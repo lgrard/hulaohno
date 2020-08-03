@@ -392,7 +392,11 @@ public class PlayerController : MonoBehaviour
         foreach (Collider hit in hitEnemies)
         {
             if (hit.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage(attack.attackDamage,playerIndex);
+            {
+                enemy.TakeDamage(attack.attackDamage, playerIndex);
+                if (attack == attackArray[4])
+                    StartCoroutine(enemy.KnockBack(dashPush));
+            }
 
             if (hit.TryGetComponent(out Destructible destructible))
                 destructible.OpenChest(attack.attackDamage);

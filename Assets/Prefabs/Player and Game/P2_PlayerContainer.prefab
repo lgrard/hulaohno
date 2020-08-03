@@ -49554,7 +49554,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   dashAmount: 40
-  dashPush: 25
+  dashPush: 15
   dashDuration: 0.15
   dashCooldown: 0.5
   gravityAmount: 20

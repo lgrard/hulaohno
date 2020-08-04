@@ -10,6 +10,7 @@ public class Destructible : MonoBehaviour
         collectibleChest,
         ItemChest,
         SpecificChest,
+        Dummy,
     }
 
     [SerializeField] ParticleSystem p_opens;
@@ -44,7 +45,7 @@ public class Destructible : MonoBehaviour
 
     public void OpenChest(int damage)
     {
-        if (HP <= 0)
+        if (HP <= 0 && currentType != ChestType.Dummy)
         {
             switch (currentType)
             {
@@ -77,7 +78,7 @@ public class Destructible : MonoBehaviour
             p_opens.Play();
         }
 
-        else
+        else if(HP > 0 || currentType == ChestType.Dummy)
         {
             HP -= damage;
             audioSource.Play();

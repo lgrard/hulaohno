@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused = false;
     public bool isEnded = false;
+    public bool isLoading = false;
 
     //Init
     private void Awake()
@@ -259,7 +260,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        uiManagement.OnRestart();
     }
 
     private void DistanceCheck()
@@ -296,7 +297,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (!isEnded)
+        if (!isEnded && !isLoading)
         {
             isPaused = !isPaused;
             if(isPaused)

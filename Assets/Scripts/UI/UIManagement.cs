@@ -49,6 +49,10 @@ public class UIManagement : MonoBehaviour
     [SerializeField] Slider audioSlider;
     [SerializeField] Slider musicSlider;
 
+    [Header("Loading screen")]
+    public LoadingSceneManager loadingSceneManager;
+    [SerializeField] Animator transitionAnim;
+
     [Header("HP bar")]
     [SerializeField] GameObject p1HPBar;
     [SerializeField] GameObject p2HPBar;
@@ -195,7 +199,25 @@ public class UIManagement : MonoBehaviour
 
     //Pause menu methods
     public void OnResume() => gameManager.PauseGame();
-    public void OnQuit() => SceneManager.LoadScene("MainMenu");
-    public void OnRestart() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    public void OnNextLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+    public void OnQuit()
+    {
+        eventSystem.enabled = false;
+        gameManager.isLoading = true;
+        transitionAnim.SetTrigger("Transition");
+        loadingSceneManager.LoadLevel(0);
+    }
+    public void OnRestart()
+    {
+        eventSystem.enabled = false;
+        gameManager.isLoading = true;
+        transitionAnim.SetTrigger("Transition");
+        loadingSceneManager.LoadLevel(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void OnNextLevel()
+    {
+        eventSystem.enabled = false;
+        gameManager.isLoading = true;
+        transitionAnim.SetTrigger("Transition");
+        loadingSceneManager.LoadLevel(0);
+    }
 }

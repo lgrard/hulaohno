@@ -57,7 +57,7 @@ public class PlayerAssignement : MonoBehaviour
 
     void JoinPlayer(CallbackContext ctx)
     {
-        if (player0Device == ctx.control.device && mainMenu != null && device0Paired)
+        if (player0Device == ctx.control.device && mainMenu != null && device0Paired && !device1Paired)
             StartCoroutine(mainMenu.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
 
         if (player0Device == null && player1Device != ctx.control.device)

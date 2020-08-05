@@ -26,6 +26,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject creditTips;
 
     [SerializeField] EventSystem eventSystem;
+    [SerializeField] LoadingSceneManager loadingSceneManager;
     private InputSystemUIInputModule eventSystemInput;
     private Button quitButton;
 
@@ -76,6 +77,7 @@ public class MainMenu : MonoBehaviour
         if (playerAssignement.device0Paired && playerAssignement.device1Paired && !isLoading)
             StartCoroutine(LoadLevel(levelToLoad));
     }
+
     private void PlayerAssignementMenu()
     {
         if (playerAssignementMenu.activeSelf)
@@ -166,7 +168,9 @@ public class MainMenu : MonoBehaviour
         isLoading = true;
         anim.SetTrigger("Transition");
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(levelToLoad);
+        playerAssignementMenu.SetActive(false);
+        menu1.SetActive(false);
+        loadingSceneManager.LoadLevel(1);
     }
 
     private void CancelQuit(CallbackContext ctx)

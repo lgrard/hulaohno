@@ -115,7 +115,7 @@ public class CameraCheckPoint : MonoBehaviour
     {
         if (playerInsideTrigger && !blockTriggered)
         {
-            Collider[] colliders = Physics.OverlapBox(zonePosition, zoneSize / 2, Quaternion.identity, playerLayer);
+            Collider[] colliders = Physics.OverlapBox(zonePosition, zoneSize / 2, Quaternion.identity, playerLayer, QueryTriggerInteraction.Ignore);
             if(colliders.Length == 1 && gameManager.player0 != null && gameManager.player1 != null)
             {
                 if (colliders[0].gameObject.GetComponent<PlayerController>().playerIndex == 0)

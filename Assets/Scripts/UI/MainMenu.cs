@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("Quit tips")]
     [SerializeField] GameObject quitTips;
+    [SerializeField] GameObject creditTips;
 
     [SerializeField] EventSystem eventSystem;
     private InputSystemUIInputModule eventSystemInput;
@@ -119,7 +120,14 @@ public class MainMenu : MonoBehaviour
     public void OnAdventure() => StartCoroutine(AdventureTransition());
     public void OnCredits()
     {
-        Debug.Log("insèrer le nom de la fine équipe");
+        quitButton = eventSystem.currentSelectedGameObject.GetComponent<Button>();
+
+        if (!creditTips.activeSelf)
+        {
+            creditTips.SetActive(true);
+            eventSystemInput.cancel.action.performed += CancelCredit;
+            eventSystem.SetSelectedGameObject(null);
+        }
     }
     private void OnCancelAssignement(CallbackContext ctx)
     {
@@ -169,5 +177,14 @@ public class MainMenu : MonoBehaviour
         eventSystemInput.submit.action.performed -= Quit;
         eventSystemInput.cancel.action.performed -= CancelQuit;
     }
+
+    private void CancelCredit(CallbackContext ctx)
+    {
+        eventSystem.SetSelectedGameObject(quitButton.gameObject);
+        eventSystem.currentSelectedGameObject.GetComponent<Button>().OnSelect(null);
+        creditTips.SetActive(false);
+        eventSystemInput.cancel.action.performed -= CancelCredit;
+    }
+
     private void Quit(CallbackContext ctx) => Application.Quit();
 }

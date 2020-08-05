@@ -58,7 +58,12 @@ public class PlayerAssignement : MonoBehaviour
     void JoinPlayer(CallbackContext ctx)
     {
         if (player0Device == ctx.control.device && mainMenu != null && device0Paired && !device1Paired)
-            StartCoroutine(mainMenu.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        {
+            _globalScheme.Global.Join.performed -= JoinPlayer;
+            _globalScheme.Global.Cancel.performed -= WithdrawPlayer;
+            _globalScheme.Global.Pause.performed -= Reset;
+            StartCoroutine(mainMenu.LoadLevel(1));
+        }
 
         if (player0Device == null && player1Device != ctx.control.device)
             player0Device = ctx.control.device;

@@ -126,6 +126,15 @@ public class PlayerController : MonoBehaviour
 
         GroundCheck();
         AttackState();
+
+        if(!isGrounded && isChargingSpecial)
+        {
+            isAttacking = true;
+            attackTimeStamp = attackTimerMax;
+            effectManager.p_spinCharge.Stop();
+            effectManager.p_spinCharged.Stop();
+            isChargingSpecial = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -166,7 +175,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Rotate player's Mesh
-            if (DesiredPosition != Vector3.zero && isGrounded)
+            if (DesiredPosition != Vector3.zero)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(DesiredPosition.x, 0, DesiredPosition.z));
                 mesh.transform.rotation = Quaternion.Slerp(desiredRotation, mesh.transform.rotation, rotationSmoothingAmount);

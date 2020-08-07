@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
-    [SerializeField] PhysicMaterial noFrictionMat;
+    private PhysicMaterial noFrictionMat;
     private Material[] defMat;
     private SkinnedMeshRenderer renderer;
     private Transform camContainer;
@@ -98,6 +98,12 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        noFrictionMat = new PhysicMaterial("noFrictionMat");
+        noFrictionMat.dynamicFriction = 0;
+        noFrictionMat.staticFriction = 0;
+        noFrictionMat.bounciness = 0.5f;
+        noFrictionMat.frictionCombine = PhysicMaterialCombine.Minimum;
+
         airControlAmount = Mathf.Clamp(airControlAmount, 0f, 1f);
 
         dashCollider = gameObject.GetComponent<SphereCollider>();

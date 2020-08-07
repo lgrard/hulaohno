@@ -131,6 +131,8 @@ public class GameManager : MonoBehaviour
 
     public void Scoring1(int amount, bool combo)
     {
+        int scoreAmountToAdd = 0;
+
         if (combo)
         {
             combo1 += 1;
@@ -138,11 +140,19 @@ public class GameManager : MonoBehaviour
             uiManagement.ComboPlus1();
         }
 
-        score1 += amount * combo1;
-        uiManagement.ScorePlus1(amount * combo1);
+        if (combo1 == 0)
+            scoreAmountToAdd = amount;
+        else
+            scoreAmountToAdd = amount * combo1;
+
+        score1 += scoreAmountToAdd;
+
+        uiManagement.ScorePlus1(scoreAmountToAdd);
     }
     public void Scoring2(int amount, bool combo)
     {
+        int scoreAmountToAdd = 0;
+
         if (combo)
         {
             combo2 += 1;
@@ -150,8 +160,14 @@ public class GameManager : MonoBehaviour
             uiManagement.ComboPlus2();
         }
 
-        score2 += amount * combo2;
-        uiManagement.ScorePlus2(amount * combo2);
+        if (combo1 == 0)
+            scoreAmountToAdd = amount;
+        else
+            scoreAmountToAdd = amount * combo2;
+
+        score2 += scoreAmountToAdd;
+
+        uiManagement.ScorePlus2(scoreAmountToAdd);
     }
 
     public void Respawn1() => StartCoroutine(Respawn(player0));

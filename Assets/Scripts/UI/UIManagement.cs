@@ -60,10 +60,19 @@ public class UIManagement : MonoBehaviour
     [SerializeField] RectTransform waveHp2;
     [SerializeField] Text respawnTimer1;
     [SerializeField] Text respawnTimer2;
+    private Animator p1HPBarAnim;
+    private Animator p2HPBarAnim;
 
     [Header("Score counter")]
     [SerializeField] Text scoreCounter1;
     [SerializeField] Text scoreCounter2;
+    [SerializeField] Text scorePeriodCounter1;
+    [SerializeField] Text scorePeriodCounter2;
+    [SerializeField] float scoreStampMax = 1f;
+    private float scoreStamp1 = 0;
+    private int currentScorePeriod1;
+    private float scoreStamp2 = 0;
+    private int currentScorePeriod2;
 
     [Header("Combo counter")]
     [SerializeField] Text comboCounter1;
@@ -84,13 +93,16 @@ public class UIManagement : MonoBehaviour
         audioSlider.value = gameManager.audioVolume;
         musicSlider.value = gameManager.musicVolume;
 
-        #region old bar
-        /*
-        p1HPBar = new GameObject[] { p1_1, p1_2, p1_3, p1_4, p1_5};
-        p2HPBar = new GameObject[] { p2_1, p2_2, p2_3, p2_4, p2_5 };
-        */
-        #endregion
-    }
+        p1HPBarAnim = p1HPBar.GetComponent<Animator>();
+        p2HPBarAnim = p2HPBar.GetComponent<Animator>();
+
+    #region old bar
+    /*
+    p1HPBar = new GameObject[] { p1_1, p1_2, p1_3, p1_4, p1_5};
+    p2HPBar = new GameObject[] { p2_1, p2_2, p2_3, p2_4, p2_5 };
+    */
+    #endregion
+}
 
     // Update is called once per frame
     void Update()
@@ -108,33 +120,48 @@ public class UIManagement : MonoBehaviour
 
         //Display score and health if player is assigned        
         if (player1 != null)
-            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1, gameManager.respawnStamp1, gameManager.combo1);
+            BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1,
+            gameManager.respawnStamp1, gameManager.combo1,scorePeriodCounter1,currentScorePeriod1,comboCounter1,scoreStamp1,p1HPBarAnim);
         else
             p1HPBar.SetActive(false);
 
         if (player2 != null)
-            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2, respawnTimer2, gameManager.respawnStamp2, gameManager.combo2);
+            BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2, respawnTimer2,
+            gameManager.respawnStamp2, gameManager.combo2, scorePeriodCounter2, currentScorePeriod2, comboCounter2, scoreStamp2,p2HPBarAnim);
         else
             p2HPBar.SetActive(false);
+
+        ScorePeriodManagement();
     }
 
     //Play an animation when score increases
-    public void ScorePlus1() => p1HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
-    public void ScorePlus2() => p2HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
+    public void ScorePlus1(int amount)
+    {
+        p1HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
+        scoreStamp1 = scoreStampMax;
+        currentScorePeriod1 += amount;
+    }
+    public void ScorePlus2(int amount)
+    {
+        p2HPBar.GetComponent<Animator>().SetTrigger("ScorePlus");
+        scoreStamp2 = scoreStampMax;
+        currentScorePeriod2 += amount;
+    }
 
     //Play an animation when combo increases
-    public void ComboPlus1() => p1HPBar.GetComponent<Animator>().SetTrigger("ComboPlus");
-    public void ComboPlus2() => p2HPBar.GetComponent<Animator>().SetTrigger("ComboPlus");
+    public void ComboPlus1() => p1HPBarAnim.SetTrigger("ComboPlus");
+    public void ComboPlus2() => p2HPBarAnim.SetTrigger("ComboPlus");
 
     //Play an animation when takes damage
-    public void Damage1() => p1HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
-    public void Damage2() => p2HPBar.GetComponent<Animator>().SetTrigger("TakesDamage");
+    public void Damage1() => p1HPBarAnim.SetTrigger("TakesDamage");
+    public void Damage2() => p2HPBarAnim.SetTrigger("TakesDamage");
 
-    public void Heal1() => p1HPBar.GetComponent<Animator>().SetTrigger("Heal");
-    public void Heal2() => p2HPBar.GetComponent<Animator>().SetTrigger("Heal");
+    public void Heal1() => p1HPBarAnim.SetTrigger("Heal");
+    public void Heal2() => p2HPBarAnim.SetTrigger("Heal");
 
     //Initialize and manage the HP bar and score display
-    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer, Text respawnTimer, float respawnStamp, int playerCombo)
+    private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer,
+    Text respawnTimer, float respawnStamp, int playerCombo, Text scorePeriodContainer,int currentScorePeriod, Text comboCounter,float scoreStamp, Animator barAnim)
     {
         //Hp setting
         globalBar.SetActive(true);
@@ -147,8 +174,12 @@ public class UIManagement : MonoBehaviour
 
         //Score setting
         scoreContainer.text = "SCORE - " + playerScore.ToString("000000");
+        scorePeriodContainer.text = "+ " + currentScorePeriod.ToString("000000");
+
+        barAnim.SetBool("ScorePeriodActive", scoreStamp > 0);
+
         //Combo setting
-        comboCounter1.text = "x" + playerCombo.ToString();
+        comboCounter.text = "x" + playerCombo.ToString();
 
         //Respawn timer setting
         if (Mathf.CeilToInt(respawnStamp) > 0)
@@ -160,7 +191,7 @@ public class UIManagement : MonoBehaviour
         else
             respawnTimer.enabled = false;
 
-        comboCounter1.enabled = playerCombo >= 1;
+        comboCounter.enabled = playerCombo >= 1;
 
         #region old bar
         /*
@@ -177,6 +208,20 @@ public class UIManagement : MonoBehaviour
         #endregion
     }
 
+    private void ScorePeriodManagement()
+    {
+        if (scoreStamp1 > 0 && player1 != null)
+            scoreStamp1 -= Time.deltaTime;
+        else
+            currentScorePeriod1 = 0;
+
+        if (scoreStamp2 > 0 && player2 != null)
+            scoreStamp2 -= Time.deltaTime;
+        else
+            currentScorePeriod2 = 0;
+    }
+
+    //Open menu methods
     public void OpenMenu()
     {
         eventSystem.SetSelectedGameObject(lastSelectedObject);
@@ -189,7 +234,6 @@ public class UIManagement : MonoBehaviour
         if (lastSelectedObject.TryGetComponent<Toggle>(out Toggle toggle))
             toggle.OnSelect(null);
     }
-
     public void OpenWin()
     {
         winMenu.SetActive(true);

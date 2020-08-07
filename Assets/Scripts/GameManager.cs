@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         }
 
         score1 += amount * combo1;
-        uiManagement.ScorePlus1();
+        uiManagement.ScorePlus1(amount * combo1);
     }
     public void Scoring2(int amount, bool combo)
     {
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
         }
 
         score2 += amount * combo2;
-        uiManagement.ScorePlus2();
+        uiManagement.ScorePlus2(amount * combo2);
     }
 
     public void Respawn1() => StartCoroutine(Respawn(player0));

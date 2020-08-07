@@ -251,11 +251,13 @@ MonoBehaviour:
   player2Color: {r: 0.8207547, g: 0.2206746, b: 0.36069316, a: 1}
   playerOutRange: 0
   maxDistance: 15
+  distanceRatio: 0
   collectible: {fileID: 4487142428442181861, guid: 32be4a8f23d86ac47b154b02092be55b,
     type: 3}
   items:
   - {fileID: 1181221108042828494, guid: 1baada9d1bf387f4890501b49ba9f9dd, type: 3}
   - {fileID: 8717496389440717317, guid: a2aeba165f94fac46895a9a78778ce31, type: 3}
+  - {fileID: 8717496389440717317, guid: cbb60c0b2f2c5414ea2b19003a8ae78f, type: 3}
   currentProgressionCp: {x: 0, y: 0, z: 0}
   respawnTime: 15
   respawnStamp1: 0
@@ -268,3 +270,5 @@ MonoBehaviour:
   p1IsDead: 0
   p2IsDead: 0
   isPaused: 0
+  isEnded: 0
+  isLoading: 0

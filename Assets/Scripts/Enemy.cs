@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     [Header("Components")]
     public EnemySpawner spawner;
     private Renderer renderer;
-    private Material defMat;
+    private Material[] defMat;
     private Animator anim;
     private NavMeshAgent agent;
     private GameManager gameManager;
@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int collectibleAmount = 3;
     [SerializeField] float itemDropRate = 0.03f; 
     [SerializeField] float stoppingDistance;
+    [SerializeField] float despawnTime = 0.3f;
     private Vector3 knockBackDir;
     private Transform target;
     private GameObject[] targetList;
@@ -84,7 +85,8 @@ public class Enemy : MonoBehaviour
         agent.stoppingDistance = stoppingDistance;
         anim = gameObject.GetComponentInChildren<Animator>();
         renderer = mesh.GetComponent<Renderer>();
-        defMat = renderer.material;
+        //defMat = renderer.material;
+        defMat = renderer.materials;
         HP = maxHp;
 
         Targetting();
@@ -105,6 +107,8 @@ public class Enemy : MonoBehaviour
 
         if (!target.gameObject.activeSelf && target != null)
             Targetting();
+
+        anim.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
     }
 
     private void FixedUpdate()
@@ -116,7 +120,12 @@ public class Enemy : MonoBehaviour
     private void LateUpdate()
     {
         if(target != null && !isKnockedBack)
-            gameObject.transform.LookAt(target);
+        {
+            Vector3 relativePos = target.position - transform.position;
+
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            transform.rotation.SetEulerAngles(new Vector3(0,rotation.eulerAngles.y,0));
+        }
     }
     #endregion
 
@@ -174,21 +183,56 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Dies");
         p_die.Play();
         gameObject.GetComponent<Collider>().enabled = false;
-        Destroy(gameObject,0.3f);
+        Destroy(gameObject, despawnTime);
         this.enabled = false;
     }
 
     //Blinking while damage method
     private IEnumerator Blink()
     {
-        renderer.material = whiteMat;
+        Material[] matList = renderer.materials;
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = whiteMat;
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = defMat[i];
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = whiteMat;
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = defMat[i];
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        //Old blinking
+        /*renderer.material = whiteMat;
         yield return new WaitForSeconds(blinkingTime);
         renderer.material = defMat;
         yield return new WaitForSeconds(blinkingTime);
         renderer.material = whiteMat;
         yield return new WaitForSeconds(blinkingTime);
         renderer.material = defMat;
-        yield return new WaitForSeconds(blinkingTime);
+        yield return new WaitForSeconds(blinkingTime);*/
     }
 
     //Attack method
@@ -286,20 +330,26 @@ public class Enemy : MonoBehaviour
             target = gameManager.player1.transform;
     }
 
-    public IEnumerator KnockBack(float force)
+    public IEnumerator KnockBack(float force, Transform origin)
     {
-        knockBackDir = -mesh.transform.forward * force;
-        agent.angularSpeed = 0;
-        agent.speed = 0;
-        attackStamp = 0f;
-        isKnockedBack = true;
+        if (!isKnockedBack)
+        {
+            float currentAgentSpeed = agent.speed;
+            float currentAgentAngular = agent.angularSpeed;
 
-        yield return new WaitForSeconds(0.25f);
+            knockBackDir = (mesh.transform.position - origin.transform.position) * force;
+            agent.angularSpeed = 0;
+            agent.speed = 0;
+            attackStamp = 0f;
+            isKnockedBack = true;
+        
+            yield return new WaitForSeconds(0.25f);
 
-        isKnockedBack = false;
-        agent.velocity = Vector3.zero;
-        agent.speed = 1.5f;
-        agent.angularSpeed = 120;
+            agent.speed = currentAgentSpeed;
+            agent.angularSpeed = currentAgentAngular;
+            isKnockedBack = false;
+            agent.velocity = Vector3.zero;
+        }
     }
 
 

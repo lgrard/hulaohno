@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
     [SerializeField] PhysicMaterial noFrictionMat;
-    private Material defMat;
+    private Material[] defMat;
     private SkinnedMeshRenderer renderer;
     private Transform camContainer;
     private AudioSource audioSource;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         dashCollider = gameObject.GetComponent<SphereCollider>();
         playerCollider = gameObject.GetComponent<CapsuleCollider>();
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        defMat = renderer.material;
+        defMat = renderer.materials;
         playerInput = GetComponent<PlayerInput>();
 
         if (playerInput.actions == null)
@@ -412,14 +412,20 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.TakeDamage(attack.attackDamage, playerIndex);
                 if (attack == attackArray[4])
-                    StartCoroutine(enemy.KnockBack(dashPush));
+                    StartCoroutine(enemy.KnockBack(dashPush,transform));
             }
 
             if (hit.TryGetComponent(out Destructible destructible))
                 destructible.OpenChest(attack.attackDamage);
 
-            effectManager.p_impact.transform.position = hit.transform.position;
-            effectManager.p_impact.Play();
+            ParticleSystem hitImpact = Instantiate(effectManager.p_impact);
+            hitImpact.transform.position = new Vector3(hit.transform.position.x, effectManager.p_impact.transform.position.y, hit.transform.position.z);
+            hitImpact.Play();
+            Destroy(hitImpact.gameObject, hitImpact.main.duration);
+
+            //Old way to play particles
+            //effectManager.p_impact.transform.position = new Vector3(hit.transform.position.x, effectManager.p_impact.transform.position.y,hit.transform.position.z);
+            //effectManager.p_impact.Play();
         }
     }
 
@@ -492,15 +498,50 @@ public class PlayerController : MonoBehaviour
     //Blinking while damage method
     private IEnumerator Blink()
     {
-        renderer.material = whiteMat;
+        Material[] matList = renderer.materials;
 
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = whiteMat;
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = defMat[i];
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = whiteMat;
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+        for (int i = 0; i < matList.Length; i++)
+        {
+            matList[i] = defMat[i];
+            yield return null;
+        }
+        renderer.materials = matList;
+        yield return new WaitForSeconds(blinkingTime);
+
+
+        //Old blinking method
+        /*renderer.material = whiteMat;
         yield return new WaitForSeconds(blinkingTime);
         renderer.material = defMat;
         yield return new WaitForSeconds(blinkingTime);
         renderer.material = whiteMat;
         yield return new WaitForSeconds(blinkingTime);
         renderer.material = defMat;
-        yield return new WaitForSeconds(blinkingTime);
+        yield return new WaitForSeconds(blinkingTime);*/
     }
 
     //Targetting system
@@ -511,7 +552,7 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
             if (enemy != null)
-                StartCoroutine(enemy.KnockBack(dashPush));
+                StartCoroutine(enemy.KnockBack(dashPush,transform));
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))

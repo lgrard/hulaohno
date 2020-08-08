@@ -6,6 +6,7 @@ public class ProgressionCheckPoint : MonoBehaviour
 {
     bool triggered = false;
     bool playerInside;
+    [SerializeField] int scoreAmount = 50;
     [SerializeField] Vector3 respawnPositionOffset;
     [SerializeField] Vector3 triggerZoneOffset;
     [SerializeField] Vector3 triggerSize;
@@ -31,7 +32,7 @@ public class ProgressionCheckPoint : MonoBehaviour
 
             respawnPosition = transform.position + respawnPositionOffset;
             gameManager.currentProgressionCp = respawnPosition;
-            gameManager.GetThroughSpawner();
+            gameManager.GetThroughSpawner(scoreAmount);
             this.enabled = false;
         }
     }

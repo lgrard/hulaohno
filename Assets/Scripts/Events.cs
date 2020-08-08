@@ -18,6 +18,9 @@ public class Events : MonoBehaviour
 
     public EventsType currentType;
 
+    [Header("Score amount")]
+    [SerializeField] int score = 100;
+
     [Header("Amount of entities")]
     [SerializeField] int amountMax;
     public int amountLeft;
@@ -143,6 +146,8 @@ public class Events : MonoBehaviour
     private IEnumerator EventCleared()
     {
         eventCleared = true;
+        gameManager.Scoring1(score, false);
+        gameManager.Scoring2(score, false);
         uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventCleared");
         yield return new WaitForEndOfFrame();
         uIManagement.eventClearedAudio.Play();

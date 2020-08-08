@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetThroughSpawner()
+    public void GetThroughSpawner(int amount)
     {
         StopCoroutine(Respawn(player0));
         StopCoroutine(Respawn(player1));
@@ -226,12 +226,14 @@ public class GameManager : MonoBehaviour
         {
             player0.GainHP(player0.maxHp);
             player0.gameObject.SetActive(true);
+            Scoring1(amount,false);
         }
 
         if(player1 != null)
         {
             player1.GainHP(player0.maxHp);
             player1.gameObject.SetActive(true);
+            Scoring2(amount, false);
         }
     }
 

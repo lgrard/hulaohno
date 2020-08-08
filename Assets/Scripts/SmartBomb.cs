@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class SmartBomb : MonoBehaviour
 {
+    [Header("Values")]
+    [SerializeField] float delay = 2f;
     [SerializeField] float duration = 3f; 
     [SerializeField] float startRadius = 3f;
     [SerializeField] float endRadius = 15f;
     [SerializeField] int numberOfTicks = 10;
     [SerializeField] int damagePerTick = 1;
+    [SerializeField] float hitStopDuration = 0.01f;
     [SerializeField] LayerMask enemyLayers;
+
+    [Header("Objects")]
     [SerializeField] GameObject mesh;
     [SerializeField] Material whiteMat;
+    [SerializeField] ParticleSystem p_take;
 
     private int playerIndex;
     private float currentRadius;
@@ -19,7 +25,6 @@ public class SmartBomb : MonoBehaviour
     private MeshRenderer renderer;
     private Material defMat;
 
-    [SerializeField] ParticleSystem p_take;
 
 
     private void Start()
@@ -36,17 +41,21 @@ public class SmartBomb : MonoBehaviour
         {
             GetComponent<BoxCollider>().enabled = false;
             playerIndex = playerController.playerIndex;
-            StartCoroutine(Bomb());
-            StartCoroutine(MeshSetting());
             p_take.Play();
             gameObject.GetComponent<AudioSource>().Play();
             gameObject.GetComponent<Animator>().SetTrigger("Take");
-            Destroy(gameObject, duration);
+            StartCoroutine(Bomb());
+            StartCoroutine(MeshSetting());
+            Destroy(gameObject, duration + delay);
         }
     }
 
     private IEnumerator Bomb()
     {
+        yield return new WaitForSeconds(delay);
+
+        StartCoroutine(cameraEffects.Shake(duration,0.04f));
+
         float tickTimeSpacing = duration / numberOfTicks;
         float tickRadiusSpacing = (endRadius-startRadius)/ numberOfTicks;
 
@@ -56,7 +65,7 @@ public class SmartBomb : MonoBehaviour
         {
             if (Physics.CheckSphere(transform.position, currentRadius, enemyLayers))
             {
-                StartCoroutine(cameraEffects.Hitstop(tickRadiusSpacing/4));
+                StartCoroutine(cameraEffects.Hitstop(hitStopDuration));
                 StartCoroutine(Blink());
             }
 
@@ -78,12 +87,14 @@ public class SmartBomb : MonoBehaviour
     }
     private IEnumerator MeshSetting()
     {
-        float meshRadiusTick = duration * Time.fixedDeltaTime;
-        float radius = startRadius;
+        yield return new WaitForSeconds(delay);
+
+        float meshRadiusTick = (endRadius*Time.fixedDeltaTime)/duration;
+        float radius = 0;
 
         while(currentRadius < endRadius)
         {
-            mesh.transform.localScale = Vector3.one * radius * 4;
+            mesh.transform.localScale = Vector3.one * radius * 2;
             radius += meshRadiusTick;
             yield return new WaitForFixedUpdate();
         }

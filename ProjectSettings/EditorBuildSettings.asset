@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: f80048f149362a646abfad7da1ea2875
   - enabled: 1
-    path: Assets/Scenes/RemyScene.unity
+    path: Assets/Scenes/Level_Lava.unity
     guid: 47e5f90a2c5c12b4a974ed38fd204287
   - enabled: 1
     path: Assets/Scenes/LoadingScreen.unity

@@ -48,14 +48,17 @@ public class CheckPointTrigger : MonoBehaviour
 
     [SerializeField] bool automaticWall;
     bool blockTriggered = false;
-    bool playerInsideTrigger;
-    bool playerInside;
-    bool disableCamBehavior;
+    bool playerInsideTrigger = false;
+    bool playerInside = false;
+    bool disableCamBehavior = false;
+    bool disableNonBlockingCam = false;
     float timeStamp = 1;
     int playerLayer;
     Camera cam;
     Events linkedEvents;
     GameManager gameManager;
+
+    Collider[] collidersCam = null;
 
 
 
@@ -134,8 +137,6 @@ public class CheckPointTrigger : MonoBehaviour
     //Fixed Update method
     private void FixedUpdate()
     {
-        Blocking();
-
         if(currentType == ZoneType.box)
         {
             playerInsideTrigger = Physics.CheckBox(zonePosition, triggerSize / 2, gameObject.transform.rotation, playerLayer, QueryTriggerInteraction.Ignore);
@@ -148,7 +149,7 @@ public class CheckPointTrigger : MonoBehaviour
             playerInside = Physics.CheckSphere(zonePosition, zoneRadius, playerLayer, QueryTriggerInteraction.Ignore);
         }
 
-        if (blockTriggered && playerInside && controlsCam)
+        if (blockTriggered && playerInside && controlsCam && !disableNonBlockingCam)
         {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = true;
             disableCamBehavior = true;
@@ -157,17 +158,20 @@ public class CheckPointTrigger : MonoBehaviour
             cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(cameraRotation), 0.05f);
         }
 
-        else if (disableCamBehavior && !playerInside && blockTriggered)
+        else if (disableCamBehavior && !playerInside && blockTriggered || disableNonBlockingCam && disableCamBehavior)
         {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = false;
             disableCamBehavior = false;
         }
+
+        Blocking();
+        NonBlockingCam();
     }
 
     //Blocking method
     private void Blocking()
     {
-        if (playerInsideTrigger && !blockTriggered)
+        if (playerInsideTrigger && !blockTriggered && blocksPlayers)
         {
             Collider[] colliders = null;
             
@@ -177,13 +181,17 @@ public class CheckPointTrigger : MonoBehaviour
             if (currentType == ZoneType.sphere)
                 colliders = Physics.OverlapSphere(zonePosition, zoneRadius, playerLayer, QueryTriggerInteraction.Ignore);
 
+
             if (colliders.Length == 1 && gameManager.player0 != null && gameManager.player1 != null)
             {
-                if (colliders[0].gameObject.GetComponent<PlayerController>().playerIndex == 0)
-                    gameManager.player1.transform.position = gameManager.player0.playerSpawnPoint.position;
+                if (blocksPlayers)
+                {
+                    if (colliders[0].gameObject.GetComponent<PlayerController>().playerIndex == 0)
+                        gameManager.player1.transform.position = gameManager.player0.playerSpawnPoint.position;
 
-                else if (colliders[0].gameObject.GetComponent<PlayerController>().playerIndex == 1)
-                    gameManager.player0.transform.position = gameManager.player1.playerSpawnPoint.position;
+                    else if (colliders[0].gameObject.GetComponent<PlayerController>().playerIndex == 1)
+                        gameManager.player0.transform.position = gameManager.player1.playerSpawnPoint.position;
+                }
             }
 
             blockTriggered = true;
@@ -226,6 +234,29 @@ public class CheckPointTrigger : MonoBehaviour
                 wallL.SetActive(false);
                 wallR.SetActive(false);
             }
+        }
+    }
+
+    private void NonBlockingCam()
+    {
+        if (playerInsideTrigger && !blocksPlayers)
+        {
+            blockTriggered = true;
+
+            if (currentType == ZoneType.box)
+                collidersCam = Physics.OverlapBox(zonePosition, zoneSize / 2, gameObject.transform.rotation, playerLayer, QueryTriggerInteraction.Ignore);
+
+            if (currentType == ZoneType.sphere)
+                collidersCam = Physics.OverlapSphere(zonePosition, zoneRadius, playerLayer, QueryTriggerInteraction.Ignore);
+
+            if (collidersCam.Length == 2 && gameManager.player0 != null && gameManager.player1 != null)
+                disableNonBlockingCam = false;
+
+            else if (collidersCam.Length == 1 && gameManager.player0 != null && gameManager.player1 != null)
+                disableNonBlockingCam = true;
+
+            else if (collidersCam.Length == 1 && gameManager.player0 != null && gameManager.player1 == null)
+                disableNonBlockingCam = false;
         }
     }
 

@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public int score2;
     public int combo1;
     public int combo2;
+    private int globalScore;
     [SerializeField] float comboStampMax = 10f;
     private float comboStamp1;
     private float comboStamp2;
@@ -71,12 +72,16 @@ public class GameManager : MonoBehaviour
     //Init
     private void Awake()
     {
-        if(!PlayerPrefs.HasKey("audioVolumePref"))
+        if (!PlayerPrefs.HasKey("globalScore"))
+            PlayerPrefs.SetInt("globalScore", 0);
+
+        if (!PlayerPrefs.HasKey("audioVolumePref"))
             PlayerPrefs.SetFloat("audioVolumePref", 1);
 
         if (!PlayerPrefs.HasKey("musicVolumePref"))
             PlayerPrefs.SetFloat("musicVolumePref", 1);
 
+        globalScore = PlayerPrefs.GetInt("globalScore");
         audioVolume = PlayerPrefs.GetFloat("audioVolumePref");
         musicVolume = PlayerPrefs.GetFloat("musicVolumePref");
 
@@ -146,6 +151,7 @@ public class GameManager : MonoBehaviour
             scoreAmountToAdd = amount * combo1;
 
         score1 += scoreAmountToAdd;
+        globalScore += scoreAmountToAdd;
 
         uiManagement.ScorePlus1(scoreAmountToAdd);
     }
@@ -166,6 +172,7 @@ public class GameManager : MonoBehaviour
             scoreAmountToAdd = amount * combo2;
 
         score2 += scoreAmountToAdd;
+        globalScore += scoreAmountToAdd;
 
         uiManagement.ScorePlus2(scoreAmountToAdd);
     }
@@ -227,9 +234,10 @@ public class GameManager : MonoBehaviour
             player0.GainHP(player0.maxHp);
             player0.gameObject.SetActive(true);
             Scoring1(amount,false);
+            PlayerPrefs.SetInt("globalScore", globalScore);
         }
 
-        if(player1 != null)
+        if (player1 != null)
         {
             player1.GainHP(player0.maxHp);
             player1.gameObject.SetActive(true);
@@ -337,6 +345,7 @@ public class GameManager : MonoBehaviour
             if (player1 != null)
                 player1.enabled = false;
 
+            PlayerPrefs.SetInt("globalScore", globalScore);
             isEnded = true;
             Time.timeScale = 0;
 

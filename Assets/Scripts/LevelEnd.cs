@@ -10,10 +10,21 @@ public class LevelEnd : MonoBehaviour
     BoxCollider collider;
     [SerializeField] Vector3 triggerZoneOffset;
     [SerializeField] Vector3 triggerSize;
+    [SerializeField] int levelIndexToLoad;
     GameManager gameManager;
+    UIManagement uIManagement;
+
+    enum ZoneType
+    {
+        levelEnd,
+        hubGate,
+    }
+
+    [SerializeField] ZoneType currentType;
 
     private void Start()
     {
+        uIManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         collider = gameObject.AddComponent<BoxCollider>();
         collider.center = triggerZoneOffset;
@@ -27,7 +38,11 @@ public class LevelEnd : MonoBehaviour
         if (playerInside1 && playerInside2 && !triggered || playerInside1 && !triggered && gameManager.player1 == null)
         {
             triggered = true;
-            gameManager.LevelEnd();
+            if(currentType == ZoneType.levelEnd)
+                gameManager.LevelEnd();
+            else if(currentType == ZoneType.hubGate)
+                uIManagement.LoadSpecificLevel(levelIndexToLoad);
+
             this.enabled = false;
         }
     }
@@ -54,7 +69,7 @@ public class LevelEnd : MonoBehaviour
     {
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(Vector3.zero + triggerZoneOffset, triggerSize);
+        Gizmos.DrawCube(Vector3.zero + triggerZoneOffset, triggerSize);
     }
 }
 

@@ -159,15 +159,15 @@ MonoBehaviour:
   collectibleAmount: 5
   itemDropRate: 0.03
   stoppingDistance: 3
+  despawnTime: 0.3
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
   p_hit: {fileID: 4622405979317916321}
   p_die: {fileID: 4622405979491602381}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
-  isMelee: 1
-  isLinearCaster: 0
-  isRadialCaster: 0
+  currentType: 0
+  currentSpecialType: 0
   gustNumber: 2
   radialProjectilesNumber: 4
   radius: 1
@@ -176,6 +176,7 @@ MonoBehaviour:
   projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,
     type: 3}
   projectilesPoint: {fileID: 3128413732375316188}
+  rotationSpeed: 1.5
 --- !u!114 &3775532770280756004
 MonoBehaviour:
   m_ObjectHideFlags: 0

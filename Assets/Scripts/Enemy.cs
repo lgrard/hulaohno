@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float gustSpacing = 0.5f;
     [SerializeField] GameObject projectiles;
     [SerializeField] GameObject projectilesPoint;
+    [SerializeField] float rotationSpeed = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -109,23 +110,20 @@ public class Enemy : MonoBehaviour
             Targetting();
 
         anim.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
+
+
+        if(agent.remainingDistance < agent.stoppingDistance && target != null);
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,lookRotation.eulerAngles.y,0), Time.deltaTime * rotationSpeed);
+        }
     }
 
     private void FixedUpdate()
     {
         if (isKnockedBack)
             agent.velocity = knockBackDir;
-    }
-
-    private void LateUpdate()
-    {
-        if(target != null && !isKnockedBack)
-        {
-            Vector3 relativePos = target.position - transform.position;
-
-            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            transform.rotation.SetEulerAngles(new Vector3(0,rotation.eulerAngles.y,0));
-        }
     }
     #endregion
 

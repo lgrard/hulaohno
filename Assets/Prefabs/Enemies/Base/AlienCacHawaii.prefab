@@ -127,6 +127,7 @@ MonoBehaviour:
   projectiles: {fileID: 3319417111744712252, guid: 31956e8ae9539f54f8a1206632d56db1,
     type: 3}
   projectilesPoint: {fileID: 4660507557689843865}
+  rotationSpeed: 1.5
 --- !u!114 &3775532770280756004
 MonoBehaviour:
   m_ObjectHideFlags: 0

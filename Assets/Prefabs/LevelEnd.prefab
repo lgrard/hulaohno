@@ -93,6 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerZoneOffset: {x: 0, y: 7.5, z: 0}
   triggerSize: {x: 1, y: 15, z: 30}
+  levelIndexToLoad: 1
+  currentType: 0
 --- !u!1 &7706630148998161154
 GameObject:
   m_ObjectHideFlags: 0

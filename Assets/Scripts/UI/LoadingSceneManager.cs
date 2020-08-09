@@ -42,6 +42,7 @@ public class LoadingSceneManager : MonoBehaviour
 
     IEnumerator LoadLevelAsync(int sceneIndex)
     {
+        yield return new WaitForSecondsRealtime(0.75f);
         loadingScreen.SetActive(true);
 
         int currentScene = SceneManager.GetActiveScene().buildIndex;

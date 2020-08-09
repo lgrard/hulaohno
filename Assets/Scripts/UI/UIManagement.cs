@@ -243,25 +243,15 @@ public class UIManagement : MonoBehaviour
 
     //Pause menu methods
     public void OnResume() => gameManager.PauseGame();
-    public void OnQuit()
+    public void OnQuit() => LoadSpecificLevel(0);
+    public void OnRestart() => LoadSpecificLevel(SceneManager.GetActiveScene().buildIndex);
+    public void OnNextLevel() => LoadSpecificLevel(1);
+
+    public void LoadSpecificLevel(int levelIndex)
     {
         eventSystem.enabled = false;
         gameManager.isLoading = true;
         transitionAnim.SetTrigger("Transition");
-        loadingSceneManager.LoadLevel(0);
-    }
-    public void OnRestart()
-    {
-        eventSystem.enabled = false;
-        gameManager.isLoading = true;
-        transitionAnim.SetTrigger("Transition");
-        loadingSceneManager.LoadLevel(SceneManager.GetActiveScene().buildIndex);
-    }
-    public void OnNextLevel()
-    {
-        eventSystem.enabled = false;
-        gameManager.isLoading = true;
-        transitionAnim.SetTrigger("Transition");
-        loadingSceneManager.LoadLevel(0);
+        loadingSceneManager.LoadLevel(levelIndex);
     }
 }

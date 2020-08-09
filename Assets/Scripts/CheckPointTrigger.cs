@@ -50,6 +50,7 @@ public class CheckPointTrigger : MonoBehaviour
     bool blockTriggered = false;
     bool playerInsideTrigger;
     bool playerInside;
+    bool disableCamBehavior;
     float timeStamp = 1;
     int playerLayer;
     Camera cam;
@@ -150,13 +151,17 @@ public class CheckPointTrigger : MonoBehaviour
         if (blockTriggered && playerInside && controlsCam)
         {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = true;
+            disableCamBehavior = true;
             Transform camContainer = cam.GetComponentInParent<CameraEffects>().transform;
             camContainer.position = Vector3.Lerp(cam.transform.position, gameObject.transform.position + cameraPositionOffset, 0.05f);
             cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(cameraRotation), 0.05f);
         }
 
-        else
+        else if (disableCamBehavior && !playerInside && blockTriggered)
+        {
             cam.GetComponentInParent<CameraEffects>().checkPointActive = false;
+            disableCamBehavior = false;
+        }
     }
 
     //Blocking method

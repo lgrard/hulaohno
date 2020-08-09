@@ -42,21 +42,22 @@ public class CameraEffects : MonoBehaviour
 
     private void FixedUpdate()
     {
-        WallSetting();
-        DistanceSetting();
-
-        if (gameManager.player0 != null && gameManager.player1 != null)
-            cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
-
-        else if (gameManager.player0 == null && gameManager.player1 != null)
-            cameraTarget.transform.position = gameManager.player1.transform.position;
-
-        else if (gameManager.player1 == null && gameManager.player0 != null)
-            cameraTarget.transform.position = gameManager.player0.transform.position;
-
-
         if (cameraTarget != null && !checkPointActive && gameManager.player0 != null)
         {
+            WallSetting();
+
+            if (gameManager.player0 != null && gameManager.player1 != null)
+            {
+                cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
+                DistanceSetting();
+            }
+
+            else if (gameManager.player0 == null && gameManager.player1 != null)
+                cameraTarget.transform.position = gameManager.player1.transform.position;
+
+            else if (gameManager.player1 == null && gameManager.player0 != null)
+                cameraTarget.transform.position = gameManager.player0.transform.position;
+
             //Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
             Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, cameraTarget.transform.position.z + offset.z);
             cameraContainer.transform.position = Vector3.Lerp(desiredPosition, cameraContainer.transform.position, smoothingAmount);
@@ -85,12 +86,9 @@ public class CameraEffects : MonoBehaviour
     }
 
     void DistanceSetting()
-    {
-        if (gameManager.player0 != null && gameManager.player1 != null)
-        {
-            float distanceCam = Mathf.Clamp(gameManager.distanceRatio * maxDistanceCam, minDistanceCam, maxDistanceCam);
-            offset = new Vector3(offset.x,offset.y, -distanceCam);
-        }
+{
+        float distanceCam = Mathf.Clamp(gameManager.distanceRatio * maxDistanceCam, minDistanceCam, maxDistanceCam);
+        offset = new Vector3(offset.x,offset.y, -distanceCam);
     }
 
     // Shake Function

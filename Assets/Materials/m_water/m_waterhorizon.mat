@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_water
+  m_Name: m_waterhorizon
   m_Shader: {fileID: -6465566751694194690, guid: ffea05041bf58f8468e9809f52cd525a,
     type: 3}
   m_ShaderKeywords: 
@@ -62,7 +62,7 @@ Material:
     - Vector1_18E5116C: 1
     - Vector1_19311FAA: 2.5
     - Vector1_2BB4BF07: 1.73
-    - Vector1_3162FED0: 1.15
+    - Vector1_3162FED0: 1.14
     - Vector1_3CEA962D: 250
     - Vector1_4873AAFB: 20
     - Vector1_50A5B1D5: 65.66
@@ -78,7 +78,7 @@ Material:
     - Vector1_CB97511D: 0.868
     - Vector1_DAD6BE26: 0.05
     - Vector1_EEF2ADBF: 0.5
-    - Vector1_F528F737: 1
+    - Vector1_F528F737: 1.58
     - Vector1_FFC46D4C: 0.5
     - _AlphaClip: 0
     - _Blend: 0
@@ -108,7 +108,7 @@ Material:
     - Color_7EE5DD21: {r: 0.08627448, g: 0.08627448, b: 0.08627448, a: 1}
     - Color_AF71E4B6: {r: 0.48126554, g: 0.8883402, b: 0.9716981, a: 0.2980392}
     - Color_B09B0D2D: {r: 0.52358484, g: 0.9047168, b: 1, a: 0}
-    - Color_CEF628F7: {r: 0.984, g: 0.8733722, b: 0.739968, a: 1}
+    - Color_CEF628F7: {r: 0.08499998, g: 1, b: 0.9820589, a: 1}
     - Color_E234DFCE: {r: 0.26274508, g: 0.4823529, b: 0.9450981, a: 1}
     - Vector2_16A92A1A: {r: 0, g: 1, b: 0, a: 0}
     - Vector2_25290189: {r: 5, g: 5, b: 0, a: 0}

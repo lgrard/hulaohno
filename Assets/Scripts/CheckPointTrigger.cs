@@ -171,7 +171,7 @@ public class CheckPointTrigger : MonoBehaviour
     //Blocking method
     private void Blocking()
     {
-        if (playerInsideTrigger && !blockTriggered && blocksPlayers)
+        if (playerInsideTrigger && !blockTriggered)
         {
             Collider[] colliders = null;
             

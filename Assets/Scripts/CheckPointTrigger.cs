@@ -88,11 +88,13 @@ public class CheckPointTrigger : MonoBehaviour
     //Update method
     private void Update()
     {
+        transform.localScale = Vector3.one;
+
         if (blocksPlayers && currentType == ZoneType.box)
-            triggerOffset = Mathf.Clamp(triggerOffset, 6, 10000);
+            triggerOffset = Mathf.Clamp(triggerOffset, 6, 1000);
 
         else if (blocksPlayers && currentType == ZoneType.sphere)
-            triggerOffset = Mathf.Clamp(triggerOffset, 3, 10000);
+            triggerOffset = Mathf.Clamp(triggerOffset, 3, zoneRadius);
 
         else if (!blocksPlayers)
             triggerOffset = Mathf.Clamp(triggerOffset, 0, 10000);

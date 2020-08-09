@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_skirtRed
+  m_Name: m_skirtPink
   m_Shader: {fileID: -6465566751694194690, guid: 2686fdc617ba80c498b7c556d997ded6,
     type: 3}
   m_ShaderKeywords: ENUM_7879BB99_ADD
@@ -114,7 +114,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_1F721295: {r: 1, g: 0, b: 0.75939226, a: 0}
+    - Color_1F721295: {r: 1, g: 0, b: 0.7270336, a: 0}
+    - Color_3DE83EA5: {r: 1, g: 1, b: 1, a: 0}
     - Color_46FEB77B: {r: 0, g: 0.7861636, b: 1, a: 0}
     - Color_CEF628F7: {r: 1, g: 0.93848616, b: 0.589, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

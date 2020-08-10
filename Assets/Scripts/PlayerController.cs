@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         noFrictionMat = new PhysicMaterial("noFrictionMat");
         noFrictionMat.dynamicFriction = 0;
         noFrictionMat.staticFriction = 0;
-        noFrictionMat.bounciness = 0.5f;
+        noFrictionMat.bounciness = 0;
         noFrictionMat.frictionCombine = PhysicMaterialCombine.Minimum;
 
         airControlAmount = Mathf.Clamp(airControlAmount, 0f, 1f);
@@ -323,6 +323,7 @@ public class PlayerController : MonoBehaviour
 
         effectManager.t_dashTrail.enabled = true;
         effectManager.p_dash.Play();
+        AudioSinglePlay(effectManager.audio_dash, 0.05f);
         dashStamp = 0;
 
         while (isDashing && dashStamp < dashDuration)
@@ -402,7 +403,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.CheckSphere(attack.attackPosition.position, attack.attackRadius, enemyLayers))
         {
-            AudioSinglePlay(audioSource.clip, 0.05f);
+            AudioSinglePlay(effectManager.audio_punch, 0.05f);
             StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
             StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
 

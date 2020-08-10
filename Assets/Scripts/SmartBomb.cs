@@ -54,6 +54,7 @@ public class SmartBomb : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        mesh.GetComponent<AudioSource>().Play();
         StartCoroutine(cameraEffects.Shake(duration,0.04f));
 
         float tickTimeSpacing = duration / numberOfTicks;
@@ -96,6 +97,10 @@ public class SmartBomb : MonoBehaviour
         {
             mesh.transform.localScale = Vector3.one * radius * 2;
             radius += meshRadiusTick;
+
+            if (currentRadius > endRadius * 0.7)
+                renderer.material.SetFloat("alphaMultiplier", Mathf.Clamp(renderer.material.GetFloat("alphaMultiplier") - Time.fixedDeltaTime*2,0,1));
+
             yield return new WaitForFixedUpdate();
         }
     }

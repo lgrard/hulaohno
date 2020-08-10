@@ -15,6 +15,8 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem p_dash;
     public ParticleSystem p_spinCharge;
     public ParticleSystem p_spinCharged;
+    public AudioClip audio_dash;
+    public AudioClip audio_punch;
 
     int groundLayer;
 

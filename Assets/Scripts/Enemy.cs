@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private GameManager gameManager;
     private Attack attackScript;
+    private AudioSource audio_attack;
 
     [Header("Values")]
     [SerializeField] int maxHp = 10;
@@ -77,9 +78,14 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         if (currentType == EnemyType.melee)
+        {
             attackScript = gameObject.GetComponent<Attack>();
+            audio_attack = attackScript.attackPosition.GetComponent<AudioSource>();
+        }
+
+        if(currentType == EnemyType.linearCaster ||currentType == EnemyType.radialCaster)
+            audio_attack = projectilesPoint.GetComponent<AudioSource>();
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -263,6 +269,7 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < gustNumber; i++)
         {
+            audio_attack.Play();
             GameObject projectileInstance = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
             projectileInstance.GetComponent<Projectiles>().direction = new Vector3(transform.forward.x,0,transform.forward.z);
             yield return new WaitForSeconds(gustSpacing);
@@ -278,6 +285,8 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < gustNumber; i++)
         {
+            audio_attack.Play();
+
             for (int u = 0; u <= radialProjectilesNumber - 1; u++)
             {
                 float projectileDirXposition = projectilesPoint.transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180 * radius);
@@ -299,6 +308,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator Hit()
     {
         attackStamp = 0f;
+        audio_attack.Play();
 
         anim.SetTrigger("Attack");
         yield return new WaitForSeconds(attackScript.delay);

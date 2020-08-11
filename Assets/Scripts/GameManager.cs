@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         DistanceCheck();
         AudioManagement();
 
-        if (isLoading)
+        if (isLoading || isEnded)
             Time.timeScale = 0;
         else
             Time.timeScale = 1;
@@ -404,9 +404,10 @@ public class GameManager : MonoBehaviour
             if (player1 != null)
                 player1.enabled = false;
 
+            periodScore1 = 0;
+            periodScore2 = 0;
             PlayerPrefs.SetInt("globalScore", globalScore);
             isEnded = true;
-            Time.timeScale = 0;
 
             uiManagement.OpenWin();
         }

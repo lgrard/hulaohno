@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -366,8 +366,10 @@ MonoBehaviour:
     type: 3}
   position1: {x: 16.060043, y: 2.5, z: 6.5829945}
   position2: {x: 14.147731, y: 2.5, z: -1.0961852}
+  spawnDelay: 0
   spawnRate: 2
   enemyCount: 1
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -817,8 +819,10 @@ MonoBehaviour:
     type: 3}
   position1: {x: -19.97411, y: 3.7673407, z: 6.7797985}
   position2: {x: -30.616951, y: 3.4145017, z: -10.115049}
+  spawnDelay: 0
   spawnRate: 1
   enemyCount: 4
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -2140,8 +2144,10 @@ MonoBehaviour:
     type: 3}
   position1: {x: 30.398008, y: 1.7813692, z: 5.1942234}
   position2: {x: 30.200737, y: 0.8095355, z: -8.973211}
+  spawnDelay: 0
   spawnRate: 0.5
   enemyCount: 1
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -3161,26 +3167,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -16
-      objectReference: {fileID: 0}
-    - target: {fileID: 5648784177063748530, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5648784177063748530, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5648784177063748530, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5648784177063748530, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5648784177063748530, guid: 279a1c74fd6fd0b4fbfafc60a462521b,
         type: 3}

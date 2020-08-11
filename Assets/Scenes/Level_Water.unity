@@ -38315,17 +38315,17 @@ PrefabInstance:
     - target: {fileID: 3748544916753437708, guid: 9aa03108a81fcd44c96869527056a7ca,
         type: 3}
       propertyPath: currentProgressionCp.y
-      value: 9.73
+      value: 7.38
       objectReference: {fileID: 0}
     - target: {fileID: 3748544916753437708, guid: 9aa03108a81fcd44c96869527056a7ca,
         type: 3}
       propertyPath: currentProgressionCp.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3748544916753437708, guid: 9aa03108a81fcd44c96869527056a7ca,
         type: 3}
       propertyPath: currentProgressionCp.z
-      value: -104.6
+      value: -104.43
       objectReference: {fileID: 0}
     - target: {fileID: 3748544916753437710, guid: 9aa03108a81fcd44c96869527056a7ca,
         type: 3}

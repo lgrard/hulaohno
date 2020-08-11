@@ -32,7 +32,7 @@ public class Events : MonoBehaviour
     private GameManager gameManager;
     private UIManagement uIManagement;
     private bool eventCleared = false;
-    private bool eventMissed = false;
+    public bool eventMissed = false;
 
     private void Start()
     {
@@ -162,7 +162,7 @@ public class Events : MonoBehaviour
         this.enabled = false;
     }
 
-    private IEnumerator EventMissed()
+    public IEnumerator EventMissed()
     {
         eventMissed = true;
         uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventMissed");

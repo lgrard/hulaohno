@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     private PlayerAssignement playerAssignement;
 
     public Events currentEvent = null;
+    public CheckPointTrigger currentTrigger = null;
     public bool p1HasTakenDamage = false;
     public bool p2HasTakenDamage = false;
     public bool p1HasHealed = false;
@@ -99,6 +100,9 @@ public class GameManager : MonoBehaviour
     //Unity Cycle
     private void Update()
     {
+        score1 = Mathf.Clamp(score1, 0, 100000000);
+        score2 = Mathf.Clamp(score2, 0, 100000000);
+
         if (inputManager.playerCount == 0 && inputManager.joiningEnabled)
             inputManager.playerPrefab = player0prefab;
 
@@ -238,6 +242,9 @@ public class GameManager : MonoBehaviour
                 periodScore1 = 0;
                 periodScore2 = 0;
 
+                if (currentTrigger != null)
+                    StartCoroutine(currentTrigger.ResetTrigger());
+
                 yield return new WaitForEndOfFrame();
                 player0.gameObject.SetActive(true);
                 player0.Spawn();
@@ -256,6 +263,13 @@ public class GameManager : MonoBehaviour
         else if(playerToRespawn == player0 && player1 == null)
         {
             yield return new WaitForEndOfFrame();
+
+            if (currentTrigger != null)
+                StartCoroutine(currentTrigger.ResetTrigger());
+
+            score1 -= periodScore1;
+            periodScore1 = 0;
+
             p1IsDead = true;
             playerToRespawn.gameObject.SetActive(true);
             p1IsDead = false;
@@ -267,6 +281,9 @@ public class GameManager : MonoBehaviour
     {
         StopCoroutine(Respawn(player1));
         StopCoroutine(Respawn(player0));
+
+        currentTrigger = null;
+        currentEvent = null;
 
         if (player0 != null)
         {

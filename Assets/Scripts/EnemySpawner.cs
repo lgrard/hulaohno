@@ -21,6 +21,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Number of enemies")]
     public int enemyCount = 1;
     public int enemyRemaining = 1;
+    private List<GameObject> enemyList = new List<GameObject>();
 
     [Header("Is the spawner working ?")]
     public bool isSpawning;
@@ -35,6 +36,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnEnable()
     {
+        isSpawning = true;
+        noMoreEnemies = false;
         layer = LayerMask.NameToLayer("Ground") | LayerMask.NameToLayer("Player");
         enemyRemaining = enemyCount;
         StartCoroutine(SpawnEnemies());
@@ -44,7 +47,7 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnDelay);
 
-        while (enemyCount > 0 && isSpawning)
+        while (enemyRemaining > 0 && isSpawning)
         {
             Vector3 spawnPos = Vector3.Lerp(position1, position2, Random.Range(0f, 1f));
 
@@ -57,7 +60,8 @@ public class EnemySpawner : MonoBehaviour
                 if (enemy.TryGetComponent<EnemyDuet>(out EnemyDuet enemyDuet))
                     enemyDuet.spawner = this;
 
-                enemyCount--;
+                enemyList.Add(enemy);
+                enemyRemaining--;
 
                 yield return new WaitForSeconds(spawnRate * Random.Range(0.8f, 1f));
             }
@@ -67,6 +71,19 @@ public class EnemySpawner : MonoBehaviour
         }
 
         isSpawning = false;
+    }
+
+    public IEnumerator CancelSpawning()
+    {
+        foreach(GameObject enemy in enemyList)
+        {
+            Destroy(enemy);
+            yield return new WaitForEndOfFrame();
+        }
+
+        this.enabled = false;
+        yield return new WaitForEndOfFrame();
+        StopAllCoroutines();
     }
 
     private void OnDrawGizmos()

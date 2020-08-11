@@ -47,6 +47,7 @@ public class CheckPointTrigger : MonoBehaviour
 
 
     [SerializeField] bool automaticWall;
+    bool isCleared = false;
     bool blockTriggered = false;
     bool playerInsideTrigger = false;
     bool playerInside = false;
@@ -66,26 +67,29 @@ public class CheckPointTrigger : MonoBehaviour
     //Initialize
     private void Start()
     {
-        wallL.SetActive(false);
-        wallR.SetActive(false);
-
-        if (TryGetComponent(out Events events))
+        if (!isCleared)
         {
-            linkedEvents = events;
-            linkedEvents.enabled = false;
-        }
+            wallL.SetActive(false);
+            wallR.SetActive(false);
 
-        playerLayer = LayerMask.GetMask("Player");
-        cam = Camera.main;
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            if (TryGetComponent(out Events events))
+            {
+                linkedEvents = events;
+                linkedEvents.enabled = false;
+            }
 
-        foreach (EnemySpawner spawner in linkedSpawner)
-        {
-            spawner.isSpawning = true;
-            spawner.enabled = false;
+            playerLayer = LayerMask.GetMask("Player");
+            cam = Camera.main;
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-            if (linkedEvents != null)
-                spawner.linkedCameraCheckpoint = gameObject;
+            foreach (EnemySpawner spawner in linkedSpawner)
+            {
+                spawner.isSpawning = true;
+                spawner.enabled = false;
+
+                if (linkedEvents != null)
+                    spawner.linkedCameraCheckpoint = gameObject;
+            }
         }
     }
 
@@ -164,7 +168,9 @@ public class CheckPointTrigger : MonoBehaviour
             disableCamBehavior = false;
         }
 
-        Blocking();
+        if(!isCleared)
+            Blocking();
+        
         NonBlockingCam();
     }
 
@@ -194,6 +200,7 @@ public class CheckPointTrigger : MonoBehaviour
                 }
             }
 
+            gameManager.currentTrigger = this;
             blockTriggered = true;
 
             if (blocksPlayers)
@@ -205,7 +212,7 @@ public class CheckPointTrigger : MonoBehaviour
             foreach (EnemySpawner spawner in linkedSpawner)
                 spawner.enabled = true;
 
-            if (linkedEvents != null)
+            if (linkedEvents != null && !linkedEvents.eventMissed)
                 linkedEvents.enabled = true;
         }
 
@@ -231,6 +238,8 @@ public class CheckPointTrigger : MonoBehaviour
 
             else
             {
+                isCleared = true;
+                gameManager.currentTrigger = null;
                 wallL.SetActive(false);
                 wallR.SetActive(false);
             }
@@ -258,6 +267,26 @@ public class CheckPointTrigger : MonoBehaviour
             else if (collidersCam.Length == 1 && gameManager.player0 != null && gameManager.player1 == null)
                 disableNonBlockingCam = false;
         }
+    }
+
+    public IEnumerator ResetTrigger()
+    {
+        wallL.SetActive(false);
+        wallR.SetActive(false);
+
+        endedSpawner.Clear();
+
+        if (linkedEvents != null && !linkedEvents.eventMissed)
+            StartCoroutine(linkedEvents.EventMissed());
+
+        foreach (EnemySpawner spawner in linkedSpawner)
+        {
+            StartCoroutine(spawner.CancelSpawning());
+            yield return null;
+        }
+
+        yield return new WaitForEndOfFrame();
+        blockTriggered = false;
     }
 
     private void OnDrawGizmosSelected()

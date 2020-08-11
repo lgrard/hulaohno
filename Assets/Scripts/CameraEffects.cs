@@ -19,7 +19,7 @@ public class CameraEffects : MonoBehaviour
     [SerializeField] float maxDistanceCam = 19;
 
     private GameManager gameManager;
-    private Vector3 offset;
+    [SerializeField] Vector3 offset;
     private Camera cam;
     private Vector3 rotOffset;
 

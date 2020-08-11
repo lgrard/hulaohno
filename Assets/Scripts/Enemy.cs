@@ -96,34 +96,34 @@ public class Enemy : MonoBehaviour
         defMat = renderer.materials;
         HP = maxHp;
 
-        Targetting();
+        StartCoroutine(Targeting());
     }
 
     //Unity Cycles
     #region Cycle
     private void Update()
     {
-        if (target == null)
-            Targetting();
+        if (target == null || target == gameManager.player0 && gameManager.p1IsDead || target == gameManager.player1 && gameManager.p2IsDead)
+            StartCoroutine(Targeting());
 
-        else if(!isKnockedBack && target != null)
+        if(target != null)
         {
-            agent.SetDestination(target.position);
-            Attack();
+            if(!isKnockedBack)
+            {
+                agent.SetDestination(target.position);
+                Attack();
+            }
+
+            anim.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
+
+            if(agent.remainingDistance < agent.stoppingDistance);
+            {
+                Vector3 direction = (target.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,lookRotation.eulerAngles.y,0), Time.deltaTime * rotationSpeed);
+            }
         }
 
-        if (!target.gameObject.activeSelf && target != null)
-            Targetting();
-
-        anim.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
-
-
-        if(agent.remainingDistance < agent.stoppingDistance && target != null);
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,lookRotation.eulerAngles.y,0), Time.deltaTime * rotationSpeed);
-        }
     }
 
     private void FixedUpdate()
@@ -149,6 +149,7 @@ public class Enemy : MonoBehaviour
             anim.SetTrigger("GetHit");
             p_hit.Play();
             StartCoroutine(Blink());
+            StartCoroutine(Targeting());
         }
     }
 
@@ -320,8 +321,34 @@ public class Enemy : MonoBehaviour
     }
 
     //Targetting method
-    private void Targetting()
+    private IEnumerator Targeting()
     {
+        if (gameManager.player0 != null && gameManager.player1 != null)
+        {
+            targetList = new GameObject[] { gameManager.player0.gameObject, gameManager.player1.gameObject };
+
+            GameObject currentTarget = gameManager.player0.gameObject;
+
+            foreach (GameObject singleTarget in targetList)
+            {
+                float distanceFromTarget = Vector3.Distance(singleTarget.transform.position, transform.position);
+
+                if (distanceFromTarget < Vector3.Distance(currentTarget.transform.position, transform.position))
+                    currentTarget = singleTarget;
+                yield return null;
+            }
+
+            target = currentTarget.transform;
+        }
+
+        else if (gameManager.player0 != null && gameManager.player1 == null)
+            target = gameManager.player0.transform;
+
+        else if (gameManager.player1 != null && gameManager.player0 == null)
+            target = gameManager.player1.transform;
+
+        //Old targetting system
+        /*
         if (gameManager.player0 != null && gameManager.player1 != null && gameManager.player0.gameObject.activeSelf && gameManager.player1.gameObject.activeSelf)
         {
             targetList = new GameObject[] { gameManager.player0.gameObject, gameManager.player1.gameObject };
@@ -335,7 +362,7 @@ public class Enemy : MonoBehaviour
 
 
         else if (gameManager.player1 != null && gameManager.player0 == null && gameManager.player1.gameObject.activeSelf)
-            target = gameManager.player1.transform;
+            target = gameManager.player1.transform;*/
     }
 
     public IEnumerator KnockBack(float force, Transform origin)

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -239,6 +239,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 4
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -6302,7 +6303,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6724,6 +6725,7 @@ MonoBehaviour:
   spawnDelay: 3
   spawnRate: 3
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -6927,6 +6929,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 1.5
   enemyCount: 9
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -7040,7 +7043,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7893,7 +7896,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10079,7 +10082,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh516128
+  m_Name: pb_Mesh51184
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10795,7 +10798,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12068,6 +12071,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 2
   enemyCount: 7
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -15938,7 +15942,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16267,7 +16271,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh516280
+  m_Name: pb_Mesh51336
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -18298,6 +18302,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 5
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -20739,6 +20744,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 2.5
   enemyCount: 5
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -23538,6 +23544,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 3
   enemyCount: 7
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -24268,6 +24275,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 3
   enemyCount: 2
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -24751,7 +24759,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27325,6 +27333,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 5
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -29863,7 +29872,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30869,7 +30878,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh515240
+  m_Name: pb_Mesh50304
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31319,6 +31328,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 5
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -32867,7 +32877,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh516480
+  m_Name: pb_Mesh51532
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -34598,7 +34608,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh514996
+  m_Name: pb_Mesh50070
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -35056,6 +35066,7 @@ MonoBehaviour:
   spawnDelay: 2
   spawnRate: 4
   enemyCount: 1
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -35334,6 +35345,7 @@ MonoBehaviour:
   spawnDelay: 5
   spawnRate: 5
   enemyCount: 1
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -41997,7 +42009,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh515320
+  m_Name: pb_Mesh50384
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -43586,6 +43598,7 @@ MonoBehaviour:
   spawnDelay: 3
   spawnRate: 4
   enemyCount: 2
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -46618,7 +46631,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f51dcac86f952374fa666cd751f6ad91, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -51212,6 +51225,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnRate: 4
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -51222,7 +51236,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh516196
+  m_Name: pb_Mesh51252
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -52089,6 +52103,7 @@ MonoBehaviour:
   amountLeft: 0
   timeMax: 10
   currentTime: 0
+  eventMissed: 0
 --- !u!4 &1876547951 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 66158693cccb05e4e86f7694606d2563,
@@ -52929,7 +52944,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -53363,7 +53378,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh516538
+  m_Name: pb_Mesh51592
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -53720,7 +53735,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28762e8cbe9ea904b9844a11cf83392e, type: 2}
+  - {fileID: 2100000, guid: f36a76aaa5d393945983b86e639719ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -54327,6 +54342,7 @@ MonoBehaviour:
   spawnDelay: 4
   spawnRate: 5
   enemyCount: 2
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -54673,6 +54689,7 @@ MonoBehaviour:
   spawnDelay: 2
   spawnRate: 3.5
   enemyCount: 3
+  enemyToSpawn: 1
   enemyRemaining: 1
   isSpawning: 1
   noMoreEnemies: 0
@@ -55276,7 +55293,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh515364
+  m_Name: pb_Mesh50426
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -55439,7 +55456,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh515160
+  m_Name: pb_Mesh50224
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

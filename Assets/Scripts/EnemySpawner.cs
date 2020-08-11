@@ -20,7 +20,9 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Number of enemies")]
     public int enemyCount = 1;
+    [HideInInspector]
     public int enemyToSpawn = 1;
+    [HideInInspector]
     public int enemyRemaining = 1;
     private List<GameObject> enemyList = new List<GameObject>();
 

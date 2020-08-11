@@ -238,6 +238,9 @@ public class CheckPointTrigger : MonoBehaviour
 
             else
             {
+                if (linkedEvents != null && !linkedEvents.eventMissed)
+                    StartCoroutine(linkedEvents.EventMissed());
+
                 isCleared = true;
                 gameManager.currentTrigger = null;
                 wallL.SetActive(false);

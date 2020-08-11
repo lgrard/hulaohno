@@ -333,7 +333,7 @@ MonoBehaviour:
   attackName: Spin
   attackIndex: 4
   attackRadius: 4
-  attackDamage: 2
+  attackDamage: 3
   delay: 0.1
   attackPosition: {fileID: 927899341648636501}
   displayPreview: 1
@@ -54315,7 +54315,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   dashAmount: 40
-  dashPush: 15
+  dashPush: 6
   dashDuration: 0.15
   dashCooldown: 0.5
   gravityAmount: 20
@@ -54325,7 +54325,7 @@ MonoBehaviour:
   attackDepthMax: 3
   attackTimerMax: 0.3
   attackStepAmount: 5
-  specialStampMax: 1
+  specialStampMax: 0.6
   attackManager: {fileID: 632097015259804482}
   playerSpawnPoint: {fileID: 4577518139876410218}
   mesh: {fileID: 3332200238471951228}

@@ -20,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Number of enemies")]
     public int enemyCount = 1;
+    public int enemyToSpawn = 1;
     public int enemyRemaining = 1;
     private List<GameObject> enemyList = new List<GameObject>();
 
@@ -40,6 +41,7 @@ public class EnemySpawner : MonoBehaviour
         noMoreEnemies = false;
         layer = LayerMask.NameToLayer("Ground") | LayerMask.NameToLayer("Player");
         enemyRemaining = enemyCount;
+        enemyToSpawn = enemyCount;
         StartCoroutine(SpawnEnemies());
     }
 
@@ -47,7 +49,7 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnDelay);
 
-        while (enemyRemaining > 0 && isSpawning)
+        while (enemyToSpawn > 0 && isSpawning)
         {
             Vector3 spawnPos = Vector3.Lerp(position1, position2, Random.Range(0f, 1f));
 
@@ -61,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
                     enemyDuet.spawner = this;
 
                 enemyList.Add(enemy);
-                enemyRemaining--;
+                enemyToSpawn--;
 
                 yield return new WaitForSeconds(spawnRate * Random.Range(0.8f, 1f));
             }

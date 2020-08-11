@@ -49324,6 +49324,8 @@ MonoBehaviour:
   p_dash: {fileID: 1512245231807078231}
   p_spinCharge: {fileID: 9074149985846095556}
   p_spinCharged: {fileID: 551833267268534214}
+  audio_dash: {fileID: 0}
+  audio_punch: {fileID: 0}
 --- !u!1 &6710283594800337945
 GameObject:
   m_ObjectHideFlags: 0
@@ -49548,7 +49550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 1
-  maxHp: 15
+  maxHp: 6
   HP: 0
   jumpHeight: 750
   speed: 10
@@ -49577,7 +49579,6 @@ MonoBehaviour:
   inputAction: {fileID: -944628639613478452, guid: 2ff868cadc31b094c807d3dfe081088a,
     type: 3}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
-  noFrictionMat: {fileID: 13400000, guid: 34b94140f52eb2646947d0d252107f36, type: 2}
   isGrounded: 0
   isAttacking: 0
   rumbleActive: 0

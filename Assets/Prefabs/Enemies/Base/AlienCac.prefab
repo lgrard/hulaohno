@@ -224,7 +224,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.5
+  m_Speed: 2.25
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -252,7 +252,7 @@ MonoBehaviour:
   spawner: {fileID: 0}
   maxHp: 5
   scoreAmount: 10
-  attackStampMax: 5
+  attackStampMax: 2
   collectibleAmount: 5
   itemDropRate: 0.03
   stoppingDistance: 3

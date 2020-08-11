@@ -9894,7 +9894,7 @@ MonoBehaviour:
   spawner: {fileID: 0}
   maxHp: 15
   scoreAmount: 30
-  attackStampMax: 4
+  attackStampMax: 3
   collectibleAmount: 15
   itemDropRate: 0.03
   stoppingDistance: 12

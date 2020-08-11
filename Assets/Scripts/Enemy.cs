@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
 
     [Header("States")]
     private bool isKnockedBack;
+    private bool isTargeting = false;
 
     //public bool isMelee;
     //public bool isLinearCaster;
@@ -103,8 +104,10 @@ public class Enemy : MonoBehaviour
     #region Cycle
     private void Update()
     {
-        if (target == null || target == gameManager.player0 && gameManager.p1IsDead || target == gameManager.player1 && gameManager.p2IsDead)
+        if (target == null && !isTargeting || target != null && !target.gameObject.activeSelf && !isTargeting)
+        {
             StartCoroutine(Targeting());
+        }
 
         if(target != null)
         {
@@ -123,7 +126,6 @@ public class Enemy : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,lookRotation.eulerAngles.y,0), Time.deltaTime * rotationSpeed);
             }
         }
-
     }
 
     private void FixedUpdate()
@@ -149,7 +151,9 @@ public class Enemy : MonoBehaviour
             anim.SetTrigger("GetHit");
             p_hit.Play();
             StartCoroutine(Blink());
-            StartCoroutine(Targeting());
+            
+            if(!isTargeting)
+                StartCoroutine(Targeting());
         }
     }
 
@@ -323,22 +327,26 @@ public class Enemy : MonoBehaviour
     //Targetting method
     private IEnumerator Targeting()
     {
+        isTargeting = true;
+
         if (gameManager.player0 != null && gameManager.player1 != null)
         {
             targetList = new GameObject[] { gameManager.player0.gameObject, gameManager.player1.gameObject };
 
-            GameObject currentTarget = gameManager.player0.gameObject;
+            GameObject currentTarget = targetList[0];
 
             foreach (GameObject singleTarget in targetList)
             {
                 float distanceFromTarget = Vector3.Distance(singleTarget.transform.position, transform.position);
 
-                if (distanceFromTarget < Vector3.Distance(currentTarget.transform.position, transform.position))
+                if (distanceFromTarget < Vector3.Distance(currentTarget.transform.position, transform.position) && singleTarget.activeSelf)
                     currentTarget = singleTarget;
+
                 yield return null;
             }
 
             target = currentTarget.transform;
+            yield return new WaitForEndOfFrame();
         }
 
         else if (gameManager.player0 != null && gameManager.player1 == null)
@@ -347,22 +355,7 @@ public class Enemy : MonoBehaviour
         else if (gameManager.player1 != null && gameManager.player0 == null)
             target = gameManager.player1.transform;
 
-        //Old targetting system
-        /*
-        if (gameManager.player0 != null && gameManager.player1 != null && gameManager.player0.gameObject.activeSelf && gameManager.player1.gameObject.activeSelf)
-        {
-            targetList = new GameObject[] { gameManager.player0.gameObject, gameManager.player1.gameObject };
-
-            if (targetList.Length > 0)
-                target = targetList[Random.Range(0, targetList.Length - 1)].transform;
-        }
-
-        else if (gameManager.player0 != null && gameManager.player1 == null && gameManager.player0.gameObject.activeSelf)
-            target = gameManager.player0.transform;
-
-
-        else if (gameManager.player1 != null && gameManager.player0 == null && gameManager.player1.gameObject.activeSelf)
-            target = gameManager.player1.transform;*/
+        isTargeting = false;
     }
 
     public IEnumerator KnockBack(float force, Transform origin)

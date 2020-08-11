@@ -36,17 +36,23 @@ public class Events : MonoBehaviour
 
     private void Start()
     {
-        currentTime = timeMax;
-        amountLeft = 0;
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.currentEvent = this;
-        uIManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
-        uIManagement.eventBar.SetActive(true);
-        uIManagement.eventBar.GetComponent<AudioSource>().Play();
-        gameManager.p1IsDead = false;
-        gameManager.p2IsDead = false;
-        gameManager.p1HasTakenDamage = false;
-        gameManager.p2HasTakenDamage = false;
+        if (!eventCleared && !eventMissed)
+        {
+            currentTime = timeMax;
+            amountLeft = 0;
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager.currentEvent = this;
+            uIManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
+            uIManagement.eventBar.SetActive(true);
+            uIManagement.eventBar.GetComponent<AudioSource>().Play();
+            gameManager.p1IsDead = false;
+            gameManager.p2IsDead = false;
+            gameManager.p1HasTakenDamage = false;
+            gameManager.p2HasTakenDamage = false;
+        }
+
+        else
+            this.enabled = false;
     }
 
     private void Update()

@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float comboStampMax = 10f;
     private float comboStamp1;
     private float comboStamp2;
+    private int periodScore1 = 0;
+    private int periodScore2 = 0;
 
     [Header("Players scripts")]
     public PlayerController player0;
@@ -156,6 +158,7 @@ public class GameManager : MonoBehaviour
             scoreAmountToAdd = amount * combo1;
 
         score1 += scoreAmountToAdd;
+        periodScore1 += scoreAmountToAdd;
         globalScore += scoreAmountToAdd;
 
         uiManagement.ScorePlus1(scoreAmountToAdd);
@@ -177,6 +180,7 @@ public class GameManager : MonoBehaviour
             scoreAmountToAdd = amount * combo2;
 
         score2 += scoreAmountToAdd;
+        periodScore2 += scoreAmountToAdd;
         globalScore += scoreAmountToAdd;
 
         uiManagement.ScorePlus2(scoreAmountToAdd);
@@ -229,6 +233,11 @@ public class GameManager : MonoBehaviour
                 p1IsDead = true;
                 p2IsDead = true;
 
+                score1 -= periodScore1;
+                score2 -= periodScore2;
+                periodScore1 = 0;
+                periodScore2 = 0;
+
                 yield return new WaitForEndOfFrame();
                 player0.gameObject.SetActive(true);
                 player0.Spawn();
@@ -256,15 +265,15 @@ public class GameManager : MonoBehaviour
 
     public void GetThroughSpawner(int amount)
     {
-        StopCoroutine(Respawn(player0));
         StopCoroutine(Respawn(player1));
+        StopCoroutine(Respawn(player0));
 
         if (player0 != null)
         {
             player0.GainHP(player0.maxHp);
             player0.gameObject.SetActive(true);
             Scoring1(amount,false);
-            PlayerPrefs.SetInt("globalScore", globalScore);
+            periodScore1 = 0;
         }
 
         if (player1 != null)
@@ -272,7 +281,10 @@ public class GameManager : MonoBehaviour
             player1.GainHP(player0.maxHp);
             player1.gameObject.SetActive(true);
             Scoring2(amount, false);
+            periodScore1 = 0;
         }
+
+        PlayerPrefs.SetInt("globalScore", globalScore);
     }
 
     #region Add items and collectibles methods

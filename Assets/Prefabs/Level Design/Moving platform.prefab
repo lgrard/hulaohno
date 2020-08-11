@@ -110,6 +110,8 @@ MonoBehaviour:
   delay: 2
   waypointsA: {fileID: 8115234050147545505}
   waypointsB: {fileID: 8115234050386194273}
+  currentType: 0
+  isMoving: 0
 --- !u!1 &8115234050117987296
 GameObject:
   m_ObjectHideFlags: 0

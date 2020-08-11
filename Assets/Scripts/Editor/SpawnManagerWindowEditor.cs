@@ -12,6 +12,9 @@ public class SpawnManagerWindowEditor : EditorWindow
     Vector3 position1Def = new Vector3(-5,0,0);
     Vector3 position2Def = new Vector3(5, 0, 0);
 
+    [Header("Delay before first spawn")]
+    public float spawnDelay = 0f;
+
     [Header("Time between spawns")]
     float spawnRate;
 
@@ -69,6 +72,7 @@ public class SpawnManagerWindowEditor : EditorWindow
 
         GUILayout.Label("How many seconds between spawns/how many spawns", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
+        spawnDelay = EditorGUILayout.FloatField("Spawn rate", spawnDelay);
         spawnRate = EditorGUILayout.FloatField("Spawn rate",spawnRate);
         enemyCount = EditorGUILayout.IntField("Number of enemies", enemyCount);
         GUILayout.EndHorizontal();
@@ -113,6 +117,7 @@ public class SpawnManagerWindowEditor : EditorWindow
         spawnerScript.enemyPrefab = enemyPrefab;
         spawnerScript.enemyCount = enemyCount;
         spawnerScript.spawnRate = spawnRate;
+        spawnerScript.spawnDelay = spawnDelay;
         spawnerScript.position1 = position1;
         spawnerScript.position2 = position2;
         spawnerScript.isSpawning = isSpawning;
@@ -124,6 +129,7 @@ public class SpawnManagerWindowEditor : EditorWindow
         position2 = position2Def;
         enemyCount = 1;
         spawnRate = 1;
+        spawnDelay = 0;
         isSpawning = true;
     }
 }

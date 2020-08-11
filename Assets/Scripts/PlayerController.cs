@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     Animator meshAnim;
     Rigidbody rb;
-    float groundCheckDistance = 0.25f;
+    float groundCheckDistance = 0.5f;
     float rotationSmoothingAmount = 0.75f;
     [SerializeField] bool somethingForward;
 
@@ -275,16 +275,10 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         if (playerIndex == 0)
-        {
-            gameManager.p1IsDead = true;
             gameManager.Respawn1();
-        }
 
         else
-        {
-            gameManager.p2IsDead = true;
             gameManager.Respawn2();
-        }
 
         meshAnim.SetTrigger("Dies");
         effectManager.p_die.Play();

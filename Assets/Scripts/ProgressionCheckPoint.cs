@@ -22,7 +22,7 @@ public class ProgressionCheckPoint : MonoBehaviour
     //Unity Cycles : Check if the player is in the checkpoint and assign the respawn position to the GameManager
     private void FixedUpdate()
     {
-        playerInside = Physics.CheckBox(transform.position + triggerZoneOffset, triggerSize/2,Quaternion.identity, playerLayer);
+        playerInside = Physics.CheckBox(transform.position + triggerZoneOffset, triggerSize/2,transform.rotation, playerLayer);
 
         if (playerInside && !triggered)
         {
@@ -39,8 +39,9 @@ public class ProgressionCheckPoint : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(transform.position + triggerZoneOffset, triggerSize);
-        Gizmos.DrawSphere(transform.position + respawnPositionOffset, 0.3f);
+        Gizmos.DrawWireCube(triggerZoneOffset, triggerSize);
+        Gizmos.DrawSphere(respawnPositionOffset, 0.3f);
     }
 }

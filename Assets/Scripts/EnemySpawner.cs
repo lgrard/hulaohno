@@ -12,6 +12,9 @@ public class EnemySpawner : MonoBehaviour
     public Vector3 position1;
     public Vector3 position2;
 
+    [Header("Delay before first spawn")]
+    public float spawnDelay = 0f;
+
     [Header("Time between spawns")]
     public float spawnRate;
 
@@ -28,19 +31,24 @@ public class EnemySpawner : MonoBehaviour
     [HideInInspector]
     public GameObject linkedCameraCheckpoint =null;
 
+    private LayerMask layer;
+
     private void OnEnable()
     {
+        layer = LayerMask.NameToLayer("Ground") | LayerMask.NameToLayer("Player");
         enemyRemaining = enemyCount;
         StartCoroutine(SpawnEnemies());
     }
 
     private IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(spawnDelay);
+
         while (enemyCount > 0 && isSpawning)
         {
             Vector3 spawnPos = Vector3.Lerp(position1, position2, Random.Range(0f, 1f));
 
-            if (!Physics.CheckSphere(spawnPos, 0.5f))
+            if (!Physics.CheckSphere(spawnPos, 0.5f, layer))
             {
                 GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
                 if(enemy.TryGetComponent<Enemy>(out Enemy enemyScriptSolo))

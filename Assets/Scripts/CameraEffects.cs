@@ -37,7 +37,7 @@ public class CameraEffects : MonoBehaviour
         //offset  = cameraContainer.transform.position - cameraTarget.transform.position;
         
         offset = new Vector3(0, 6.5f, -minDistanceCam);        
-        rotOffset = cam.transform.rotation.eulerAngles;
+        rotOffset = cameraContainer.transform.rotation.eulerAngles;
     }
 
     private void FixedUpdate()
@@ -46,24 +46,25 @@ public class CameraEffects : MonoBehaviour
         {
             WallSetting();
 
-            if (gameManager.player0 != null && gameManager.player1 != null)
+            if (gameManager.player0 != null && !gameManager.p1IsDead && gameManager.player1 != null && !gameManager.p2IsDead)
             {
                 cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
                 DistanceSetting();
             }
 
-            else if (gameManager.player0 == null && gameManager.player1 != null)
+            else if (gameManager.player0 == null && gameManager.player1 != null || gameManager.player0 != null && gameManager.p1IsDead && gameManager.player1 != null && !gameManager.p2IsDead)
                 cameraTarget.transform.position = gameManager.player1.transform.position;
 
-            else if (gameManager.player1 == null && gameManager.player0 != null)
+            else if (gameManager.player1 == null && gameManager.player0 != null || gameManager.player1 != null && gameManager.p2IsDead && gameManager.player0 != null && !gameManager.p1IsDead)
                 cameraTarget.transform.position = gameManager.player0.transform.position;
+
 
             //Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
             Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, cameraTarget.transform.position.z + offset.z);
             cameraContainer.transform.position = Vector3.Lerp(desiredPosition, cameraContainer.transform.position, smoothingAmount);
 
             Vector3 desiredRotation = rotOffset;
-            cam.transform.rotation = Quaternion.Slerp(Quaternion.Euler(desiredRotation), cam.transform.rotation,smoothingAmount);
+            cameraContainer.transform.rotation = Quaternion.Slerp(Quaternion.Euler(desiredRotation), cameraContainer.transform.rotation,smoothingAmount);
         }
     }
 

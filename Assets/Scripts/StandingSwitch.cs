@@ -61,28 +61,37 @@ public class StandingSwitch : MonoBehaviour
 
     IEnumerator OpenDoor()
     {
-        foreach(GameObject linkedObject in linkedObjects)
+        while (playerInside)
         {
-            while (playerInside)
+            foreach(GameObject linkedObject in linkedObjects)
             {
                 linkedObject.GetComponent<SwitchDoor>().isOpenning = true;
                 yield return new WaitForEndOfFrame();
             }
+        }
 
+        foreach(GameObject linkedObject in linkedObjects)
+        {
             linkedObject.GetComponent<SwitchDoor>().isOpenning = false;
+            yield return new WaitForEndOfFrame();
         }
     }
+
     IEnumerator movePlatform()
     {
-        foreach (GameObject linkedObject in linkedObjects)
+        while (playerInside)
         {
-            while (playerInside)
+            foreach (GameObject linkedObject in linkedObjects)
             {
                 linkedObject.GetComponentInChildren<MovingPlatform>().isMoving = true;
                 yield return new WaitForEndOfFrame();
             }
+        }
 
+        foreach (GameObject linkedObject in linkedObjects)
+        {
             linkedObject.GetComponentInChildren<MovingPlatform>().isMoving = false;
+            yield return new WaitForEndOfFrame();
         }
     }
 

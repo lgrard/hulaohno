@@ -190,8 +190,9 @@ public class GameManager : MonoBehaviour
     {
         if (player0 != null && player1 != null)
         {
-            if (playerToRespawn == player0)
+            if (playerToRespawn == player0 && !p2IsDead)
             {
+                p1IsDead = true;
                 respawnStamp1 = respawnTime;
 
                 while (respawnStamp1 > 0)
@@ -203,10 +204,12 @@ public class GameManager : MonoBehaviour
                 playerToRespawn.gameObject.SetActive(true);
                 playerToRespawn.Spawn();
                 respawnStamp1 = 0;
+                p1IsDead = false;
             }
 
-            else
+            else if(playerToRespawn == player1 && !p1IsDead)
             {
+                p2IsDead = true;
                 respawnStamp2 = respawnTime;
 
                 while (respawnStamp2 > 0)
@@ -218,13 +221,35 @@ public class GameManager : MonoBehaviour
                 playerToRespawn.gameObject.SetActive(true);
                 playerToRespawn.Spawn();
                 respawnStamp2 = 0;
+                p2IsDead = false;
+            }
+
+            else if (playerToRespawn == player1 && p1IsDead || playerToRespawn == player0 && p2IsDead)
+            {
+                p1IsDead = true;
+                p2IsDead = true;
+
+                yield return new WaitForEndOfFrame();
+                player0.gameObject.SetActive(true);
+                player0.Spawn();
+
+                player1.gameObject.SetActive(true);
+                player1.Spawn();
+
+                respawnStamp1 = 0;
+                p1IsDead = false;
+
+                respawnStamp2 = 0;
+                p2IsDead = false;
             }
         }
 
         else if(playerToRespawn == player0 && player1 == null)
         {
             yield return new WaitForEndOfFrame();
+            p1IsDead = true;
             playerToRespawn.gameObject.SetActive(true);
+            p1IsDead = false;
             playerToRespawn.Spawn();
         }
     }

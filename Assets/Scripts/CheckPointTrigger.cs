@@ -8,7 +8,7 @@ public class CheckPointTrigger : MonoBehaviour
 {
     [Header("Camera position and rotation")]
     [SerializeField] Vector3 cameraPositionOffset;
-    [SerializeField] Vector3 cameraRotation;
+    [SerializeField] Vector3 cameraRotationOffset;
 
     [Header("Trigger zone position and offset")]
     [SerializeField] Vector3 zonePositionOffset;
@@ -155,7 +155,7 @@ public class CheckPointTrigger : MonoBehaviour
             disableCamBehavior = true;
             Transform camContainer = cam.GetComponentInParent<CameraEffects>().transform;
             camContainer.position = Vector3.Lerp(cam.transform.position, gameObject.transform.position + cameraPositionOffset, 0.05f);
-            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(cameraRotation), 0.05f);
+            camContainer.rotation = Quaternion.Slerp(camContainer.rotation, Quaternion.Euler(transform.rotation.eulerAngles + cameraRotationOffset), 0.05f);
         }
 
         else if (disableCamBehavior && !playerInside && blockTriggered || disableNonBlockingCam && disableCamBehavior)

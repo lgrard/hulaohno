@@ -116,9 +116,9 @@ public class GameManager : MonoBehaviour
         DistanceCheck();
         AudioManagement();
 
-        if (isLoading || isEnded)
+        if (isLoading || isEnded || isPaused)
             Time.timeScale = 0;
-        else
+        else if(!isLoading && !isEnded && !isPaused)
             Time.timeScale = 1;
     }
 
@@ -387,11 +387,6 @@ public class GameManager : MonoBehaviour
             isPaused = !isPaused;
             if(isPaused)
                 uiManagement.OpenMenu();
-
-            if (isPaused)
-                Time.timeScale = 0f;
-            else
-                Time.timeScale = 1f;
         }
     }
 

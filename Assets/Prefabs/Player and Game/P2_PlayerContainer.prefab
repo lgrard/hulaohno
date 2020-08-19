@@ -49324,8 +49324,8 @@ MonoBehaviour:
   p_dash: {fileID: 1512245231807078231}
   p_spinCharge: {fileID: 9074149985846095556}
   p_spinCharged: {fileID: 551833267268534214}
-  audio_dash: {fileID: 0}
-  audio_punch: {fileID: 0}
+  audio_dash: {fileID: 8300000, guid: 99883dffb93689c498e4197bea062be2, type: 3}
+  audio_punch: {fileID: 8300000, guid: 4afdea81e36606a44a2c3907468e89c5, type: 3}
 --- !u!1 &6710283594800337945
 GameObject:
   m_ObjectHideFlags: 0
@@ -49532,7 +49532,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1

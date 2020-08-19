@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2c7e8dd22a5f17347ae9bca6ef7644d5
+guid: af7a0a76751408f4fb902b364fdeb0ee
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: t_chest
+      name: No Name
     second: {fileID: 2100000, guid: 7108f1729341a8342ab3f75f2d145b16, type: 2}
   materials:
     materialImportMode: 1
@@ -39,7 +39,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 2
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -85,7 +85,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 2
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

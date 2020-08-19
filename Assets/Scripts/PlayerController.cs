@@ -308,6 +308,13 @@ public class PlayerController : MonoBehaviour
     {
         canDash = false;
 
+        if (isChargingSpecial)
+        {
+            isChargingSpecial = false;
+            effectManager.p_spinCharge.Stop();
+            effectManager.p_spinCharged.Stop();
+        }
+
         isDashing = true;
         isInvincible = true;
         meshAnim.SetBool("Dash", true);
@@ -398,8 +405,8 @@ public class PlayerController : MonoBehaviour
         if (Physics.CheckSphere(attack.attackPosition.position, attack.attackRadius, enemyLayers))
         {
             AudioSinglePlay(effectManager.audio_punch, 0.05f);
-            StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.07f));
-            StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.03f));
+            StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.03f));
+            StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.02f));
 
             if (rumbleActive)
                 StartCoroutine(Rumble(0.5f, 1, 0.1f));

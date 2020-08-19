@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Lava.unity
     guid: 47e5f90a2c5c12b4a974ed38fd204287
+  - enabled: 1
+    path: Assets/Scenes/Level_Water.unity
+    guid: 0331e98cf1a7a3842ab2e5346e6d1024
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 8b8b74fbfc2bc7944ab00d597ada46d2,
       type: 2}

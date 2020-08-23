@@ -143,7 +143,7 @@ MonoBehaviour:
   attackName: Attack
   attackIndex: 0
   attackRadius: 1
-  attackDamage: 4
+  attackDamage: 2
   delay: 0.4
   attackPosition: {fileID: 8667584472548423007}
   displayPreview: 1

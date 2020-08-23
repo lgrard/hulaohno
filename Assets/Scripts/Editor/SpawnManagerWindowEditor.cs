@@ -72,7 +72,7 @@ public class SpawnManagerWindowEditor : EditorWindow
 
         GUILayout.Label("How many seconds between spawns/how many spawns", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        spawnDelay = EditorGUILayout.FloatField("Spawn rate", spawnDelay);
+        spawnDelay = EditorGUILayout.FloatField("Spawn delay", spawnDelay);
         spawnRate = EditorGUILayout.FloatField("Spawn rate",spawnRate);
         enemyCount = EditorGUILayout.IntField("Number of enemies", enemyCount);
         GUILayout.EndHorizontal();

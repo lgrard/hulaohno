@@ -228,7 +228,7 @@ public class CheckPointTrigger : MonoBehaviour
             }
         }
 
-        else if (blocksPlayers && linkedSpawner.Count == endedSpawner.Count)
+        else if (blocksPlayers && linkedSpawner.Count == endedSpawner.Count && !isCleared)
         {
             wallL.GetComponent<Animator>().SetTrigger("Out");
             wallR.GetComponent<Animator>().SetTrigger("Out");
@@ -238,8 +238,14 @@ public class CheckPointTrigger : MonoBehaviour
 
             else
             {
-                if (linkedEvents != null && !linkedEvents.eventMissed)
-                    StartCoroutine(linkedEvents.EventMissed());
+                if (linkedEvents != null && !linkedEvents.eventMissed && !linkedEvents.eventCleared)
+                {
+                    if (linkedEvents.currentType == Events.EventsType.dontDie || linkedEvents.currentType == Events.EventsType.dontTakeDamage)
+                        StartCoroutine(linkedEvents.EventCleared());
+
+                    else
+                        StartCoroutine(linkedEvents.EventMissed());
+                }
 
                 isCleared = true;
                 gameManager.currentTrigger = null;

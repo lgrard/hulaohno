@@ -31,7 +31,7 @@ public class Events : MonoBehaviour
 
     private GameManager gameManager;
     private UIManagement uIManagement;
-    private bool eventCleared = false;
+    public bool eventCleared = false;
     public bool eventMissed = false;
 
     private void Start()
@@ -149,8 +149,9 @@ public class Events : MonoBehaviour
             StartCoroutine(EventMissed());
     }
 
-    private IEnumerator EventCleared()
+    public IEnumerator EventCleared()
     {
+        Debug.Log("event cleared");
         eventCleared = true;
         gameManager.Scoring1(score, false);
         gameManager.Scoring2(score, false);
@@ -164,6 +165,7 @@ public class Events : MonoBehaviour
 
     public IEnumerator EventMissed()
     {
+        Debug.Log("event missed");
         eventMissed = true;
         uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventMissed");
         yield return new WaitForEndOfFrame();

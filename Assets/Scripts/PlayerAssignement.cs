@@ -25,10 +25,13 @@ public class PlayerAssignement : MonoBehaviour
 
     void OnEnable()
     {
-        _globalScheme.Enable();
-        _globalScheme.Global.Join.performed += JoinPlayer;
-        _globalScheme.Global.Cancel.performed += WithdrawPlayer;
-        _globalScheme.Global.Pause.performed += Reset;
+        if(player0Device == null || player1Device == null)
+        {
+            _globalScheme.Enable();
+            _globalScheme.Global.Join.performed += JoinPlayer;
+            _globalScheme.Global.Cancel.performed += WithdrawPlayer;
+            _globalScheme.Global.Pause.performed += Reset;
+        }
 
         Debug.Log("1 : " + player0Device);
         Debug.Log("2 : " + player1Device);
@@ -57,13 +60,13 @@ public class PlayerAssignement : MonoBehaviour
 
     void JoinPlayer(CallbackContext ctx)
     {
-        if (player0Device == ctx.control.device && mainMenu != null && device0Paired && !device1Paired)
+        /*if (player0Device == ctx.control.device && mainMenu != null && device0Paired && !device1Paired)
         {
             _globalScheme.Global.Join.performed -= JoinPlayer;
             _globalScheme.Global.Cancel.performed -= WithdrawPlayer;
             _globalScheme.Global.Pause.performed -= Reset;
             StartCoroutine(mainMenu.LoadLevel(1));
-        }
+        }*/
 
         if (player0Device == null && player1Device != ctx.control.device)
             player0Device = ctx.control.device;
@@ -99,5 +102,14 @@ public class PlayerAssignement : MonoBehaviour
             playerInputManager.playerPrefab = playerInputManager.gameObject.GetComponent<GameManager>().player1prefab;
             playerInputManager.JoinPlayer(1, 0, null, player1Device);
         }
+    }
+
+    public void RepawnPlayers(PlayerInput playerInput, int playerIndex)
+    {
+        if (playerIndex == 0)
+            playerInput.SwitchCurrentControlScheme(player0Device);
+
+        else if (playerIndex == 1)
+            playerInput.SwitchCurrentControlScheme(player1Device);
     }
 }

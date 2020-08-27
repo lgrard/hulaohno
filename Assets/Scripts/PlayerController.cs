@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     public GameObject i_shield;
     public bool shieldActive = false;
 
-    PlayerInput playerInput;
+    public PlayerInput playerInput;
     Animator meshAnim;
     Rigidbody rb;
     float groundCheckDistance = 0.5f;

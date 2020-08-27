@@ -1,29 +1,29 @@
 fileFormatVersion: 2
-guid: 6cae0e3657534ac459d000f3753188d9
+guid: ac0db4d0990b6534091d65348716f9fd
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: -107068217131388216
-    second: Rig|Appear
+      74: 2836685032926465750
+    second: Rig|attack
   - first:
-      74: -1978387001296620524
-    second: Rig|Crawl
+      74: 4441086434653260395
+    second: Rig|gethit
   - first:
-      74: 3753753312718541129
-    second: Rig|Crawl (1)
+      74: 6770635348455542655
+    second: Rig|idle
   - first:
-      74: -3510217540682870009
-    second: Rig|Attack
+      74: -8817025062475859629
+    second: Rig|spawn
   - first:
-      74: -4293841215451705315
-    second: Rig|Spawn
+      74: -2261022580837840742
+    second: Rig|walk
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: f42b502eea0a6c6498278d6a7d0f80ba, type: 2}
+      name: mesh_caster
+    second: {fileID: 2100000, guid: e0611b4ba54eaea469a844e356a4d2da, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -52,11 +52,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Rig|Spawn
-      takeName: Rig|Spawn
+      name: Rig|attack
+      takeName: Rig|attack
       internalID: 0
       firstFrame: 0
-      lastFrame: 9
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -81,11 +81,40 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Rig|Crawl
-      takeName: Rig|Crawl
+      name: Rig|gethit
+      takeName: Rig|gethit
       internalID: 0
       firstFrame: 0
-      lastFrame: 9
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|idle
+      takeName: Rig|idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 59
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -110,11 +139,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Rig|Attack
-      takeName: Rig|Attack
+      name: Rig|spawn
+      takeName: Rig|spawn
       internalID: 0
       firstFrame: 0
-      lastFrame: 9
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -138,18 +167,47 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|walk
+      takeName: Rig|walk
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.4
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -187,7 +245,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 0.004
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

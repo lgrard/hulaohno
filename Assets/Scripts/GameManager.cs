@@ -275,6 +275,8 @@ public class GameManager : MonoBehaviour
             p1IsDead = false;
             playerToRespawn.Spawn();
         }
+
+        playerAssignement.RepawnPlayers(playerToRespawn.playerInput, playerToRespawn.playerIndex);
     }
 
     public void GetThroughSpawner(int amount)

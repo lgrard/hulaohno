@@ -275,6 +275,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < gustNumber; i++)
         {
             audio_attack.Play();
+            anim.SetTrigger("Attack");
             GameObject projectileInstance = Instantiate(projectiles, projectilesPoint.transform.position, Quaternion.identity);
             projectileInstance.GetComponent<Projectiles>().direction = new Vector3(transform.forward.x,0,transform.forward.z);
             yield return new WaitForSeconds(gustSpacing);
@@ -291,6 +292,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < gustNumber; i++)
         {
             audio_attack.Play();
+            anim.SetTrigger("Attack");
 
             for (int u = 0; u <= radialProjectilesNumber - 1; u++)
             {

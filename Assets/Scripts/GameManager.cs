@@ -373,11 +373,7 @@ public class GameManager : MonoBehaviour
         {
             distance = Vector3.Distance(player0.transform.position, player1.transform.position);
             distanceRatio = distance / maxDistance;
-
-            if (distance < maxDistance)
-                playerOutRange = false;
-            else
-                playerOutRange = true;
+            playerOutRange = distance > maxDistance;
         }
 
         else

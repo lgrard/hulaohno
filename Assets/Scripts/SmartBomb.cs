@@ -5,6 +5,7 @@ using UnityEngine;
 public class SmartBomb : MonoBehaviour
 {
     [Header("Values")]
+    public float dropRate;
     [SerializeField] float delay = 2f;
     [SerializeField] float duration = 3f; 
     [SerializeField] float startRadius = 3f;

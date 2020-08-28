@@ -42,9 +42,10 @@ public class CameraEffects : MonoBehaviour
 
     private void FixedUpdate()
     {
+        WallSetting();
+
         if (cameraTarget != null && !checkPointActive && gameManager.player0 != null)
         {
-            WallSetting();
 
             if (gameManager.player0 != null && !gameManager.p1IsDead && gameManager.player1 != null && !gameManager.p2IsDead)
             {
@@ -75,8 +76,10 @@ public class CameraEffects : MonoBehaviour
 
         distanceLine.enabled = gameManager.playerOutRange;
 
-        if (distanceLine.enabled)
+        if (gameManager.playerOutRange)
         {
+            distanceLine.widthMultiplier = gameManager.distanceRatio-1;
+
             Vector3 player0Pos = new Vector3(gameManager.player0.transform.position.x, gameManager.player0.transform.position.y + lineOffset, gameManager.player0.transform.position.z);
             Vector3 player1Pos = new Vector3(gameManager.player1.transform.position.x, gameManager.player1.transform.position.y + lineOffset, gameManager.player1.transform.position.z);
 

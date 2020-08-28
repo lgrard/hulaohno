@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShieldItem : MonoBehaviour
 {
+    public float dropRate;
     [SerializeField] ParticleSystem p_take;
     private void OnTriggerEnter(Collider other)
     {

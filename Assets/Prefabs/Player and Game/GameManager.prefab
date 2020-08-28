@@ -249,6 +249,9 @@ MonoBehaviour:
   player1: {fileID: 0}
   player1Color: {r: 0.2216981, g: 0.44339633, b: 0.8867924, a: 1}
   player2Color: {r: 0.8207547, g: 0.2206746, b: 0.36069316, a: 1}
+  eventClearedColor: {r: 0.3496351, g: 0.9150943, b: 0.42080083, a: 1}
+  eventMissedColor: {r: 0.8962264, g: 0.1986917, b: 0.1986917, a: 1}
+  checkPointColor: {r: 1, g: 0.6777062, b: 0.033018887, a: 1}
   playerOutRange: 0
   maxDistance: 15
   distanceRatio: 0
@@ -263,6 +266,7 @@ MonoBehaviour:
   respawnStamp1: 0
   respawnStamp2: 0
   currentEvent: {fileID: 0}
+  currentTrigger: {fileID: 0}
   p1HasTakenDamage: 0
   p2HasTakenDamage: 0
   p1HasHealed: 0

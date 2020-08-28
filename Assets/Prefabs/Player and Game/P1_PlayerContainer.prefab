@@ -54176,7 +54176,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4afdea81e36606a44a2c3907468e89c5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -54338,6 +54338,7 @@ MonoBehaviour:
   rumbleActive: 0
   i_shield: {fileID: 7803965094228671374}
   shieldActive: 0
+  playerInput: {fileID: 0}
   somethingForward: 0
 --- !u!1 &7803965094228671374
 GameObject:

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPositionOffset: {x: 0, y: 0, z: 0}
-  cameraRotation: {x: 0, y: 0, z: 0}
+  cameraRotationOffset: {x: 0, y: 0, z: 0}
   zonePositionOffset: {x: 0, y: 2.5, z: 0}
   triggerOffset: 6
   zoneRadius: 15
@@ -65,6 +65,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2265787532130458970}
     m_Modifications:
+    - target: {fileID: 2188613886178206317, guid: 1c16cf42b490f584db3e047d6500464a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4656725855687815643, guid: 1c16cf42b490f584db3e047d6500464a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -123,7 +128,7 @@ PrefabInstance:
     - target: {fileID: 4656725855687815643, guid: 1c16cf42b490f584db3e047d6500464a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4656725855687815643, guid: 1c16cf42b490f584db3e047d6500464a,
         type: 3}
@@ -224,7 +229,7 @@ PrefabInstance:
     - target: {fileID: 4656725855687815643, guid: 1c16cf42b490f584db3e047d6500464a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4656725855687815643, guid: 1c16cf42b490f584db3e047d6500464a,
         type: 3}

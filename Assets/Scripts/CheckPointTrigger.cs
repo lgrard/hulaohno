@@ -114,7 +114,7 @@ public class CheckPointTrigger : MonoBehaviour
         {
             if(currentType == ZoneType.box)
             {
-                wallL.transform.localScale = new Vector3(2, 10, zoneSize.z);
+                wallL.transform.localScale = new Vector3(3, 10, zoneSize.z);
                 wallL.transform.localPosition = new Vector3(zoneSize.x / 2 + wallL.transform.localScale.x / 2, 2, 0);
                 wallL.transform.rotation = gameObject.transform.rotation;
 
@@ -125,7 +125,7 @@ public class CheckPointTrigger : MonoBehaviour
 
             if (currentType == ZoneType.sphere)
             {
-                wallL.transform.localScale = new Vector3(2, 10, zoneRadius*2);
+                wallL.transform.localScale = new Vector3(3, 10, zoneRadius*2);
                 wallL.transform.localPosition = new Vector3(zoneRadius + wallL.transform.localScale.x / 2, 2, 0);
                 wallL.transform.rotation = gameObject.transform.rotation;
 

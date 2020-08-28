@@ -440,6 +440,7 @@ MonoBehaviour:
   lineOffset: 0.5
   minDistanceCam: 16
   maxDistanceCam: 19
+  offset: {x: 0, y: 6.5, z: -16}
   checkPointActive: 0
 --- !u!1 &6244638071813190803
 GameObject:

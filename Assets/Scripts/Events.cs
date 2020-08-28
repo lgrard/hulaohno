@@ -156,6 +156,7 @@ public class Events : MonoBehaviour
         gameManager.Scoring1(score, false);
         gameManager.Scoring2(score, false);
         uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventCleared");
+        uIManagement.displayEventText("EVENT CLEARED", gameManager.eventClearedColor);
         yield return new WaitForEndOfFrame();
         uIManagement.eventClearedAudio.Play();
         yield return new WaitForSeconds(1f);
@@ -168,6 +169,7 @@ public class Events : MonoBehaviour
         Debug.Log("event missed");
         eventMissed = true;
         uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventMissed");
+        uIManagement.displayEventText("EVENT MISSED", gameManager.eventClearedColor);
         yield return new WaitForEndOfFrame();
         uIManagement.eventMissedAudio.Play();
         yield return new WaitForSeconds(1f);

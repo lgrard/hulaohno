@@ -83,6 +83,7 @@ public class UIManagement : MonoBehaviour
     [SerializeField] Text comboCounter2;
 
     [Header("Event bar")]
+    [SerializeField] GameObject eventTexts;
     public GameObject eventBar;
     public Text eventObjective;
     public Text eventTimer;
@@ -263,6 +264,15 @@ public class UIManagement : MonoBehaviour
         gameManager.isLoading = true;
         transitionAnim.SetTrigger("Transition");
         loadingSceneManager.LoadLevel(levelIndex);
+    }
+
+    public void displayEventText(string textToDisplay, Color color)
+    {
+        Image[] images = eventTexts.GetComponentsInChildren<Image>();
+        images[0].color = color;
+        images[1].color = new Color(color.r, color.g, color.b, 0.25f);
+        eventTexts.GetComponentInChildren<Text>().text = textToDisplay;
+        eventTexts.GetComponent<Animator>().SetTrigger("Pop");
     }
 
     private IEnumerator ShowScore()

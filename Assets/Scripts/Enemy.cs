@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Mesh and attack point")]
     [SerializeField] GameObject mesh;
+    [SerializeField] AudioClip audio_hit;
 
     [Header("Components")]
     public EnemySpawner spawner;
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     private GameManager gameManager;
     private Attack attackScript;
     private AudioSource audio_attack;
+    private AudioSource audioSource;
 
     [Header("Values")]
     [SerializeField] int maxHp = 10;
@@ -75,6 +77,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject projectiles;
     [SerializeField] GameObject projectilesPoint;
     [SerializeField] float rotationSpeed = 1;
+
+    private void Awake()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        PlaySingle(audioSource.clip);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -142,6 +150,8 @@ public class Enemy : MonoBehaviour
 
         HP -= damageTaken;
         attackStamp = 0f;
+
+        PlaySingle(audio_hit);
 
         if (HP <= 0)
             Die();
@@ -382,6 +392,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void PlaySingle(AudioClip clip)
+    {
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
 
     private void OnDrawGizmosSelected()
     {

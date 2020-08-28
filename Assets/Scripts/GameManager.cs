@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
     [Header("Players color")]
     public Color player1Color;
     public Color player2Color;
+    public Color eventClearedColor;
+    public Color eventMissedColor;
+    [SerializeField] Color checkPointColor;
 
     [Header("Player distance")]
     public bool playerOutRange = false;
@@ -281,6 +284,8 @@ public class GameManager : MonoBehaviour
 
     public void GetThroughSpawner(int amount)
     {
+        uiManagement.displayEventText("CHECKPOINT", checkPointColor);
+
         StopCoroutine(Respawn(player1));
         StopCoroutine(Respawn(player0));
 

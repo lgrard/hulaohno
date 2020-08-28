@@ -58,10 +58,15 @@ public class GameManager : MonoBehaviour
     public float respawnStamp1 = 15f;
     public float respawnStamp2 = 15f;
 
+    [Header("Dying sentences")]
+    [SerializeField] string[] sentences1;
+    [SerializeField] string[] sentences2;
+
     private PlayerInputManager inputManager;
     private UIManagement uiManagement;
     private PlayerAssignement playerAssignement;
 
+    [Header("Other")]
     public Events currentEvent = null;
     public CheckPointTrigger currentTrigger = null;
     public bool p1HasTakenDamage = false;
@@ -199,6 +204,13 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Respawn(PlayerController playerToRespawn)
     {
+        if(playerToRespawn == player0)
+            uiManagement.displayEventText(sentences1[Random.Range(0,sentences1.Length)], player1Color);
+
+        if (playerToRespawn == player1)
+            uiManagement.displayEventText(sentences2[Random.Range(0, sentences2.Length)], player2Color);
+
+
         if (player0 != null && player1 != null)
         {
             if (playerToRespawn == player0 && !p2IsDead)

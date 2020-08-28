@@ -265,6 +265,16 @@ MonoBehaviour:
   respawnTime: 15
   respawnStamp1: 0
   respawnStamp2: 0
+  sentences1:
+  - PLAYER 1 BLEWED UP
+  - PLAYER 1 LOOKS ILL... NO ?
+  - I HATE BLUE ANYWAY
+  - GOT THE BLUES ?
+  sentences2:
+  - ROSES ARE RED...
+  - OH NO ! NOT THE RED ONE !
+  - YOU'LL BE FINE, I GUESS
+  - DAMN ALIENS
   currentEvent: {fileID: 0}
   currentTrigger: {fileID: 0}
   p1HasTakenDamage: 0

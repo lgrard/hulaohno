@@ -11,6 +11,7 @@ public class LevelEnd : MonoBehaviour
     [SerializeField] Vector3 triggerZoneOffset;
     [SerializeField] Vector3 triggerSize;
     [SerializeField] int levelIndexToLoad;
+    [SerializeField] TextMesh highScoreText;
     GameManager gameManager;
     UIManagement uIManagement;
 
@@ -30,6 +31,9 @@ public class LevelEnd : MonoBehaviour
         collider.center = triggerZoneOffset;
         collider.size = triggerSize;
         collider.isTrigger = true;
+
+        if (currentType == ZoneType.hubGate && highScoreText != null && PlayerPrefs.HasKey("hs" + levelIndexToLoad.ToString()))
+            highScoreText.text = PlayerPrefs.GetInt("hs" + levelIndexToLoad.ToString()).ToString("0000000");
     }
 
     //Unity Cycles : Check if the player is in the checkpoint and end the level

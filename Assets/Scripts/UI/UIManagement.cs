@@ -39,6 +39,7 @@ public class UIManagement : MonoBehaviour
     [Header("Win menu")]
     [SerializeField] GameObject winMenu;
     [SerializeField] Button nextLevelButton;
+    int displayWinScore = 0;
 
     [Header("Pause menu")]
     [SerializeField] GameObject pauseMenu;
@@ -64,6 +65,9 @@ public class UIManagement : MonoBehaviour
     private Animator p2HPBarAnim;
 
     [Header("Score counter")]
+    [SerializeField] Text highScorePauseCounter;
+    [SerializeField] Text highScoreWinCounter;
+    [SerializeField] Text scoreWinCounter;
     [SerializeField] Text scoreCounter1;
     [SerializeField] Text scoreCounter2;
     [SerializeField] Text scorePeriodCounter1;
@@ -96,13 +100,15 @@ public class UIManagement : MonoBehaviour
         p1HPBarAnim = p1HPBar.GetComponent<Animator>();
         p2HPBarAnim = p2HPBar.GetComponent<Animator>();
 
+        highScorePauseCounter.text = "High Score : " + PlayerPrefs.GetInt("hs" + SceneManager.GetActiveScene().buildIndex.ToString()).ToString("0000000");
+
     #region old bar
-    /*
-    p1HPBar = new GameObject[] { p1_1, p1_2, p1_3, p1_4, p1_5};
-    p2HPBar = new GameObject[] { p2_1, p2_2, p2_3, p2_4, p2_5 };
-    */
-    #endregion
-}
+        /*
+        p1HPBar = new GameObject[] { p1_1, p1_2, p1_3, p1_4, p1_5};
+        p2HPBar = new GameObject[] { p2_1, p2_2, p2_3, p2_4, p2_5 };
+        */
+        #endregion
+    }
 
     // Update is called once per frame
     void Update()
@@ -117,6 +123,9 @@ public class UIManagement : MonoBehaviour
 
         if (pauseMenu.activeSelf)
             lastSelectedObject = eventSystem.currentSelectedGameObject;
+
+        if (winMenu.activeSelf)
+            scoreWinCounter.text = displayWinScore.ToString("0000000");
 
         //Display score and health if player is assigned        
         if (player1 != null)
@@ -239,6 +248,7 @@ public class UIManagement : MonoBehaviour
         winMenu.SetActive(true);
         eventSystem.SetSelectedGameObject(nextLevelButton.gameObject);
         nextLevelButton.OnSelect(null);
+        StartCoroutine(ShowScore());
     }
 
     //Pause menu methods
@@ -253,5 +263,26 @@ public class UIManagement : MonoBehaviour
         gameManager.isLoading = true;
         transitionAnim.SetTrigger("Transition");
         loadingSceneManager.LoadLevel(levelIndex);
+    }
+
+    private IEnumerator ShowScore()
+    {
+        Animator anim = winMenu.GetComponent<Animator>();
+        int multiplier = 1;
+
+        yield return new WaitForSecondsRealtime(1f);
+        anim.SetBool("Scoring", true);
+
+        while (displayWinScore < gameManager.score1 + gameManager.score2)
+        {
+            displayWinScore += 1* multiplier;
+            multiplier += 1;
+            yield return new WaitForSecondsRealtime(0.001f);
+        }
+
+        anim.SetBool("Scoring", false);
+
+        displayWinScore = gameManager.score1 + gameManager.score2;
+        highScoreWinCounter.text = "High Score : " + PlayerPrefs.GetInt("hs" + SceneManager.GetActiveScene().buildIndex.ToString()).ToString("0000000");
     }
 }

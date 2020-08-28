@@ -404,6 +404,10 @@ public class GameManager : MonoBehaviour
             periodScore1 = 0;
             periodScore2 = 0;
             PlayerPrefs.SetInt("globalScore", globalScore);
+
+            if(PlayerPrefs.GetInt(("hs" + SceneManager.GetActiveScene().buildIndex.ToString())) < score1+score2)
+                PlayerPrefs.SetInt("hs" + SceneManager.GetActiveScene().buildIndex.ToString(), score1 + score2);
+
             isEnded = true;
 
             uiManagement.OpenWin();

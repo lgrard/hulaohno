@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float attackStepAmount = 5f;
     private float specialStamp = 0;
     [SerializeField] float specialStampMax = 1f;
+    public float specialStampRatio;
 
     [SerializeField] GameObject attackManager;
     private Attack[] attackArray;
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking;
     [SerializeField] bool rumbleActive = false;
     bool isRumbling = false;
-    bool isDashing = false;
+    public bool isDashing = false;
     bool canDash = true;
     bool isInvincible = false;
     bool isChargingSpecial = false;
@@ -133,7 +134,12 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
         AttackState();
 
-        if(!isGrounded && isChargingSpecial)
+        if (isChargingSpecial)
+            specialStampRatio = (specialStamp / specialStampMax);
+        else
+            specialStampRatio = 1;
+
+        if (!isGrounded && isChargingSpecial)
         {
             isAttacking = true;
             attackTimeStamp = attackTimerMax;

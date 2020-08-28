@@ -169,7 +169,7 @@ public class Events : MonoBehaviour
         Debug.Log("event missed");
         eventMissed = true;
         uIManagement.eventBar.GetComponent<Animator>().SetTrigger("EventMissed");
-        uIManagement.displayEventText("EVENT MISSED", gameManager.eventClearedColor);
+        uIManagement.displayEventText("EVENT MISSED", gameManager.eventMissedColor);
         yield return new WaitForEndOfFrame();
         uIManagement.eventMissedAudio.Play();
         yield return new WaitForSeconds(1f);

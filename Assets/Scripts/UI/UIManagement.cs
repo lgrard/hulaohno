@@ -57,6 +57,12 @@ public class UIManagement : MonoBehaviour
     [Header("HP bar")]
     [SerializeField] GameObject p1HPBar;
     [SerializeField] GameObject p2HPBar;
+    [SerializeField] GameObject dash1;
+    [SerializeField] GameObject dash2;
+    [SerializeField] Image spin1;
+    [SerializeField] Image spin2;
+    [SerializeField] GameObject shield1;
+    [SerializeField] GameObject shield2;
     [SerializeField] RectTransform waveHp1;
     [SerializeField] RectTransform waveHp2;
     [SerializeField] Text respawnTimer1;
@@ -131,13 +137,13 @@ public class UIManagement : MonoBehaviour
         //Display score and health if player is assigned        
         if (player1 != null)
             BarManagement(player1, p1HPBar, waveHp1, gameManager.score1, scoreCounter1,respawnTimer1,
-            gameManager.respawnStamp1, gameManager.combo1,scorePeriodCounter1,currentScorePeriod1,comboCounter1,scoreStamp1,p1HPBarAnim);
+            gameManager.respawnStamp1, gameManager.combo1,scorePeriodCounter1,currentScorePeriod1,comboCounter1,scoreStamp1,p1HPBarAnim, spin1, shield1, dash1);
         else
             p1HPBar.SetActive(false);
 
         if (player2 != null)
             BarManagement(player2, p2HPBar, waveHp2, gameManager.score2, scoreCounter2, respawnTimer2,
-            gameManager.respawnStamp2, gameManager.combo2, scorePeriodCounter2, currentScorePeriod2, comboCounter2, scoreStamp2,p2HPBarAnim);
+            gameManager.respawnStamp2, gameManager.combo2, scorePeriodCounter2, currentScorePeriod2, comboCounter2, scoreStamp2,p2HPBarAnim, spin2, shield2, dash2);
         else
             p2HPBar.SetActive(false);
 
@@ -171,7 +177,7 @@ public class UIManagement : MonoBehaviour
 
     //Initialize and manage the HP bar and score display
     private void BarManagement(PlayerController player, GameObject globalBar, RectTransform waveHp, int playerScore, Text scoreContainer,
-    Text respawnTimer, float respawnStamp, int playerCombo, Text scorePeriodContainer,int currentScorePeriod, Text comboCounter,float scoreStamp, Animator barAnim)
+    Text respawnTimer, float respawnStamp, int playerCombo, Text scorePeriodContainer,int currentScorePeriod, Text comboCounter,float scoreStamp, Animator barAnim, Image spinIcon, GameObject shield, GameObject dashIcon)
     {
         //Hp setting
         globalBar.SetActive(true);
@@ -202,6 +208,14 @@ public class UIManagement : MonoBehaviour
             respawnTimer.enabled = false;
 
         comboCounter.enabled = playerCombo >= 1;
+
+        spinIcon.color = new Color(spinIcon.color.r, spinIcon.color.g, spinIcon.color.b, Mathf.Lerp(1, 0,player.specialStampRatio));
+        barAnim.SetBool("ReadyToSpin", player.specialStampRatio < 0.1f);
+
+        shield.SetActive(player.shieldActive);
+        barAnim.SetBool("ShieldActive", player.shieldActive);
+
+        dashIcon.SetActive(player.isDashing);
 
         #region old bar
         /*

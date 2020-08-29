@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HPItem : MonoBehaviour
 {
-    public float dropRate;
     [SerializeField] int amount;
     [SerializeField] ParticleSystem p_take;
 

@@ -34,7 +34,7 @@ public class PlayerIndicator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        spriteRenderer.enabled = Physics.Linecast(gameObject.transform.position, cam.transform.position,layerMask);
+        spriteRenderer.enabled = Physics.Linecast(playerController.transform.position, cam.transform.position,layerMask);
     }
 
     private void ColorSet()

@@ -212,15 +212,15 @@ public class PlayerController : MonoBehaviour
             effectManager.p_run.Stop();
 
         //Set step sounds
-        if (isGrounded && !audioStep.isPlaying && rb.velocity.magnitude > 2)
+        if (!isDashing && isGrounded && !audioStep.isPlaying && rb.velocity.magnitude > 2)
         {
             audioStep.Play();
-            audioStep.pitch = rb.velocity.magnitude / speed;
+            audioStep.pitch = (rb.velocity.magnitude / speed)*1.5f;
         }
 
-        else
+        if (isDashing | !isGrounded | rb.velocity.magnitude <= 2 && audioStep.isPlaying)
             audioStep.Stop();
-;    }
+    }
 
     //Jump Method
     private void OnJump()
@@ -243,13 +243,22 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             if (hitInfo.collider.tag.Equals("wood") && audioStep.clip != woodStep)
+            {
+                audioStep.volume = 0.4f;
                 audioStep.clip = woodStep;
+            }
 
             else if (hitInfo.collider.tag.Equals("rock") && audioStep.clip != rockStep)
+            {
+                audioStep.volume = 0.4f;
                 audioStep.clip = rockStep;
+            }
 
             else if (hitInfo.collider.tag.Equals("sand") && audioStep.clip != sandStep)
+            {
+                audioStep.volume = 1;
                 audioStep.clip = sandStep;
+            }
         }
 
         meshAnim.SetBool("Grounded", isGrounded);

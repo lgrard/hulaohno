@@ -54466,6 +54466,8 @@ MonoBehaviour:
   woodStep: {fileID: 8300000, guid: 2130dbc3536d57b409e6afa9a7bcefc3, type: 3}
   rockStep: {fileID: 8300000, guid: eba57ff4d3ab6444bac71b9b03f6f21d, type: 3}
   sandStep: {fileID: 8300000, guid: 083dc35baa4b971429659067813d3ae0, type: 3}
+  audio_specialCharge: {fileID: 8300000, guid: 4ad1e27eb81800b4b967780ccb4f7843, type: 3}
+  audio_special: {fileID: 8300000, guid: dafa088c4af8e6f478564e8447ff86d7, type: 3}
   isGrounded: 0
   isAttacking: 0
   rumbleActive: 0

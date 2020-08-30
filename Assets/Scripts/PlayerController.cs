@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
+    [SerializeField] GameObject deathObject;
 
     [Header("Audio")]
     [SerializeField] AudioSource audioStep;
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip sandStep;
     [SerializeField] AudioClip audio_specialCharge;
     [SerializeField] AudioClip audio_special;
+    [SerializeField] AudioClip audio_jump;
 
     private PhysicMaterial noFrictionMat;
     private Material[] defMat;
@@ -235,6 +237,7 @@ public class PlayerController : MonoBehaviour
             Vector3 upDir = new Vector3(0, jumpHeight, 0);
             rb.AddForce(upDir);
             effectManager.p_jump.Play();
+            AudioSinglePlay(audio_jump, 0.2f,0.5f);
             meshAnim.SetTrigger("Jump");
         }
     }
@@ -329,6 +332,9 @@ public class PlayerController : MonoBehaviour
 
         meshAnim.SetTrigger("Dies");
         effectManager.p_die.Play();
+        GameObject deathObjectInstance = Instantiate(deathObject);
+        deathObjectInstance.transform.position = gameObject.transform.position;
+        Destroy(deathObjectInstance, 1.5f);
         gameObject.SetActive(false);
     }
 
@@ -371,7 +377,7 @@ public class PlayerController : MonoBehaviour
 
         effectManager.t_dashTrail.enabled = true;
         effectManager.p_dash.Play();
-        AudioSinglePlay(effectManager.audio_dash, 0.05f);
+        AudioSinglePlay(effectManager.audio_dash, 0.05f,0.7f);
         dashStamp = 0;
 
         while (isDashing && dashStamp < dashDuration)
@@ -434,7 +440,7 @@ public class PlayerController : MonoBehaviour
             meshAnim.SetTrigger("Spin");
             isAttacking = true;
             attackTimeStamp = attackTimerMax;
-            AudioSinglePlay(audio_special, 0.05f);
+            AudioSinglePlay(audio_special, 0.05f,1f);
             StartCoroutine(Attack(attackArray[4]));
         }
         effectManager.p_spinCharge.Stop();
@@ -451,7 +457,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.CheckSphere(attack.attackPosition.position, attack.attackRadius, enemyLayers))
         {
-            AudioSinglePlay(effectManager.audio_punch, 0.05f);
+            AudioSinglePlay(effectManager.audio_punch, 0.05f,1f);
             StartCoroutine(camContainer.GetComponent<CameraEffects>().Hitstop(0.03f));
             StartCoroutine(camContainer.GetComponent<CameraEffects>().Shake(0.1f, 0.02f));
 
@@ -489,7 +495,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            AudioSinglePlay(audio_specialCharge, 0.05f);
+            AudioSinglePlay(audio_specialCharge, 0.05f,1f);
             effectManager.p_spinCharge.Play();
             specialStamp = specialStampMax;
             isChargingSpecial = true;
@@ -527,10 +533,11 @@ public class PlayerController : MonoBehaviour
     }
 
     //Audio play method
-    private void AudioSinglePlay(AudioClip clipToPlay, float pitchVariation)
+    private void AudioSinglePlay(AudioClip clipToPlay, float pitchVariation, float volume)
     {
         audioSource.clip = clipToPlay;
         audioSource.pitch = Random.Range(1 - pitchVariation, 1 + pitchVariation);
+        audioSource.volume = volume;
         audioSource.Play();
     }
 

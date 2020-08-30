@@ -54462,12 +54462,15 @@ MonoBehaviour:
   inputAction: {fileID: -944628639613478452, guid: 2ff868cadc31b094c807d3dfe081088a,
     type: 3}
   whiteMat: {fileID: 2100000, guid: fb7635e2e518d18429b9d69a3c106c42, type: 2}
+  deathObject: {fileID: 6988791603578631692, guid: a37f69d59b21d924492c3be0fb24b903,
+    type: 3}
   audioStep: {fileID: 7384668784124572945}
   woodStep: {fileID: 8300000, guid: 2130dbc3536d57b409e6afa9a7bcefc3, type: 3}
   rockStep: {fileID: 8300000, guid: eba57ff4d3ab6444bac71b9b03f6f21d, type: 3}
   sandStep: {fileID: 8300000, guid: 083dc35baa4b971429659067813d3ae0, type: 3}
   audio_specialCharge: {fileID: 8300000, guid: 4ad1e27eb81800b4b967780ccb4f7843, type: 3}
   audio_special: {fileID: 8300000, guid: dafa088c4af8e6f478564e8447ff86d7, type: 3}
+  audio_jump: {fileID: 8300000, guid: 35636635e4fb0a44996a990f43fcd0e9, type: 3}
   isGrounded: 0
   isAttacking: 0
   rumbleActive: 0

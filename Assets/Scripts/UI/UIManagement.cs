@@ -97,6 +97,11 @@ public class UIManagement : MonoBehaviour
     public AudioSource eventClearedAudio;
     public AudioSource eventMissedAudio;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip audio_navigation;
+    [SerializeField] AudioClip audio_validation;
+    private AudioSource audioSource;
+
     private void Start()
     {
         Time.timeScale = 1f;
@@ -106,6 +111,8 @@ public class UIManagement : MonoBehaviour
 
         p1HPBarAnim = p1HPBar.GetComponent<Animator>();
         p2HPBarAnim = p2HPBar.GetComponent<Animator>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         highScorePauseCounter.text = "High Score : " + PlayerPrefs.GetInt("hs" + SceneManager.GetActiveScene().buildIndex.ToString()).ToString("0000000");
 
@@ -120,6 +127,8 @@ public class UIManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        eventSystem.sendNavigationEvents = true;
+
         gameManager.audioVolume = audioSlider.value;
         gameManager.musicVolume = musicSlider.value;
 
@@ -256,8 +265,7 @@ public class UIManagement : MonoBehaviour
         if (lastSelectedObject.TryGetComponent<Dropdown>(out Dropdown dropDown))
             dropDown.OnSelect(null);
         if (lastSelectedObject.TryGetComponent<Toggle>(out Toggle toggle))
-            toggle.OnSelect(null);
-    }
+            toggle.OnSelect(null);    }
     public void OpenWin()
     {
         winMenu.SetActive(true);
@@ -267,10 +275,29 @@ public class UIManagement : MonoBehaviour
     }
 
     //Pause menu methods
-    public void OnResume() => gameManager.PauseGame();
-    public void OnQuit() => LoadSpecificLevel(0);
-    public void OnRestart() => LoadSpecificLevel(SceneManager.GetActiveScene().buildIndex);
-    public void OnNextLevel() => LoadSpecificLevel(1);
+    public void OnResume()
+    {
+        AudioSinglePlay(audio_validation, 0, 0.5f);
+        gameManager.PauseGame();
+    }
+
+    public void OnQuit()
+    {
+        AudioSinglePlay(audio_validation, 0, 0.5f);
+        LoadSpecificLevel(0);
+    }
+
+    public void OnRestart()
+    {
+        AudioSinglePlay(audio_validation, 0, 0.5f);
+        LoadSpecificLevel(SceneManager.GetActiveScene().buildIndex); 
+    }
+
+    public void OnNextLevel()
+    {
+        AudioSinglePlay(audio_validation, 0, 0.5f);
+        LoadSpecificLevel(1);
+    }
 
     public void LoadSpecificLevel(int levelIndex)
     {
@@ -308,5 +335,15 @@ public class UIManagement : MonoBehaviour
 
         displayWinScore = gameManager.score1 + gameManager.score2;
         highScoreWinCounter.text = "High Score : " + PlayerPrefs.GetInt("hs" + SceneManager.GetActiveScene().buildIndex.ToString()).ToString("0000000");
+    }
+
+
+    //Audio play method
+    private void AudioSinglePlay(AudioClip clipToPlay, float pitchVariation, float volume)
+    {
+        audioSource.clip = clipToPlay;
+        audioSource.pitch = Random.Range(1 - pitchVariation, 1 + pitchVariation);
+        audioSource.volume = volume;
+        audioSource.Play();
     }
 }

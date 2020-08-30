@@ -50,10 +50,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
+
+    [Header("Audio")]
     [SerializeField] AudioSource audioStep;
     [SerializeField] AudioClip woodStep;
     [SerializeField] AudioClip rockStep;
     [SerializeField] AudioClip sandStep;
+    [SerializeField] AudioClip audio_specialCharge;
+    [SerializeField] AudioClip audio_special;
+
     private PhysicMaterial noFrictionMat;
     private Material[] defMat;
     private SkinnedMeshRenderer renderer;
@@ -429,7 +434,7 @@ public class PlayerController : MonoBehaviour
             meshAnim.SetTrigger("Spin");
             isAttacking = true;
             attackTimeStamp = attackTimerMax;
-
+            AudioSinglePlay(audio_special, 0.05f);
             StartCoroutine(Attack(attackArray[4]));
         }
         effectManager.p_spinCharge.Stop();
@@ -484,6 +489,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
+            AudioSinglePlay(audio_specialCharge, 0.05f);
             effectManager.p_spinCharge.Play();
             specialStamp = specialStampMax;
             isChargingSpecial = true;

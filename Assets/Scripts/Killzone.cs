@@ -5,6 +5,8 @@ using UnityEngine;
 [ExecuteAlways]
 public class Killzone : MonoBehaviour
 {
+    [SerializeField] AudioSource audio;
+
     [Header("Values")]
     [SerializeField] int damage = 1000;
     [SerializeField] float fireRate = 50;
@@ -120,6 +122,7 @@ public class Killzone : MonoBehaviour
     {
         if (collider.TryGetComponent(out PlayerController playerController) && collider.GetType() == typeof(CapsuleCollider))
         {
+            audio.Play();
             playerController.TakeDamage(damage);
         }
     }

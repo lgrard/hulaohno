@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8148530582405288509}
   - component: {fileID: 8148530582405288508}
   m_Layer: 0
-  m_Name: Killzone
+  m_Name: Killzone_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -64,6 +64,14 @@ MonoBehaviour:
   boxCollider: {fileID: 8148530582405288509}
   p_fire: {fileID: 493350354774753527}
   p_fire1: {fileID: 558675804898651235}
+  liquidPlane: {fileID: 0}
+  wayPointA: {fileID: 0}
+  wayPointB: {fileID: 0}
+  rippleMesh: {fileID: 0}
+  rippleSpeed: 0.2
+  rippleDelay: 0
+  previewRipple: 0
+  currentType: 0
 --- !u!1001 &7927453354457835762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75,6 +83,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Volume
       value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5327157584303788709, guid: e96b2903e4e2caa478d19c57793905f9,
+        type: 3}
+      propertyPath: MinDistance
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7555706860848392197, guid: e96b2903e4e2caa478d19c57793905f9,
         type: 3}

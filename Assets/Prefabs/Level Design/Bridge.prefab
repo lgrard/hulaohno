@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7963938777745264377}
   - component: {fileID: 4447605300823650816}
   m_Layer: 8
-  m_Name: mesh_bridge
+  m_Name: Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,6 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: aea5c9dd2dd848e4db10c50d60e2fa83, type: 2}
   - {fileID: 2100000, guid: 7108f1729341a8342ab3f75f2d145b16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -95,7 +96,7 @@ GameObject:
   - component: {fileID: 1277385502500455001}
   m_Layer: 8
   m_Name: Collider_extra bridge
-  m_TagString: Untagged
+  m_TagString: wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

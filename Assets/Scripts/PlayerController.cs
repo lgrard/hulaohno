@@ -50,6 +50,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EffectManager effectManager;
     [SerializeField] InputActionAsset inputAction;
     [SerializeField] Material whiteMat;
+    [SerializeField] AudioSource audioStep;
+    [SerializeField] AudioClip woodStep;
+    [SerializeField] AudioClip rockStep;
+    [SerializeField] AudioClip sandStep;
     private PhysicMaterial noFrictionMat;
     private Material[] defMat;
     private SkinnedMeshRenderer renderer;
@@ -206,6 +210,16 @@ public class PlayerController : MonoBehaviour
 
         if(!isGrounded | rb.velocity.magnitude <= 2 && effectManager.p_run.isPlaying)
             effectManager.p_run.Stop();
+
+        //Set step sounds
+        if (isGrounded && !audioStep.isPlaying && rb.velocity.magnitude > 2)
+        {
+            audioStep.Play();
+            audioStep.pitch = rb.velocity.magnitude / speed;
+        }
+
+        else
+            audioStep.Stop();
 ;    }
 
     //Jump Method
@@ -223,7 +237,20 @@ public class PlayerController : MonoBehaviour
     //Check if the player is Grounded
     private void GroundCheck()
     {
-        isGrounded = Physics.Raycast(new Ray(gameObject.transform.position, gameObject.transform.up * -1),groundCheckDistance,groundLayer);
+        Ray groundRay = new Ray(gameObject.transform.position, gameObject.transform.up * -1);
+        isGrounded = Physics.Raycast(groundRay, out RaycastHit hitInfo, groundCheckDistance, groundLayer);
+
+        if (isGrounded)
+        {
+            if (hitInfo.collider.tag.Equals("wood") && audioStep.clip != woodStep)
+                audioStep.clip = woodStep;
+
+            else if (hitInfo.collider.tag.Equals("rock") && audioStep.clip != rockStep)
+                audioStep.clip = rockStep;
+
+            else if (hitInfo.collider.tag.Equals("sand") && audioStep.clip != sandStep)
+                audioStep.clip = sandStep;
+        }
 
         meshAnim.SetBool("Grounded", isGrounded);
     }

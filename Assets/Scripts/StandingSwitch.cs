@@ -8,6 +8,7 @@ public class StandingSwitch : MonoBehaviour
     [SerializeField] Vector3 triggerOffset;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] GameObject switchMesh;
+    AudioSource audioSource;
     bool playerInside;
     bool triggered;
 
@@ -24,6 +25,8 @@ public class StandingSwitch : MonoBehaviour
     {
         if (currentType == InteractionType.movePlatform && linkedObjects != null)
             StartCoroutine(InitMovePlat());
+
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -33,6 +36,7 @@ public class StandingSwitch : MonoBehaviour
         if (playerInside && !triggered && linkedObjects != null)
         {
             triggered = true;
+            audioSource.Play();
 
             switch (currentType)
             {
@@ -47,7 +51,10 @@ public class StandingSwitch : MonoBehaviour
         }
 
         else if(!playerInside && triggered)
+        {
+            audioSource.Play();
             triggered = false;
+        }
     }
 
     void MeshBevahiour()

@@ -2844,7 +2844,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4223287586667680025}
-  m_Text: Oceans are blue
+  m_Text: Water Ploof
   m_OffsetZ: 0
   m_CharacterSize: 0.2
   m_LineSpacing: 1

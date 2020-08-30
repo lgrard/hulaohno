@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("audioVolumePref", 1);
 
         if (!PlayerPrefs.HasKey("musicVolumePref"))
-            PlayerPrefs.SetFloat("musicVolumePref", 1);
+            PlayerPrefs.SetFloat("musicVolumePref", 0.4f);
 
         globalScore = PlayerPrefs.GetInt("globalScore");
         audioVolume = PlayerPrefs.GetFloat("audioVolumePref");

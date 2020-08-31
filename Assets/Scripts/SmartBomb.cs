@@ -22,7 +22,8 @@ public class SmartBomb : MonoBehaviour
     private int playerIndex;
     private float currentRadius;
     private CameraEffects cameraEffects;
-    private MeshRenderer renderer;
+    [SerializeField] MeshRenderer renderer;
+    [SerializeField] MeshRenderer rendererChild;
     private Material defMat;
 
 
@@ -30,7 +31,6 @@ public class SmartBomb : MonoBehaviour
     private void Start()
     {
         cameraEffects = GameObject.Find("GameManager").GetComponent<GameManager>().camContainer.GetComponent<CameraEffects>();
-        renderer = mesh.GetComponent<MeshRenderer>();
         defMat = renderer.material;
     }
 
@@ -99,7 +99,10 @@ public class SmartBomb : MonoBehaviour
             radius += meshRadiusTick;
 
             if (currentRadius > endRadius * 0.7)
+            {
                 renderer.material.SetFloat("alphaMultiplier", Mathf.Clamp(renderer.material.GetFloat("alphaMultiplier") - Time.fixedDeltaTime*2,0,1));
+                rendererChild.material.SetFloat("alphaMultiplier", Mathf.Clamp(renderer.material.GetFloat("alphaMultiplier") - Time.fixedDeltaTime * 2, 0, 1));
+            }
 
             yield return new WaitForFixedUpdate();
         }

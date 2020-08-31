@@ -9,6 +9,7 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem p_jump;
     public ParticleSystem p_run;
     public ParticleSystem p_hit;
+    public ParticleSystem p_hitDash;
     public ParticleSystem p_die;
     public ParticleSystem p_impact;
     public TrailRenderer t_dashTrail;

@@ -109,8 +109,8 @@ MonoBehaviour:
   maxHp: 10
   scoreAmount: 20
   attackStampMax: 3
-  collectibleAmount: 10
-  itemDropRate: 0.03
+  collectibleAmount: 8
+  itemDropRate: 0.1
   stoppingDistance: 3
   despawnTime: 0.5
   enemyLayers:

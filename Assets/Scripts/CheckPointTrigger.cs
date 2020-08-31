@@ -58,6 +58,7 @@ public class CheckPointTrigger : MonoBehaviour
     Camera cam;
     Events linkedEvents;
     GameManager gameManager;
+    UIManagement uiManagement;
 
     Collider[] collidersCam = null;
 
@@ -81,6 +82,7 @@ public class CheckPointTrigger : MonoBehaviour
             playerLayer = LayerMask.GetMask("Player");
             cam = Camera.main;
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            uiManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
 
             foreach (EnemySpawner spawner in linkedSpawner)
             {
@@ -248,6 +250,7 @@ public class CheckPointTrigger : MonoBehaviour
                 }
 
                 isCleared = true;
+                uiManagement.displayEventText("CONTINUE TO THE NEXT AREA !", gameManager.eventClearedColor);
                 gameManager.currentTrigger = null;
                 wallL.SetActive(false);
                 wallR.SetActive(false);

@@ -615,7 +615,14 @@ public class PlayerController : MonoBehaviour
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
             if (enemy != null)
+            {
                 StartCoroutine(enemy.KnockBack(dashPush,transform));
+                ParticleSystem dashImpact = Instantiate(effectManager.p_hitDash);
+                dashImpact.transform.position = new Vector3(other.transform.position.x, effectManager.p_impact.transform.position.y, other.transform.position.z);
+                dashImpact.transform.rotation = other.transform.rotation;
+                dashImpact.Play();
+                Destroy(dashImpact.gameObject, dashImpact.main.duration);
+            }
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))

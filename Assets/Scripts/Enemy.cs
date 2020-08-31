@@ -377,6 +377,7 @@ public class Enemy : MonoBehaviour
             float currentAgentSpeed = agent.speed;
             float currentAgentAngular = agent.angularSpeed;
 
+            PlaySingle(audio_hit);
             knockBackDir = (mesh.transform.position - origin.transform.position) * force;
             agent.angularSpeed = 0;
             agent.speed = 0;

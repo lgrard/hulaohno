@@ -9895,12 +9895,12 @@ MonoBehaviour:
   audio_hit: {fileID: 8300000, guid: 0257629e6ae8d5d48b5794f5aa8f54b5, type: 3}
   spawner: {fileID: 0}
   maxHp: 10
-  scoreAmount: 10
+  scoreAmount: 30
   attackStampMax: 3
-  collectibleAmount: 5
-  itemDropRate: 0.03
+  collectibleAmount: 10
+  itemDropRate: 0.2
   stoppingDistance: 12
-  despawnTime: 0.3
+  despawnTime: 0.5
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024

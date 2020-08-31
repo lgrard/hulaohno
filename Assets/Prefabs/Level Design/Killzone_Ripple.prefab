@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde9de403f6bd5e449abe8b1ba4f0fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audio: {fileID: 4253181659944566128}
   damage: 1000
   fireRate: 30
   size: {x: 6.12, y: 8, z: 9.86}

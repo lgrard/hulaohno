@@ -96,6 +96,7 @@ public class Enemy : MonoBehaviour
         if(currentType == EnemyType.linearCaster ||currentType == EnemyType.radialCaster)
             audio_attack = projectilesPoint.GetComponent<AudioSource>();
 
+        transform.localScale *= Random.Range(0.8f, 1.2f);
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;

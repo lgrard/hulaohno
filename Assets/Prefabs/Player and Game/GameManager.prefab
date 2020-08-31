@@ -262,7 +262,7 @@ MonoBehaviour:
   - {fileID: 8717496389440717317, guid: a2aeba165f94fac46895a9a78778ce31, type: 3}
   - {fileID: 8717496389440717317, guid: cbb60c0b2f2c5414ea2b19003a8ae78f, type: 3}
   currentProgressionCp: {x: 0, y: 0, z: 0}
-  respawnTime: 15
+  respawnTime: 10
   respawnStamp1: 0
   respawnStamp2: 0
   sentences1:

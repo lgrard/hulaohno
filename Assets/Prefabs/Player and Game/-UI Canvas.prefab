@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 8751556668497732942}
   - component: {fileID: 5462311801283168227}
   - component: {fileID: 6362704247040775667}
+  - component: {fileID: 5406613595394151302}
   m_Layer: 0
   m_Name: -PauseMenu
   m_TagString: Untagged
@@ -284,6 +285,25 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!95 &5406613595394151302
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312331816262565169}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d6a4d642bc25d504fbba6ead7eccd1f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &327862187142063996
 GameObject:
   m_ObjectHideFlags: 0

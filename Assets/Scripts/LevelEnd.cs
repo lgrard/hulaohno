@@ -14,6 +14,7 @@ public class LevelEnd : MonoBehaviour
     [SerializeField] TextMesh highScoreText;
     GameManager gameManager;
     UIManagement uIManagement;
+    AudioSource audioSource;
 
     enum ZoneType
     {
@@ -25,6 +26,7 @@ public class LevelEnd : MonoBehaviour
 
     private void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         uIManagement = GameObject.Find("-UI Canvas").GetComponent<UIManagement>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         collider = gameObject.AddComponent<BoxCollider>();
@@ -43,7 +45,10 @@ public class LevelEnd : MonoBehaviour
         {
             triggered = true;
             if(currentType == ZoneType.levelEnd)
+            {
                 gameManager.LevelEnd();
+                audioSource.Play();
+            }
             else if(currentType == ZoneType.hubGate)
                 uIManagement.LoadSpecificLevel(levelIndexToLoad);
 

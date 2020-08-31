@@ -1,5 +1,79 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &707099084527147246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2435793713541906968}
+  - component: {fileID: 2910537096904264219}
+  - component: {fileID: 7672310562560082395}
+  m_Layer: 5
+  m_Name: sprite scheme2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2435793713541906968
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707099084527147246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7753059, y: 0.7753059, z: 0.7753059}
+  m_Children: []
+  m_Father: {fileID: 3218534209533389081}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 234, y: 9}
+  m_SizeDelta: {x: 312.2942, y: 312.2942}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2910537096904264219
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707099084527147246}
+  m_CullTransparentMesh: 0
+--- !u!114 &7672310562560082395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707099084527147246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8ba4da8680ebaaa4fa7306247eec63d7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3218534209181929529
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +185,7 @@ RectTransform:
   - {fileID: 3218534210512747392}
   - {fileID: 3218534209824985012}
   - {fileID: 3218534210495827156}
+  - {fileID: 2435793713541906968}
   m_Father: {fileID: 7463168360577812136}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -394,7 +469,7 @@ GameObject:
   - component: {fileID: 3218534210495827158}
   - component: {fileID: 3218534210495827159}
   m_Layer: 5
-  m_Name: sprite scheme
+  m_Name: sprite scheme1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,15 +484,15 @@ RectTransform:
   m_GameObject: {fileID: 3218534210495827157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7753059, y: 0.7753059, z: 0.7753059}
   m_Children: []
   m_Father: {fileID: 3218534209533389081}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.752, y: 21}
-  m_SizeDelta: {x: 635.27747, y: 287.22638}
+  m_AnchoredPosition: {x: -125.5, y: 8.999992}
+  m_SizeDelta: {x: 603.00525, y: 287.22638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3218534210495827158
 CanvasRenderer:

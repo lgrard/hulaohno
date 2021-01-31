@@ -9,41 +9,90 @@ public class CameraEffects : MonoBehaviour
     [SerializeField] GameObject cameraContainer;
     [SerializeField] float smoothingAmount = 0.95f;
     [SerializeField] GameObject cameraTarget;
+
+    [Header("Distance management")]
+    [SerializeField] BoxCollider wallL = null;
+    [SerializeField] BoxCollider wallR = null;
+    [SerializeField] LineRenderer distanceLine;
+    [SerializeField] float lineOffset = 0.5f;
+    [SerializeField] float minDistanceCam = 16;
+    [SerializeField] float maxDistanceCam = 19;
+
     private GameManager gameManager;
-    private Vector3 offset;
+    [SerializeField] Vector3 offset;
     private Camera cam;
+    private Vector3 rotOffset;
 
     public bool checkPointActive = false;
 
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (gameManager.player0 != null)
+            cameraTarget.transform.position = gameManager.player0.transform.position;
 
         cam = Camera.main;
-        offset  = cameraContainer.transform.position - cameraTarget.transform.position;
-        offset = new Vector3(offset.x, offset.y, cameraContainer.transform.position.z);
+        
+        //Offset auto setting at start
+        //offset  = cameraContainer.transform.position - cameraTarget.transform.position;
+        
+        offset = new Vector3(0, 6.5f, -minDistanceCam);        
+        rotOffset = cameraContainer.transform.rotation.eulerAngles;
     }
 
     private void FixedUpdate()
     {
-        if (gameManager.player0 != null && gameManager.player1 != null)
-            cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
+        WallSetting();
 
-        else if (gameManager.player0 == null && gameManager.player1 != null)
-            cameraTarget.transform.position = gameManager.player1.transform.position;
-
-        else if (gameManager.player1 == null && gameManager.player0 != null)
-            cameraTarget.transform.position = gameManager.player0.transform.position;
-
-
-        if (cameraTarget != null && !checkPointActive)
+        if (cameraTarget != null && !checkPointActive && gameManager.player0 != null)
         {
-            Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
+
+            if (gameManager.player0 != null && !gameManager.p1IsDead && gameManager.player1 != null && !gameManager.p2IsDead)
+            {
+                cameraTarget.transform.position = Vector3.Lerp(gameManager.player0.transform.position, gameManager.player1.transform.position, 0.5f);
+                DistanceSetting();
+            }
+
+            else if (gameManager.player0 == null && gameManager.player1 != null || gameManager.player0 != null && gameManager.p1IsDead && gameManager.player1 != null && !gameManager.p2IsDead)
+                cameraTarget.transform.position = gameManager.player1.transform.position;
+
+            else if (gameManager.player1 == null && gameManager.player0 != null || gameManager.player1 != null && gameManager.p2IsDead && gameManager.player0 != null && !gameManager.p1IsDead)
+                cameraTarget.transform.position = gameManager.player0.transform.position;
+
+
+            //Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, offset.z);
+            Vector3 desiredPosition = new Vector3(cameraTarget.transform.position.x + offset.x, cameraTarget.transform.position.y + offset.y, cameraTarget.transform.position.z + offset.z);
             cameraContainer.transform.position = Vector3.Lerp(desiredPosition, cameraContainer.transform.position, smoothingAmount);
 
-            Vector3 desiredRotation = new Vector3(9.17f, 0, 0);
-            cam.transform.rotation = Quaternion.Slerp(Quaternion.Euler(desiredRotation), cam.transform.rotation,smoothingAmount);
+            Vector3 desiredRotation = rotOffset;
+            cameraContainer.transform.rotation = Quaternion.Slerp(Quaternion.Euler(desiredRotation), cameraContainer.transform.rotation,smoothingAmount);
         }
+    }
+
+    void WallSetting()
+    {
+        wallL.enabled = gameManager.playerOutRange;
+        wallR.enabled = gameManager.playerOutRange;
+
+        distanceLine.enabled = gameManager.playerOutRange;
+
+        if (gameManager.playerOutRange)
+        {
+            distanceLine.widthMultiplier = gameManager.distanceRatio-1;
+
+            Vector3 player0Pos = new Vector3(gameManager.player0.transform.position.x, gameManager.player0.transform.position.y + lineOffset, gameManager.player0.transform.position.z);
+            Vector3 player1Pos = new Vector3(gameManager.player1.transform.position.x, gameManager.player1.transform.position.y + lineOffset, gameManager.player1.transform.position.z);
+
+            distanceLine.SetPosition(0, player0Pos);
+            distanceLine.SetPosition(1, Vector3.Lerp(player0Pos, player1Pos, 0.5f));
+            distanceLine.SetPosition(2, player1Pos);
+        }
+    }
+
+    void DistanceSetting()
+{
+        float distanceCam = Mathf.Clamp(gameManager.distanceRatio * maxDistanceCam, minDistanceCam, maxDistanceCam);
+        offset = new Vector3(offset.x,offset.y, -distanceCam);
     }
 
     // Shake Function

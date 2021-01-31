@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 340420069355825667}
   - component: {fileID: 8782701523736006709}
   - component: {fileID: 3089159194156920012}
-  - component: {fileID: 8996038169678795021}
-  m_Layer: 0
+  - component: {fileID: 1817794783564943129}
+  - component: {fileID: 27464607306369721}
+  m_Layer: 8
   m_Name: PalmTreeSingle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3666550114732267536}
-  m_LocalRotation: {x: -0.000000081460335, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 34.68444, y: 2.8386369, z: -19.488298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,7 +61,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3eab34fd07d71b34ba95379d15a40963, type: 2}
-  - {fileID: 2100000, guid: b49abc7bdafd732419dba049d5cb8859, type: 2}
+  - {fileID: 2100000, guid: 8690525139bd57344bf455fbd74ac653, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,7 +82,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8996038169678795021
+--- !u!136 &1817794783564943129
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666550114732267536}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.35
+  m_Height: 9.718896
+  m_Direction: 1
+  m_Center: {x: 0, y: 4.13, z: -0.09}
+--- !u!65 &27464607306369721
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,5 +107,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.64, y: 9.12, z: 1.48}
-  m_Center: {x: 0, y: 4.56, z: 0.02}
+  m_Size: {x: 7, y: 0.63, z: 7}
+  m_Center: {x: -0.04449272, y: 8.82, z: 0.4349656}

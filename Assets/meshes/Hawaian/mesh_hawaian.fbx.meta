@@ -1,0 +1,512 @@
+fileFormatVersion: 2
+guid: bc13059cb2ea22b4486f7783a6f06db2
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: 2161728227584322392
+    second: Rig|alien_attack
+  - first:
+      74: -7108726291146013959
+    second: Rig|alien_idle
+  - first:
+      74: -1905529253767677863
+    second: Rig|alien_walk
+  - first:
+      74: -1061519673244963164
+    second: Rig|pnj_handSign
+  - first:
+      74: 7517267933356070390
+    second: Rig|pnj_idle
+  - first:
+      74: -6977316593749648318
+    second: Rig|alien_Die
+  - first:
+      74: 2137649538317444037
+    second: Rig|alien_getHit
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair
+    second: {fileID: 2100000, guid: e35014abcba564649827d5e9d55920df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_skin
+    second: {fileID: 2100000, guid: db02cf69edf4c3b438d2009e9d6ecf43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_skirt
+    second: {fileID: 2100000, guid: 83a45cc544d918a469660613397932f7, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Rig|alien_attack' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'R_arm2' has scale animation that will be
+      discarded.\n\t'L_arm2' has scale animation that will be discarded.\n\nClip
+      'Rig|alien_Die' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Root'
+      has scale animation that will be discarded.\n\t'hips' has translation animation
+      that will be discarded.\n\t'hips' has scale animation that will be discarded.\n\t'torso'
+      has translation animation that will be discarded.\n\t'torso' has scale animation
+      that will be discarded.\n\t'R_shoulder' has translation animation that will
+      be discarded.\n\t'R_shoulder' has scale animation that will be discarded.\n\t'R_arm1'
+      has translation animation that will be discarded.\n\t'R_arm1' has scale animation
+      that will be discarded.\n\t'R_arm2' has translation animation that will be
+      discarded.\n\t'R_arm2' has scale animation that will be discarded.\n\t'R_hand'
+      has translation animation that will be discarded.\n\t'R_hand' has scale animation
+      that will be discarded.\n\t'Neck' has translation animation that will be discarded.\n\t'Neck'
+      has scale animation that will be discarded.\n\t'Head' has translation animation
+      that will be discarded.\n\t'Head' has scale animation that will be discarded.\n\t'L_shoulder'
+      has translation animation that will be discarded.\n\t'L_shoulder' has scale
+      animation that will be discarded.\n\t'L_arm1' has translation animation that
+      will be discarded.\n\t'L_arm1' has scale animation that will be discarded.\n\t'L_arm2'
+      has translation animation that will be discarded.\n\t'L_arm2' has scale animation
+      that will be discarded.\n\t'L_hand' has translation animation that will be
+      discarded.\n\t'L_hand' has scale animation that will be discarded.\n\t'R_pelivis'
+      has translation animation that will be discarded.\n\t'R_pelivis' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'R_pelivis'
+      has scale animation that will be discarded.\n\t'R_leg1' has translation animation
+      that will be discarded.\n\t'R_leg1' has scale animation that will be discarded.\n\t'R_leg2'
+      has translation animation that will be discarded.\n\t'R_leg2' has scale animation
+      that will be discarded.\n\t'R_foot' has translation animation that will be
+      discarded.\n\t'R_foot' has scale animation that will be discarded.\n\t'L_pelivis'
+      has translation animation that will be discarded.\n\t'L_pelivis' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'L_pelivis'
+      has scale animation that will be discarded.\n\t'L_leg1' has translation animation
+      that will be discarded.\n\t'L_leg1' has scale animation that will be discarded.\n\t'L_leg2'
+      has translation animation that will be discarded.\n\t'L_leg2' has scale animation
+      that will be discarded.\n\t'L_foot' has translation animation that will be
+      discarded.\n\t'L_foot' has scale animation that will be discarded.\n\nClip
+      'Rig|alien_getHit' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'hips'
+      has scale animation that will be discarded.\n\t'R_arm1' has translation animation
+      that will be discarded.\n\t'R_arm1' has scale animation that will be discarded.\n\t'Head'
+      has scale animation that will be discarded.\n\t'L_arm1' has translation animation
+      that will be discarded.\n\t'L_arm1' has scale animation that will be discarded.\n\t'R_pelivis'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_pelivis'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Rig|alien_idle' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'hips'
+      has scale animation that will be discarded.\n\nClip 'Rig|alien_walk' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'torso' has scale animation
+      that will be discarded.\n\nClip 'Rig|pnj_idle' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'hips' has scale animation that will be
+      discarded.\n\t'R_arm1' has scale animation that will be discarded.\n\t'Head'
+      has scale animation that will be discarded.\n\t'L_arm1' has scale animation
+      that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths:
+    - Rig
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Rig|alien_attack
+      takeName: Rig|alien_attack
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|alien_idle
+      takeName: Rig|alien_idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|alien_walk
+      takeName: Rig|alien_walk
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|pnj_handSign
+      takeName: Rig|pnj_handSign
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|pnj_idle
+      takeName: Rig|pnj_idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|alien_Die
+      takeName: Rig|alien_Die
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rig|alien_getHit
+      takeName: Rig|alien_getHit
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 14
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 75
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: mesh_hawaian(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rig
+      parentName: mesh_hawaian(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Root
+      parentName: Rig
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -8.43925e-16, y: -0.70710665, z: -0.7071069, w: -6.9182194e-16}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: hips
+      parentName: Root
+      position: {x: -0, y: 0.28033885, z: 0}
+      rotation: {x: -0, y: -0.00000011920933, z: -0, w: 1}
+      scale: {x: 1, y: 1.0439373, z: 1}
+    - name: torso
+      parentName: hips
+      position: {x: -6.661338e-16, y: 0.1432614, z: 0.0000000055879354}
+      rotation: {x: 2.9605887e-16, y: 0.000000099341115, z: 0.000000002483521, w: 1}
+      scale: {x: 1.0002978, y: 0.9935321, z: 1.0064543}
+    - name: R_shoulder
+      parentName: torso
+      position: {x: -0.0000000020954758, y: 0.19347674, z: -0.000000007683411}
+      rotation: {x: 0.5395138, y: -0.45708293, z: -0.5395137, w: -0.4570831}
+      scale: {x: 1.0018893, y: 1.000481, z: 0.99769974}
+    - name: R_arm1
+      parentName: R_shoulder
+      position: {x: 0.000000009778887, y: 0.13797297, z: -0.000000018488208}
+      rotation: {x: 0.06954082, y: 0.02489679, z: -0.002258897, w: 0.9972659}
+      scale: {x: 1.0248046, y: 0.8937648, z: 0.9879623}
+    - name: R_arm2
+      parentName: R_arm1
+      position: {x: -0.0000000048894435, y: 0.21883309, z: 0.0000000055879354}
+      rotation: {x: -0.012478635, y: 0.10127935, z: -0.015201323, w: -0.99466366}
+      scale: {x: 0.9936898, y: 0.99030006, z: 1.0153115}
+    - name: R_hand
+      parentName: R_arm2
+      position: {x: -0.00000008766074, y: 0.15976477, z: -0.000000022351742}
+      rotation: {x: -0.02966636, y: 0.006029366, z: -0.023590457, w: 0.9992633}
+      scale: {x: 0.9970379, y: 1.0116179, z: 0.99254775}
+    - name: Neck
+      parentName: torso
+      position: {x: -0.0000000020954758, y: 0.19347674, z: -0.000000007683411}
+      rotation: {x: 2.4671529e-17, y: 0.000000019868217, z: -0.0000000012417634, w: 1}
+      scale: {x: 1.0015503, y: 0.9997139, z: 0.99875385}
+    - name: Head
+      parentName: Neck
+      position: {x: 8.731149e-10, y: 0.047685586, z: 0.0000000059371814}
+      rotation: {x: 6.1678425e-18, y: 0.000000004967049, z: -9.31323e-10, w: 1}
+      scale: {x: 1.0004696, y: 0.98284703, z: 1.0005682}
+    - name: L_shoulder
+      parentName: torso
+      position: {x: -0.0000000020954758, y: 0.19347674, z: -0.000000007683411}
+      rotation: {x: 0.5395138, y: 0.45708293, z: 0.5395137, w: -0.4570831}
+      scale: {x: 0.999711, y: 1.0012786, z: 0.999046}
+    - name: L_arm1
+      parentName: L_shoulder
+      position: {x: -0.0000000055879354, y: 0.13797295, z: -0.000000046755304}
+      rotation: {x: 0.06969497, y: -0.025011064, z: 0.002436966, w: 0.9972518}
+      scale: {x: 1.0270734, y: 0.89190793, z: 0.98872507}
+    - name: L_arm2
+      parentName: L_arm1
+      position: {x: 0.00000005448237, y: 0.21883306, z: 0.000000008381903}
+      rotation: {x: 0.012278387, y: 0.10129226, z: -0.015176812, w: 0.99466515}
+      scale: {x: 0.9953885, y: 0.98896796, z: 1.0147777}
+    - name: L_hand
+      parentName: L_arm2
+      position: {x: 0.0000000041909516, y: 0.15976462, z: -0.000000067055225}
+      rotation: {x: -0.029666478, y: -0.0060295304, z: 0.023590365, w: 0.9992632}
+      scale: {x: 0.9974854, y: 1.0073339, z: 0.99596065}
+    - name: R_pelivis
+      parentName: Root
+      position: {x: -0, y: 0.28033885, z: 0}
+      rotation: {x: -0.5, y: 0.49999994, z: 0.5, w: 0.5000001}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: R_leg1
+      parentName: R_pelivis
+      position: {x: -9.357162e-10, y: 0.09846146, z: 0.000000013654967}
+      rotation: {x: 0.6784165, y: -0.0000006165355, z: 0.00000058114523, w: -0.7346776}
+      scale: {x: 0.99999994, y: 1.0000005, z: 0.9999997}
+    - name: R_leg2
+      parentName: R_leg1
+      position: {x: -0.0000000055879354, y: 0.09705455, z: 0.000000024097972}
+      rotation: {x: -0.018453058, y: 0.7068653, z: -0.018452939, w: 0.70686656}
+      scale: {x: 1.0000001, y: 0.99999946, z: 1.0000001}
+    - name: R_foot
+      parentName: R_leg2
+      position: {x: -0.0000000048894435, y: 0.13004926, z: -0.000000009778887}
+      rotation: {x: 0.010241759, y: 0.74779147, z: -0.66379243, w: -0.009091346}
+      scale: {x: 0.9999999, y: 1, z: 1}
+    - name: L_pelivis
+      parentName: Root
+      position: {x: -0, y: 0.28033885, z: 0}
+      rotation: {x: -0.5, y: -0.49999994, z: -0.5, w: 0.5000001}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: L_leg1
+      parentName: L_pelivis
+      position: {x: -2.6564536e-16, y: 0.09846146, z: -0.000000007433626}
+      rotation: {x: 0.6784165, y: 0.0000006016343, z: -0.00000065565104, w: -0.73467755}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999997}
+    - name: L_leg2
+      parentName: L_leg1
+      position: {x: 0.0000000049369575, y: 0.09705455, z: 0.000000024447218}
+      rotation: {x: -0.018453062, y: -0.7068654, z: 0.018452883, w: 0.7068666}
+      scale: {x: 0.99999994, y: 1, z: 0.9999998}
+    - name: L_foot
+      parentName: L_leg2
+      position: {x: 0.000000007858034, y: 0.13004927, z: 3.4924597e-10}
+      rotation: {x: -0.010241789, y: 0.74779147, z: -0.6637925, w: 0.009091316}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: Mesh
+      parentName: mesh_hawaian(Clone)
+      position: {x: 0.000000014886745, y: 0.0000000059271015, z: 5.7999594e-10}
+      rotation: {x: 0.7071067, y: -4.3422873e-15, z: -4.062614e-15, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 75
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

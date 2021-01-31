@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - rock
+  - wood
+  - sand
   layers:
   - Default
   - TransparentFX
@@ -16,8 +19,8 @@ TagManager:
   - Ground
   - Enemy
   - Player
-  - 
-  - 
+  - Destructible
+  - Collisions
   - 
   - 
   - 
